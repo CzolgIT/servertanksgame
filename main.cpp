@@ -1,8 +1,11 @@
 #include <SDL2/SDL.h>
+#ifdef __APPLE__
 #include <SDL2_net/SDL_net.h>
+#else
+#include <SDL2/SDL_net.h>
+#endif
 
-
-#define IP "127.0.0.1"
+#define IP "153.19.7.230"
 #define SERVERPORT 1616
 #define min(val1, val2) (val1 > val2 ? val2 : val1)
 
