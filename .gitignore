@@ -32,5 +32,8 @@ obj/*.o
 **/*.out
 **/*.app
 
+# Tanks exe
+Tanks
+
 # Kdevelop project file
 *.kdev4
