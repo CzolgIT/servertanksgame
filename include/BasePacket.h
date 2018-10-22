@@ -12,6 +12,8 @@ enum PacketType : Uint8{
     PT_UNKNOWN = 0xff
 };
 
+//ucze sie : ( przepraszam
+
 class BasePacket
 {
 protected:
