@@ -12,39 +12,28 @@ enum PacketType : Uint8{
     PT_UNKNOWN = 0xff
 };
 
-//ucze sie : ( przepraszam
-
 class BasePacket
 {
 protected:
-    BasePacket( PacketType type, unsigned int size ):
-        size_((size > 1) ? size : 1) // size should be always 1 or greater
-
-        {
-            data_ = std::unique_ptr<Uint8[]>(new Uint8[size_]()); //allocate
-            
-            data_[0] = type;
-            
-        }
-        
+    BasePacket( PacketType type, unsigned int packetSize );
         // Content of the packet 
-        std::unique_ptr<Uint8[]> data_;
+        std::unique_ptr<Uint8[]> data;
         
-        unsigned int size_;
+        unsigned int size;
     
         
 public:
-    virtual ~BasePacket(){}
+    virtual ~BasePacket();
     
     //return the type of the packet
     
-    virtual PacketType GetType() const final {return (PacketType)data_[0];}
+    virtual PacketType getType() const;
     
-    virtual Uint8* GetData() const final {return data_.get();}
+    virtual Uint8* getData() const;
     
-    virtual unsigned int GetSize() const final {return size_;}
+    virtual unsigned int getSize() const;
     
-    virtual void Print() const { std::cout << "Not defined - this is a base packet" << std::endl;}
+    virtual void print() const;
 };
 
 #endif

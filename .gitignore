@@ -36,4 +36,5 @@ obj/*.o
 Tanks
 
 # Kdevelop project file
+.kdev4/
 *.kdev4

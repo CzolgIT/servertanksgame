@@ -1,8 +1,8 @@
 #include "Client.h"
 
 Client::Client(Uint8 ID, UDPsocket udpsock):
-UDPsocket_(udpsock),
-ID_(ID)
+udpSocket(udpsock),
+id(ID)
 {
 }
 Client::~Client()
@@ -12,14 +12,14 @@ Client::~Client()
 
 void Client::UDPSend( const BasePacket& packet){
 
-    UDPpacket_.data = packet.GetData();
-    UDPpacket_.len = packet.GetSize();
-    UDPpacket_.maxlen = packet.GetSize();
+    udpPacket.data = packet.getData();
+    udpPacket.len = packet.getSize();
+    udpPacket.maxlen = packet.getSize();
     
-    SDLNet_UDP_Send(UDPsocket_,-1,&UDPpacket_);
+    SDLNet_UDP_Send(udpSocket,-1,&udpPacket);
 }
 
 void Client::SetUDPAddress( IPaddress address){
 
-    UDPpacket_.address = address;
+    udpPacket.address = address;
 }

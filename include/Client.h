@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL_net.h>
 #include<memory>
-#include"../shared/BasePacket.h"
+#include "BasePacket.h"
 
 class Client
 {
@@ -15,15 +15,12 @@ public:
     
     void SetUDPAddress(IPaddress address);
     
-    Uint8 GetID() {return ID_;}
+    Uint8 GetID() {return id;}
     
 private:
-    UDPsocket UDPsocket_;
-    UDPpacket UDPpacket_;
-    Uint8 ID_;
-    
-    
-    
+    UDPsocket udpSocket;
+    UDPpacket udpPacket;
+    Uint8 id;
 };
 
 
