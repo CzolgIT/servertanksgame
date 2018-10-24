@@ -6,6 +6,8 @@
 
 // Here will be all includes for futher packets (based on their type)
 #include "BasePacket.h"
+#include "JoinRequestPacket.h"
+#include "JoinResponsePacket.h"
 
 // Larger than the largest packet that will be received
 #define UNIVERSAL_PACKET_SIZE 100

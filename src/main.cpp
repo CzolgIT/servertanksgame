@@ -1,10 +1,16 @@
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL_net.h>
+#undef main
 
+#include "UniversalPacket.h"
+#include "Client.h"
 #define SERVERIP "127.0.0.1" //temporary for testing
 #define SERVERPORT 1177 //temporary for testing
 #define MAX_CLIENTS 2 //lol
+
+
+std::vector<std::unique_ptr<Client>> clients;
 
 IPaddress address;
 TCPsocket TCP_socket; //for connectivity
@@ -87,6 +93,65 @@ void init(){
     SDLNet_TCP_AddSocket(TCP_SocketSet,TCP_socket);
     SDLNet_CheckSockets(TCP_SocketSet,0);
     
+}
+
+void accept_client()
+{
     
+    TCPsocket new_socket;
+    
+    //try to accept a new connection
+    // if there was no connection accept return null
+    if(SDLNet_SocketReady(TCP_socket)){
+    
+        new_socket = SDLNet_TCP_Accept(TCP_socket);
+        
+    }
+    else return;
+    
+    if(new_socket !=NULL)
+    {
+        JoinRequestPacket joinRequestPacket;
+        
+        if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.getData(), joinRequestPacket.getSize()) <=0)
+        {
+            std::cout << "zjebalo sie\n";
+            return;
+        }
+        
+        if(clients.size() < MAX_CLIENTS)
+        {
+            
+            JoinResponsePacket joinResponsePacket;
+            joinResponsePacket.setResponse(JR_OK);
+            
+            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int)joinResponsePacket.getSize()){
+            
+                std::cout << "zjebalo sie x2\n";
+                return;
+                
+            }
+            //TODO add new player and do some stuff
+            
+        }
+        else
+        {
+            
+            JoinResponsePacket joinResponsePacket;
+            joinResponsePacket.setResponse(JR_REJECT);
+            
+            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int)joinResponsePacket.getSize()){
+            
+                std::cout << "zjebalo sie x2\n";
+                return;
+                
+            }
+            
+        }
+        
+        
+        
+    }
     
 }
+

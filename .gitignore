@@ -34,7 +34,7 @@ obj/*.o
 
 # Tanks exe
 Tanks
-
+Server
 # Kdevelop project file
 .kdev4/
 *.kdev4
