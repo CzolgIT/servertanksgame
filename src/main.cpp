@@ -24,17 +24,15 @@ void accept_client();
 
 int main(int argc, char* argv[])
 {
-    
-    bool quit = false;
-    
+        
     init();
-    
+    bool quit = false;
+
     while(!quit){
     
         // Check if any sockets are ready
         SDLNet_CheckSockets(TCP_SocketSet,0);
-        printf("XD");
-        SDL_Delay(200);
+        accept_client();
     }
     
     	// cleanup
@@ -111,6 +109,9 @@ void accept_client()
     
     if(new_socket !=NULL)
     {
+        
+        SDL_Log("Connected to client %s:%i", SDLNet_ResolveIP(&address), SDLNet_Read16(&address.port));
+        
         JoinRequestPacket joinRequestPacket;
         
         if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.getData(), joinRequestPacket.getSize()) <=0)
@@ -132,6 +133,7 @@ void accept_client()
                 
             }
             //TODO add new player and do some stuff
+            std::cout << "XD";
             
         }
         else
