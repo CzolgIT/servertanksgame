@@ -1,4 +1,4 @@
-EXE = Tanks
+EXE = Server
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
