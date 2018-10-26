@@ -1,4 +1,4 @@
-#include "Client.h"
+#include "Main.h"
 
 Client::Client(Uint8 ID, UDPsocket udpsock):
 udpSocket(udpsock),

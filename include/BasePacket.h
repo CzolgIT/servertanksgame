@@ -1,9 +1,7 @@
 #ifndef BASEPACKET_H
 #define BASEPACKET_H
 
-#include<iostream>
-#include<memory>
-#include<SDL2/SDL_net.h>
+#include "Main.h"
 
 // First byte of a packed should always be the type
 enum PacketType : Uint8{

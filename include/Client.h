@@ -1,9 +1,7 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <SDL2/SDL_net.h>
-#include<memory>
-#include "BasePacket.h"
+#include "Main.h"
 
 class Client
 {

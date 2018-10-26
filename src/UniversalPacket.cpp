@@ -1,4 +1,4 @@
-#include "UniversalPacket.h"
+#include "Main.h"
 
 UniversalPacket::UniversalPacket():
     size(UNIVERSAL_PACKET_SIZE),

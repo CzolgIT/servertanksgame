@@ -1,13 +1,7 @@
 #ifndef UNIVERSAL_PACKET_H
 #define UNIVERSAL_PACKET_H
 
-#include <memory>
-#include <SDL2/SDL.h>
-
-// Here will be all includes for futher packets (based on their type)
-#include "BasePacket.h"
-#include "JoinRequestPacket.h"
-#include "JoinResponsePacket.h"
+#include "Main.h"
 
 // Larger than the largest packet that will be received
 #define UNIVERSAL_PACKET_SIZE 100

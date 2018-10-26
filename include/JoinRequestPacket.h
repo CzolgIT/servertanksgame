@@ -1,7 +1,7 @@
 #ifndef JOIN_REQUEST_PACKET_H
 #define JOIN_REQUEST_PACKET_H
 
-#include "BasePacket.h"
+#include "Main.h"
 
 #define JOINREQUEST_PACKET_SIZE (1+8)
 

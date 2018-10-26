@@ -1,49 +1,7 @@
-#include <iostream>
-#include <vector>
-#include <SDL2/SDL_net.h>
-#undef main
+#include "Main.h"
 
-#include "UniversalPacket.h"
-#include "Client.h"
-#define SERVERIP "127.0.0.1" //temporary for testing
-#define SERVERPORT 1177 //temporary for testing
-#define MAX_CLIENTS 2 //lol
-
-
-std::vector<std::unique_ptr<Client>> clients;
-
-IPaddress address;
-TCPsocket TCP_socket; //for connectivity
-SDLNet_SocketSet TCP_SocketSet;
-UDPsocket UDP_socket; //for gameplay
-UDPpacket UDP_packet;
-
-void init();
-
-void accept_client();
-
-int main(int argc, char* argv[])
+NetManager::NetManager()
 {
-        
-    init();
-    bool quit = false;
-
-    while(!quit){
-    
-        // Check if any sockets are ready
-        SDLNet_CheckSockets(TCP_SocketSet,0);
-        accept_client();
-    }
-    
-    	// cleanup
-	SDLNet_FreeSocketSet( TCP_SocketSet );
-	SDLNet_Quit();
-	SDL_Quit();
-    return 0;
-}
-
-void init(){
-
     std::cout << "Starting TANKS server..."<< std::endl;
     SDL_Log("Server IP: %s",SERVERIP);
     
@@ -90,13 +48,20 @@ void init(){
     
     SDLNet_TCP_AddSocket(TCP_SocketSet,TCP_socket);
     SDLNet_CheckSockets(TCP_SocketSet,0);
+}
+
+
+NetManager::~NetManager()
+{
+    SDLNet_FreeSocketSet( TCP_SocketSet );
+	SDLNet_Quit();
+	SDL_Quit();
     
 }
 
-void accept_client()
+void NetManager::acceptClient()
 {
-    
-    TCPsocket new_socket;
+        TCPsocket new_socket;
     
     //try to accept a new connection
     // if there was no connection accept return null
@@ -154,6 +119,19 @@ void accept_client()
         
         
     }
-    
 }
 
+
+void NetManager::update()
+{
+        bool quit = false;
+
+    while(!quit){
+    
+        // Check if any sockets are ready
+        SDLNet_CheckSockets(TCP_SocketSet,0);
+                acceptClient();
+    }
+    
+    
+}

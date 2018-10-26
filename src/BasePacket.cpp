@@ -1,4 +1,4 @@
-#include"BasePacket.h"
+#include"Main.h"
 
 BasePacket::BasePacket( PacketType type, unsigned int packetSize ):
         size((packetSize > 1) ? packetSize : 1) // size should be always 1 or greater

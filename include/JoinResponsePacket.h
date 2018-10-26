@@ -1,7 +1,7 @@
 #ifndef JOIN_RESPONSE_PACKET_H
 #define JOIN_RESPONSE_PACKET_H
 
-#include "BasePacket.h"
+#include "Main.h"
 
 #define JOIN_RESPONSE_PACKET_SIZE 3
 
