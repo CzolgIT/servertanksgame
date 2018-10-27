@@ -42,6 +42,17 @@ in the console.
 Default server ip is 127.0.0.1 (*localhost*).
 Default server port is 1177
 
+Just worth mentioning - to kill the server process you have to send SIGKILL. That means Ctrl+C doesnt work :poop:
+
+Short review of ps command
+```
+ps -aux | grep ./Server
+```
+then find ./Server process and his PID number
+next step is:
+```
+kill -9 PID
+```
 
 ## Current progress
 - [x] Make server operational
