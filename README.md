@@ -53,3 +53,5 @@ Default server port is 1177
 - [ ] Synchronization stuff
 - [ ] Make server initialization possible from client side (not sure of it)
 - [ ] Fix some bugs...
+
+@CzolgIT if you have any ideas what to do with server - just let me know :+1:
