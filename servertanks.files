@@ -1,0 +1,14 @@
+README.md
+include/BasePacket.h
+include/Client.h
+include/JoinRequestPacket.h
+include/JoinResponsePacket.h
+include/Main.h
+include/NetManager.h
+include/UniversalPacket.h
+src/BasePacket.cpp
+src/Client.cpp
+src/JoinResponsePacket.cpp
+src/Main.cpp
+src/NetManager.cpp
+src/UniversalPacket.cpp
