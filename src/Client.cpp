@@ -1,6 +1,3 @@
-
-#include <Client.h>
-
 #include "Main.h"
 
 Client::Client(Uint8 ID,TCPsocket tcpsock, UDPsocket udpsock):

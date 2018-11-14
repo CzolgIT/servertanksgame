@@ -1,6 +1,3 @@
-
-#include <JoinResponsePacket.h>
-
 #include "Main.h"
 
 void JoinResponsePacket::SetResponse(JoinResponse joinResponse){

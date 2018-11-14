@@ -144,7 +144,7 @@ void NetManager::Update()
 
 Uint8 NetManager::getAvailableId() {
     //todo: randomize id bo andrzej tak chce xd
-    Uint8 id = 4001;
+    Uint8 id = 100;
 
     while(getClient(id))
     {
@@ -156,4 +156,14 @@ Uint8 NetManager::getAvailableId() {
 
 
 
+}
+
+Client *NetManager::getClient(Uint8 id) {
+    for(auto& client: clients)
+    {
+        if(client->GetID()==id){
+            return client.get();
+        }
+    }
+    return nullptr;
 }
