@@ -70,9 +70,10 @@ void NetManager::AcceptClient()
     
     if(new_socket !=NULL)
     {
-        
+        std::cout << "lol" << std::endl;
         SDL_Log("Connected to client %s:%i", SDLNet_ResolveIP(&address), SDLNet_Read16(&address.port));
-        
+        std::cout << "XD" << clients.size() << std::endl;
+
         JoinRequestPacket joinRequestPacket;
         
         if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.GetData(), joinRequestPacket.GetSize()) <=0)
@@ -80,7 +81,6 @@ void NetManager::AcceptClient()
             std::cout << "zjebalo sie\n";
             return;
         }
-        std::cout << clients.size() << std::endl;
         if(clients.size() < MAX_CLIENTS)
         {
             
