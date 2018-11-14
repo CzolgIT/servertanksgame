@@ -12,9 +12,9 @@ Client::~Client()
 
 void Client::UDPSend( const BasePacket& packet){
 
-    udpPacket.data = packet.getData();
-    udpPacket.len = packet.getSize();
-    udpPacket.maxlen = packet.getSize();
+    udpPacket.data = packet.GetData();
+    udpPacket.len = packet.GetSize();
+    udpPacket.maxlen = packet.GetSize();
     
     SDLNet_UDP_Send(udpSocket,-1,&udpPacket);
 }

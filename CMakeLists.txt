@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(tanksgame)
+project(servertanksgame)
 
 # use cmake/FindSDL2*.cmake
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
@@ -15,7 +15,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_net REQUIRED)
 
 file(GLOB SOURCES "src/*.cpp")
-add_executable(tanksgame ${SOURCES} include/HearbeatPacket.h src/HearbeatPacket.cpp)
+add_executable(tanksgame ${SOURCES})
 
 include_directories(
         "include/"

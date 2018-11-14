@@ -19,9 +19,9 @@ public:
     JoinResponsePacket() : BasePacket(PT_JOIN_RESPONSE, JOIN_RESPONSE_PACKET_SIZE) {}
     ~JoinResponsePacket() {}
     
-    void setResponse(JoinResponse joinResponse);
+    void SetResponse(JoinResponse joinResponse);
     
-    JoinResponse getResponse() const;
+    JoinResponse GetResponse() const;
 };
 
 #endif

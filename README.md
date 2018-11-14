@@ -26,7 +26,7 @@ Installed frameworks:
 ### Linux & MacOS
 Simply enter the project folder and type
 ```
-make
+cmake .
 ```
 ### Windows
 CLI

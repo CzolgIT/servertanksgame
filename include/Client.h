@@ -10,7 +10,7 @@ public:
     ~Client();
     
     void UDPSend(const BasePacket& packet);
-    
+    void TCPSend(const BasePacket& packet);
     void SetUDPAddress(IPaddress address);
     
     Uint8 GetID() {return id;}

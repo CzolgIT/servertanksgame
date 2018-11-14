@@ -8,10 +8,10 @@ class NetManager
 public:
     NetManager();
     ~NetManager();
-    void activate();
-    void close();
-    void update();
-    void acceptClient();
+    void Activate();
+    void Close();
+    void Update();
+    void AcceptClient();
     
 private:
     std::vector<std::unique_ptr<Client>> clients;

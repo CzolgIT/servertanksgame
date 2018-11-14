@@ -1,11 +1,11 @@
 #include "Main.h"
 
-void JoinResponsePacket::setResponse(JoinResponse joinResponse){
+void JoinResponsePacket::SetResponse(JoinResponse joinResponse){
 
     data[1] = joinResponse;
 }
 
-JoinResponse JoinResponsePacket::getResponse() const
+JoinResponse JoinResponsePacket::GetResponse() const
 {
     return (JoinResponse)data[1];
 }

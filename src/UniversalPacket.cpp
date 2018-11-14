@@ -5,17 +5,17 @@ UniversalPacket::UniversalPacket():
     data(new Uint8[UNIVERSAL_PACKET_SIZE]())
 {}
 
-Uint8 * UniversalPacket::getData() const
+Uint8 * UniversalPacket::GetData() const
 {
   return data.get();  
 }
 
-unsigned int UniversalPacket::getSize() const
+unsigned int UniversalPacket::GetSize() const
 {
     return size;
 }
 
-std::unique_ptr<BasePacket> UniversalPacket::createFromContents()
+std::unique_ptr<BasePacket> UniversalPacket::CreateFromContents()
 {
     
     switch(data[0])
@@ -25,10 +25,10 @@ std::unique_ptr<BasePacket> UniversalPacket::createFromContents()
     }
 }
 
-std::unique_ptr<BasePacket> UniversalPacket::constructPacket(BasePacket* packet)
+std::unique_ptr<BasePacket> UniversalPacket::ConstructPacket(BasePacket *packet)
 {
     
-    memcpy(packet->getData(), data.get(), packet->getSize());
+    memcpy(packet->GetData(), data.get(), packet->GetSize());
     
     return std::unique_ptr<BasePacket>(packet);
     

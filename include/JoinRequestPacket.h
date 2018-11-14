@@ -1,5 +1,6 @@
 #ifndef JOIN_REQUEST_PACKET_H
 #define JOIN_REQUEST_PACKET_H
+#endif
 
 #include "Main.h"
 
@@ -12,4 +13,3 @@ public:
     ~JoinRequestPacket(){}
 };
 
-#endif

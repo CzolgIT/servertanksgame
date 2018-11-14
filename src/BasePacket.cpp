@@ -13,23 +13,23 @@ BasePacket::~BasePacket()
 {
 }
 
-PacketType BasePacket::getType() const
+PacketType BasePacket::GetType() const
 {
           return (PacketType)data[0];
     
 }
 
-Uint8 * BasePacket::getData() const
+Uint8 * BasePacket::GetData() const
 {
     return data.get();
 }
 
-unsigned int BasePacket::getSize() const
+unsigned int BasePacket::GetSize() const
 {
     return size;
 }
 
-void BasePacket::print() const
+void BasePacket::Print() const
 {
     std::cout << "Not defined - this is a base packet\n";
 }

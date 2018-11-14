@@ -52,7 +52,7 @@ NetManager::~NetManager()
     
 }
 
-void NetManager::acceptClient()
+void NetManager::AcceptClient()
 {
         TCPsocket new_socket;
     
@@ -72,7 +72,7 @@ void NetManager::acceptClient()
         
         JoinRequestPacket joinRequestPacket;
         
-        if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.getData(), joinRequestPacket.getSize()) <=0)
+        if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.GetData(), joinRequestPacket.GetSize()) <=0)
         {
             std::cout << "zjebalo sie\n";
             return;
@@ -82,9 +82,9 @@ void NetManager::acceptClient()
         {
             
             JoinResponsePacket joinResponsePacket;
-            joinResponsePacket.setResponse(JR_OK);
+            joinResponsePacket.SetResponse(JR_OK);
             
-            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int)joinResponsePacket.getSize()){
+            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.GetData(), joinResponsePacket.GetSize()) < (int) joinResponsePacket.GetSize()){
             
                 std::cout << "zjebalo sie x2\n";
                 return;
@@ -98,9 +98,9 @@ void NetManager::acceptClient()
         {
             
             JoinResponsePacket joinResponsePacket;
-            joinResponsePacket.setResponse(JR_REJECT);
+            joinResponsePacket.SetResponse(JR_REJECT);
             
-            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int)joinResponsePacket.getSize()){
+            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.GetData(), joinResponsePacket.GetSize()) < (int) joinResponsePacket.GetSize()){
             
                 std::cout << "zjebalo sie x2\n";
                 return;
@@ -115,7 +115,7 @@ void NetManager::acceptClient()
 }
 
 
-void NetManager::update()
+void NetManager::Update()
 {
         bool quit = false;
 
@@ -123,7 +123,7 @@ void NetManager::update()
     
         // Check if any sockets are ready
         SDLNet_CheckSockets(TCP_SocketSet,0);
-                acceptClient();
+        AcceptClient();
     }
     
     

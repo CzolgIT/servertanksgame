@@ -28,13 +28,13 @@ public:
     
     //return the type of the packet
     
-    virtual PacketType getType() const;
+    virtual PacketType GetType() const;
     
-    virtual Uint8* getData() const;
+    virtual Uint8* GetData() const;
     
-    virtual unsigned int getSize() const;
+    virtual unsigned int GetSize() const;
     
-    virtual void print() const;
+    virtual void Print() const;
 };
 
 #endif
