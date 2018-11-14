@@ -19,6 +19,7 @@
 #include "NetManager.h"
 #include "UniversalPacket.h"
 #include "HeartbeatPacket.h"
+#include "PlayerDisconnectedPacket.h"
 
 
 #define SERVERIP "127.0.0.1" //temporary for testing

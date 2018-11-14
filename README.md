@@ -28,17 +28,27 @@ Simply enter the project folder and type
 ```
 cmake .
 ```
+(temporary - have to set proper arguments to move cmake files)
+after that:
+```$xslt
+make
+```
 ### Windows
 CLI
 ```
-make
+idk how lol
 ```
 ## Running
 Run the server by typing
 ```
 ./Server
 ```
-in the console.
+or
+```$xslt
+./Server &
+```
+to run in the background
+
 Default server ip is 127.0.0.1 (*localhost*).
 Default server port is 1177
 
@@ -64,5 +74,3 @@ kill -9 PID
 - [ ] Synchronization stuff
 - [ ] Make server initialization possible from client side (not sure of it)
 - [ ] Fix some bugs...
-
-@CzolgIT if you have any ideas what to do with server - just let me know :+1:

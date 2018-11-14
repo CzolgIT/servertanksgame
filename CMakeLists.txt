@@ -15,7 +15,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_net REQUIRED)
 
 file(GLOB SOURCES "src/*.cpp")
-add_executable(tanksgame ${SOURCES})
+add_executable(servertanksgame ${SOURCES})
 
 include_directories(
         "include/"
@@ -23,7 +23,7 @@ include_directories(
         ${SDL2_NET_INCLUDE_DIR}
 )
 
-target_link_libraries(tanksgame
+target_link_libraries(servertanksgame
         ${SDL2_LIBRARY}
         ${SDL2_NET_LIBRARY}
         )
