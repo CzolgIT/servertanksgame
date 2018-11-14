@@ -1,3 +1,6 @@
+
+#include <NetManager.h>
+
 #include "Main.h"
 
 NetManager::NetManager()
@@ -83,7 +86,7 @@ void NetManager::AcceptClient()
             
             JoinResponsePacket joinResponsePacket;
             joinResponsePacket.SetResponse(JR_OK);
-            
+            joinResponsePacket.SetId(getAvailableId());
             if (SDLNet_TCP_Send(new_socket, joinResponsePacket.GetData(), joinResponsePacket.GetSize()) < (int) joinResponsePacket.GetSize()){
             
                 std::cout << "zjebalo sie x2\n";
@@ -92,6 +95,16 @@ void NetManager::AcceptClient()
             }
             //TODO add new player and do some stuff
             std::cout << "XD";
+
+            clients.push_back(std::unique_ptr<Client>(new Client(joinResponsePacket.GetId(),new_socket,UDP_socket)));
+
+            SDLNet_TCP_AddSocket(TCP_SocketSet,clients.back()->GetTCPSocket());
+            SDLNet_CheckSockets(TCP_SocketSet,0);
+            clients.back()->AttachSocketSet(&TCP_SocketSet);
+
+            std::cout << "Client joined with ID: " << (int)clients.back()->GetID() << std::endl;
+
+
             
         }
         else
@@ -127,4 +140,20 @@ void NetManager::Update()
     }
     
     
+}
+
+Uint8 NetManager::getAvailableId() {
+    //todo: randomize id bo andrzej tak chce xd
+    Uint8 id = 4001;
+
+    while(getClient(id))
+    {
+        id++;
+        if(id == 0)
+            return id;
+    }
+    return id;
+
+
+
 }

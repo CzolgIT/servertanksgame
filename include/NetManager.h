@@ -12,6 +12,10 @@ public:
     void Close();
     void Update();
     void AcceptClient();
+
+    Uint8 getAvailableId();
+    Client* getClient(Uint8 id);
+    void disconnectClient(Uint8 id);
     
 private:
     std::vector<std::unique_ptr<Client>> clients;
