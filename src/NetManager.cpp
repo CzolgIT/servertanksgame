@@ -80,7 +80,7 @@ void NetManager::AcceptClient()
             std::cout << "zjebalo sie\n";
             return;
         }
-        
+        std::cout << clients.size() << std::endl;
         if(clients.size() < MAX_CLIENTS)
         {
             
@@ -93,8 +93,7 @@ void NetManager::AcceptClient()
                 return;
                 
             }
-            //TODO add new player and do some stuff
-            std::cout << "XD";
+            //todo: add new player and do some stuff
 
             clients.push_back(std::unique_ptr<Client>(new Client(joinResponsePacket.GetId(),new_socket,UDP_socket)));
 
