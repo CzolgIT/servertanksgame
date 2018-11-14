@@ -22,5 +22,5 @@
 
 
 #define SERVERIP "127.0.0.1" //temporary for testing
-#define SERVERPORT 1177 //temporary for testing
+#define SERVERPORT 7777 //temporary for testing
 #define MAX_CLIENTS 2 //lol
