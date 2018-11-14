@@ -5,13 +5,6 @@ NetManager::NetManager()
     std::cout << "Starting TANKS server..."<< std::endl;
     SDL_Log("Server IP: %s",SERVERIP);
     
-    if(SDL_Init(SDL_INIT_EVERYTHING) == -1){
-    
-        std::cout << "SDL_Init %s\n" << SDL_GetError() << std::endl;
-        exit(1);
-        
-    }
-    
     if(SDLNet_Init() == -1){
         
         std::cout << "SDL_Init %s\n" << SDL_GetError() << std::endl;

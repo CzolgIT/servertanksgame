@@ -9,6 +9,7 @@ enum PacketType : Uint8{
     PT_BASE = 0,
     PT_JOIN_REQUEST = 1,
     PT_JOIN_RESPONSE = 2,
+    PT_HEARTBEAT = 3,
     PT_UNKNOWN = 0xff
 };
 
