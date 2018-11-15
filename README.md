@@ -74,3 +74,7 @@ kill -9 PID
 - [ ] Synchronization stuff
 - [ ] Make server initialization possible from client side (not sure of it)
 - [ ] Fix some bugs...
+
+## Useful links (just for my own use)
+http://beej.us/guide/bgnet/html/multi/index.html
+https://www.libsdl.org/projects/SDL_net/docs/index.html
