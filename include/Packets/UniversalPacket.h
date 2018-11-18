@@ -16,10 +16,8 @@ public:
     
     std::unique_ptr<BasePacket> createFromContents();
 private:
-    std::unique_ptr<Uint8[]> data;
-    
     unsigned int size;
-    
+    std::unique_ptr<Uint8[]> data;
     std::unique_ptr<BasePacket> constructPacket(BasePacket *packet);
 };
 

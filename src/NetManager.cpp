@@ -1,10 +1,10 @@
-
-#include <NetManager.h>
-
 #include "Main.h"
 
 NetManager::NetManager()
 {
+
+    tcpConnection = TcpConnection();
+
     std::cout << "Starting TANKS server..."<< std::endl;
     SDL_Log("Server IP: %s",SERVERIP);
     
@@ -136,6 +136,7 @@ void NetManager::update()
         // Check if any sockets are ready
         SDLNet_CheckSockets(TCP_SocketSet,0);
         acceptClient();
+        processTcp();
     }
     
     
@@ -181,7 +182,45 @@ void NetManager::disconnectClient(Uint8 id) {
 
     if(foundClient){
         PlayerDisconnectedPacket playerDisconnectedPacket(id);
-        //todo: send info to other clients
+        tcpConnection.tcp_send_all(playerDisconnectedPacket,clients);
     }
 
 }
+
+void NetManager::processTcp() {
+
+    if(clients.size() > 0){
+
+        for(auto client = clients.begin(); client!=clients.end();){
+            if(SDLNet_SocketReady((*client)->getTcpSocket())){
+                //receive data directly into the universal packet
+                if(SDLNet_TCP_Recv((*client)->getTcpSocket(),universalPacket.getData(), universalPacket.getSize())>0){
+                    std::unique_ptr<BasePacket> recvd = universalPacket.createFromContents();
+
+
+                    if(recvd)
+                    {
+                        recvd->print();
+
+                        if(recvd->getType() == PT_PLAYER_DISCONNECTED){
+                            auto * packet = (PlayerDisconnectedPacket*)recvd.get();
+                            disconnectClient(packet->getId());
+                        }
+
+                    }
+                }
+
+
+
+
+            }
+
+
+
+        }
+
+
+    }
+
+}
+

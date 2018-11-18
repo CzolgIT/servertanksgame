@@ -12,6 +12,7 @@ public:
     void close();
     void update();
     void acceptClient();
+    void processTcp();
 
     Uint8 getAvailableId();
     Client* getClient(Uint8 id);
@@ -25,7 +26,8 @@ private:
     SDLNet_SocketSet TCP_SocketSet;
     UDPsocket UDP_socket; //for gameplay
     UDPpacket UDP_packet;
-    
+    TcpConnection tcpConnection;
+    UniversalPacket universalPacket;
 };
 
 #endif

@@ -20,6 +20,16 @@ std::unique_ptr<BasePacket> UniversalPacket::createFromContents()
     
     switch(data[0])
     {
+        case PT_PLAYER_DISCONNECTED:
+            return constructPacket(new PlayerDisconnectedPacket);
+        case PT_SYNC:
+            return constructPacket(new SyncPacket);
+        case PT_HEARTBEAT:
+            return constructPacket(new HeartbeatPacket);
+        case PT_JOIN_REQUEST:
+            return constructPacket(new JoinRequestPacket);
+        case PT_JOIN_RESPONSE:
+            return constructPacket(new JoinResponsePacket);
         default:
             return nullptr;
     }
@@ -33,6 +43,10 @@ std::unique_ptr<BasePacket> UniversalPacket::constructPacket(BasePacket *packet)
     return std::unique_ptr<BasePacket>(packet);
     
     
+}
+
+UniversalPacket::~UniversalPacket() {
+
 }
 
 

@@ -5,6 +5,7 @@
 #ifndef SERVERTANKSGAME_UDPCONNECTION_H
 #define SERVERTANKSGAME_UDPCONNECTION_H
 
+#include "Main.h"
 
 class UdpConnection {
 
