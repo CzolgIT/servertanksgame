@@ -9,17 +9,17 @@ public:
     Client(Uint8 ID, TCPsocket tcpsock, UDPsocket udpsock);
     ~Client();
     
-    void UDPSend(const BasePacket& packet);
-    void TCPSend(const BasePacket& packet);
-    void SetUDPAddress(IPaddress address);
-    void AttachSocketSet(SDLNet_SocketSet* socketSet);
-    void SetPosition(SDL_Point newPosition);
+    void udpSend(const BasePacket &packet);
+    void tcpSend(const BasePacket &packet);
+    void setUdpAddress(IPaddress address);
+    void attachSocketSet(SDLNet_SocketSet *socketSet);
+    void setPosition(SDL_Point newPosition);
 
-    TCPsocket GetTCPSocket();
-    Uint8 GetID();
-    SDL_Point GetPosition();
+    TCPsocket getTcpSocket();
+    Uint8 getId();
+    SDL_Point getPosition();
 
-    bool NeedsUDPAddress();
+    bool needsUdpAddress();
 
 
     

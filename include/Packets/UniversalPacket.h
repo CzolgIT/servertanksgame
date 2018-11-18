@@ -11,16 +11,16 @@ public:
     UniversalPacket();
     ~UniversalPacket();
     
-    Uint8* GetData() const;
-    unsigned int GetSize() const;
+    Uint8* getData() const;
+    unsigned int getSize() const;
     
-    std::unique_ptr<BasePacket> CreateFromContents();
+    std::unique_ptr<BasePacket> createFromContents();
 private:
     std::unique_ptr<Uint8[]> data;
     
     unsigned int size;
     
-    std::unique_ptr<BasePacket> ConstructPacket(BasePacket *packet);
+    std::unique_ptr<BasePacket> constructPacket(BasePacket *packet);
 };
 
 

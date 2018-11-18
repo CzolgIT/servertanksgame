@@ -55,7 +55,7 @@ NetManager::~NetManager()
     
 }
 
-void NetManager::AcceptClient()
+void NetManager::acceptClient()
 {
         TCPsocket new_socket;
     
@@ -76,7 +76,7 @@ void NetManager::AcceptClient()
 
         JoinRequestPacket joinRequestPacket;
         
-        if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.GetData(), joinRequestPacket.GetSize()) <=0)
+        if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.getData(), joinRequestPacket.getSize()) <=0)
         {
             std::cout << "zjebalo sie\n";
             return;
@@ -85,9 +85,9 @@ void NetManager::AcceptClient()
         {
             
             JoinResponsePacket joinResponsePacket;
-            joinResponsePacket.SetResponse(JR_OK);
-            joinResponsePacket.SetId(getAvailableId());
-            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.GetData(), joinResponsePacket.GetSize()) < (int) joinResponsePacket.GetSize()){
+            joinResponsePacket.setResponse(JR_OK);
+            joinResponsePacket.setId(getAvailableId());
+            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int) joinResponsePacket.getSize()){
             
                 std::cout << "zjebalo sie x2\n";
                 return;
@@ -95,13 +95,13 @@ void NetManager::AcceptClient()
             }
             //todo: add new player and do some stuff
 
-            clients.push_back(std::unique_ptr<Client>(new Client(joinResponsePacket.GetId(),new_socket,UDP_socket)));
+            clients.push_back(std::unique_ptr<Client>(new Client(joinResponsePacket.getId(),new_socket,UDP_socket)));
 
-            SDLNet_TCP_AddSocket(TCP_SocketSet,clients.back()->GetTCPSocket());
+            SDLNet_TCP_AddSocket(TCP_SocketSet, clients.back()->getTcpSocket());
             SDLNet_CheckSockets(TCP_SocketSet,0);
-            clients.back()->AttachSocketSet(&TCP_SocketSet);
+            clients.back()->attachSocketSet(&TCP_SocketSet);
 
-            std::cout << "Client joined with ID: " << (int)clients.back()->GetID() << std::endl;
+            std::cout << "Client joined with ID: " << (int) clients.back()->getId() << std::endl;
 
 
             
@@ -110,9 +110,9 @@ void NetManager::AcceptClient()
         {
             
             JoinResponsePacket joinResponsePacket;
-            joinResponsePacket.SetResponse(JR_REJECT);
+            joinResponsePacket.setResponse(JR_REJECT);
             
-            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.GetData(), joinResponsePacket.GetSize()) < (int) joinResponsePacket.GetSize()){
+            if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int) joinResponsePacket.getSize()){
             
                 std::cout << "zjebalo sie x2\n";
                 return;
@@ -127,7 +127,7 @@ void NetManager::AcceptClient()
 }
 
 
-void NetManager::Update()
+void NetManager::update()
 {
         bool quit = false;
 
@@ -135,7 +135,7 @@ void NetManager::Update()
     
         // Check if any sockets are ready
         SDLNet_CheckSockets(TCP_SocketSet,0);
-        AcceptClient();
+        acceptClient();
     }
     
     
@@ -143,7 +143,7 @@ void NetManager::Update()
 
 Uint8 NetManager::getAvailableId() {
     //todo: randomize id bo andrzej tak chce xd
-    Uint8 id = 100;
+    Uint8 id = 1;
 
     while(getClient(id))
     {
@@ -160,9 +160,28 @@ Uint8 NetManager::getAvailableId() {
 Client *NetManager::getClient(Uint8 id) {
     for(auto& client: clients)
     {
-        if(client->GetID()==id){
+        if(client->getId()==id){
             return client.get();
         }
     }
     return nullptr;
+}
+
+void NetManager::disconnectClient(Uint8 id) {
+
+    bool foundClient = false;
+
+    for(auto it = clients.begin(); it != clients.end(); it++){
+        if((*it)->getId()==id){
+            clients.erase(it);
+            foundClient = true;
+            break;
+        }
+    }
+
+    if(foundClient){
+        PlayerDisconnectedPacket playerDisconnectedPacket(id);
+        //todo: send info to other clients
+    }
+
 }

@@ -18,11 +18,11 @@ public:
     HeartbeatPacket(Uint8 id);
     ~HeartbeatPacket();
 
-    void SetId(Uint8 id);
+    void setId(Uint8 id);
 
-    Uint8 GetId() const;
+    Uint8 getId() const;
 
-    void Print() const override;
+    void print() const override;
 
 };
 

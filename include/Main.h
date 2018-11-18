@@ -12,14 +12,14 @@
     #include <SDL2/SDL_net.h>
 #endif
 
-#include "BasePacket.h"
-#include "Client.h"
-#include "JoinRequestPacket.h"
-#include "JoinResponsePacket.h"
+#include "Packets/BasePacket.h"
+#include "Models/Client.h"
+#include "Packets/JoinRequestPacket.h"
+#include "Packets/JoinResponsePacket.h"
 #include "NetManager.h"
-#include "UniversalPacket.h"
-#include "HeartbeatPacket.h"
-#include "PlayerDisconnectedPacket.h"
+#include "Packets/UniversalPacket.h"
+#include "Packets/HeartbeatPacket.h"
+#include "Packets/PlayerDisconnectedPacket.h"
 
 
 #define SERVERIP "127.0.0.1" //temporary for testing

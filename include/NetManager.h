@@ -8,10 +8,10 @@ class NetManager
 public:
     NetManager();
     ~NetManager();
-    void Activate();
-    void Close();
-    void Update();
-    void AcceptClient();
+    void activate();
+    void close();
+    void update();
+    void acceptClient();
 
     Uint8 getAvailableId();
     Client* getClient(Uint8 id);

@@ -4,7 +4,7 @@ int main(int argc, char* argv[])
 {
         
     NetManager netManager;
-    netManager.Update();
+    netManager.update();
 
     
     return 0;

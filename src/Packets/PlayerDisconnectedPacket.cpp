@@ -2,9 +2,9 @@
 // Created by inql on 15.11.18.
 //
 
-#include <PlayerDisconnectedPacket.h>
+#include <Packets/PlayerDisconnectedPacket.h>
 
-#include "PlayerDisconnectedPacket.h"
+#include "Packets/PlayerDisconnectedPacket.h"
 
 PlayerDisconnectedPacket::PlayerDisconnectedPacket() : BasePacket(PT_PLAYER_DISCONNECTED, PLAYERDISCONNECTED_PACKET_SIZE) {
 

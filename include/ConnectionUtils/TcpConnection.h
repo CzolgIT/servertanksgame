@@ -1,0 +1,14 @@
+//
+// Created by inql on 18.11.18.
+//
+
+#ifndef SERVERTANKSGAME_TCPCONNECTION_H
+#define SERVERTANKSGAME_TCPCONNECTION_H
+
+
+class TcpConnection {
+
+};
+
+
+#endif //SERVERTANKSGAME_TCPCONNECTION_H

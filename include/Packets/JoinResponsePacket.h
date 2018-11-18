@@ -20,11 +20,11 @@ public:
     JoinResponsePacket() : BasePacket(PT_JOIN_RESPONSE, JOIN_RESPONSE_PACKET_SIZE) {}
     ~JoinResponsePacket() {}
     
-    void SetResponse(JoinResponse joinResponse);
-    void SetId(Uint8 id);
+    void setResponse(JoinResponse joinResponse);
+    void setId(Uint8 id);
 
-    JoinResponse GetResponse() const;
-    Uint8 GetId() const ;
+    JoinResponse getResponse() const;
+    Uint8 getId() const ;
 };
 
 #endif
