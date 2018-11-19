@@ -134,7 +134,9 @@ void NetManager::update()
     while(!quit){
     
         // Check if any sockets are ready
-        SDLNet_CheckSockets(TCP_SocketSet,0);
+        int numready = SDLNet_CheckSockets(TCP_SocketSet,0);
+        if(numready>0)
+            std::cout << numready << std::endl;
         acceptClient();
         processTcp();
     }
@@ -171,7 +173,7 @@ Client *NetManager::getClient(Uint8 id) {
 void NetManager::disconnectClient(Uint8 id) {
 
     bool foundClient = false;
-
+    std::cout << "Before: " << clients.size() << std::endl;
     for(auto it = clients.begin(); it != clients.end(); it++){
         if((*it)->getId()==id){
             clients.erase(it);
@@ -183,6 +185,7 @@ void NetManager::disconnectClient(Uint8 id) {
     if(foundClient){
         PlayerDisconnectedPacket playerDisconnectedPacket(id);
         tcpConnection.tcp_send_all(playerDisconnectedPacket,clients);
+        std::cout << "After: " << clients.size() << std::endl;
     }
 
 }
@@ -213,6 +216,9 @@ void NetManager::processTcp() {
 
 
 
+            }
+            else{
+                client++;
             }
 
 
