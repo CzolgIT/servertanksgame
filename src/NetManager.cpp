@@ -78,7 +78,7 @@ void NetManager::acceptClient()
         
         if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.getData(), joinRequestPacket.getSize()) <=0)
         {
-            std::cout << "zjebalo sie\n";
+            std::cout << "error\n";
             return;
         }
         if(clients.size() < MAX_CLIENTS)
@@ -89,7 +89,7 @@ void NetManager::acceptClient()
             joinResponsePacket.setId(getAvailableId());
             if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int) joinResponsePacket.getSize()){
             
-                std::cout << "zjebalo sie x2\n";
+                std::cout << "error x2\n";
                 return;
                 
             }
@@ -114,7 +114,7 @@ void NetManager::acceptClient()
             
             if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int) joinResponsePacket.getSize()){
             
-                std::cout << "zjebalo sie x2\n";
+                std::cout << "error x2\n";
                 return;
                 
             }
