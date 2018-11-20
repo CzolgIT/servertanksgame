@@ -31,6 +31,7 @@
 #include "ConnectionUtils/TcpConnection.h"
 #include "ConnectionUtils/UdpConnection.h"
 
+#include "Room.h"
 #include "NetManager.h"
 
 
