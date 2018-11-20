@@ -21,6 +21,9 @@
 #include "Packets/UniversalPacket.h"
 #include "Packets/HeartbeatPacket.h"
 #include "Packets/PlayerDisconnectedPacket.h"
+#include "Packets/PlayerJoinedPacket.h"
+#include "Packets/PlayerReadyPacket.h"
+#include "Packets/StartGameRequestPacket.h"
 #include "Packets/SyncPacket.h"
 
 #include "Models/Client.h"

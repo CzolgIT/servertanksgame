@@ -11,7 +11,10 @@ enum PacketType : Uint8{
     PT_JOIN_RESPONSE = 2,
     PT_HEARTBEAT = 3,
     PT_PLAYER_DISCONNECTED = 4,
-    PT_SYNC = 5,
+    PT_PLAYER_JOINED = 5,
+    PT_PLAYER_READY = 6,
+    PT_SYNC = 7,
+    PT_START_REQUEST = 8,
     PT_UNKNOWN = 0xff
 };
 

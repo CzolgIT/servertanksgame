@@ -200,7 +200,6 @@ void NetManager::processTcp() {
                 if(SDLNet_TCP_Recv((*client)->getTcpSocket(),universalPacket.getData(), universalPacket.getSize())>0){
                     std::unique_ptr<BasePacket> recvd = universalPacket.createFromContents();
 
-
                     if(recvd)
                     {
                         recvd->print();
