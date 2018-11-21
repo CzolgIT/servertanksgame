@@ -1,3 +1,6 @@
+
+#include <NetManager.h>
+
 #include "Main.h"
 
 NetManager::NetManager()
@@ -227,5 +230,52 @@ void NetManager::processTcp() {
 
     }
 
+}
+
+void NetManager::createRoom(Uint8 hostId, int maxClients) {
+    rooms.push_back(std::unique_ptr<Room>(new Room()));
+
+    rooms.back()->setRoomId(getAvailableRoomId());
+    rooms.back()->setMaxClients(maxClients);
+    rooms.back()->setHostId(hostId);
+}
+
+void NetManager::deleteRoom(Uint8 id) {
+    bool foundRoom = false;
+    std::cout << "Before: " << rooms.size() << std::endl;
+    for(auto it = rooms.begin(); it != rooms.end(); it++){
+        if((*it)->getRoomId()==id){
+            rooms.erase(it);
+            foundRoom = true;
+            break;
+        }
+    }
+
+    if(foundRoom){
+        //todo: send packet about destroying a room (optional!)
+        std::cout << "After: " << clients.size() << std::endl;
+    }
+}
+
+Room *NetManager::getRoom(Uint8 id) {
+    for(auto& room: rooms)
+    {
+        if(room->getRoomId()==id){
+            return room.get();
+        }
+    }
+    return nullptr;
+}
+
+Uint8 NetManager::getAvailableRoomId() {
+    Uint8 id = 1;
+
+    while(getRoom(id))
+    {
+        id++;
+        if(id == 0)
+            return id;
+    }
+    return id;
 }
 

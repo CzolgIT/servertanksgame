@@ -27,11 +27,11 @@
 #include "Packets/SyncPacket.h"
 
 #include "Models/Client.h"
+#include "Room.h"
 
 #include "ConnectionUtils/TcpConnection.h"
 #include "ConnectionUtils/UdpConnection.h"
 
-#include "Room.h"
 #include "NetManager.h"
 
 

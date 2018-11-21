@@ -8,11 +8,15 @@ class NetManager
 public:
     NetManager();
     ~NetManager();
-    void activate();
-    void close();
     void update();
     void acceptClient();
     void processTcp();
+
+    void createRoom(Uint8 hostId, int maxClients);
+    void deleteRoom(Uint8 id);
+
+    Room* getRoom(Uint8 id);
+    Uint8 getAvailableRoomId();
 
     Uint8 getAvailableId();
     Client* getClient(Uint8 id);
@@ -20,6 +24,8 @@ public:
     
 private:
     std::vector<std::unique_ptr<Client>> clients;
+
+    std::vector<std::unique_ptr<Room>> rooms;
 
     IPaddress address;
     TCPsocket TCP_socket; //for connectivity

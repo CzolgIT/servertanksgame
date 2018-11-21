@@ -1,9 +1,6 @@
 //
 // Created by inql on 20.11.18.
 //
-
-#include <Room.h>
-
 #include "Main.h"
 
 Room::Room() = default;
@@ -48,3 +45,10 @@ Client *Room::getClient(Uint8 id) {
     return nullptr;
 }
 
+int Room::getMaxClients() {
+    return this->maxClients;
+}
+
+void Room::setMaxClients(int maxClients) {
+    this->maxClients = maxClients;
+}
