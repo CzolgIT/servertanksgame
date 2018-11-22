@@ -32,7 +32,6 @@ private:
     SDLNet_SocketSet TCP_SocketSet;
     UDPsocket UDP_socket; //for gameplay
     UDPpacket UDP_packet;
-    TcpConnection tcpConnection;
     UniversalPacket universalPacket;
 };
 

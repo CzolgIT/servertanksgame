@@ -2,11 +2,6 @@
 // Created by inql on 18.11.18.
 //
 #include "Main.h"
-
-UdpConnection::UdpConnection() = default;
-
-UdpConnection::~UdpConnection() = default;
-
 void UdpConnection::udpSendTo(Uint8 id, const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients) {
 
     for(auto& client : clients){

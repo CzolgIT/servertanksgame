@@ -2,9 +2,6 @@
 
 NetManager::NetManager()
 {
-
-    tcpConnection = TcpConnection();
-
     std::cout << "Starting TANKS server..."<< std::endl;
     SDL_Log("Server IP: %s",SERVERIP);
     
@@ -14,7 +11,7 @@ NetManager::NetManager()
         exit(2);
     }
     
-    if( SDLNet_ResolveHost( &address, NULL, SERVERPORT ) == -1 ) {
+    if( SDLNet_ResolveHost( &address, nullptr, SERVERPORT ) == -1 ) {
 		printf( "SDLNet_ResolveHost: %s\n", SDLNet_GetError( ) );
 		exit( 3 );
     }
@@ -36,7 +33,7 @@ NetManager::NetManager()
     
     //Allocate the socket set
     TCP_SocketSet = SDLNet_AllocSocketSet(MAX_CLIENTS+1);
-    if (TCP_SocketSet == NULL)
+    if (TCP_SocketSet == nullptr)
     {
         fprintf(stderr, "SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
         exit(6);
@@ -68,7 +65,7 @@ void NetManager::acceptClient()
     }
     else return;
     
-    if(new_socket !=NULL)
+    if(new_socket != nullptr)
     {
         std::cout << "lol" << std::endl;
         SDL_Log("Connected to client %s:%i", SDLNet_ResolveIP(&address), SDLNet_Read16(&address.port));
@@ -184,7 +181,7 @@ void NetManager::disconnectClient(Uint8 id) {
 
     if(foundClient){
         PlayerDisconnectedPacket playerDisconnectedPacket(id);
-        tcpConnection.tcpSendAll(playerDisconnectedPacket, clients);
+        TcpConnection::tcpSendAll(playerDisconnectedPacket, clients);
         std::cout << "After: " << clients.size() << std::endl;
     }
 
@@ -192,7 +189,7 @@ void NetManager::disconnectClient(Uint8 id) {
 
 void NetManager::processTcp() {
 
-    if(clients.size() > 0){
+    if(!clients.empty()){
 
         for(auto client = clients.begin(); client!=clients.end();){
             if(SDLNet_SocketReady((*client)->getTcpSocket())){

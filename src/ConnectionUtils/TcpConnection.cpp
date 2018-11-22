@@ -31,10 +31,3 @@ void TcpConnection::tcpSendAllExcept(Uint8 id, const BasePacket &packet, std::ve
     }
 
 }
-
-TcpConnection::~TcpConnection() {
-
-}
-
-TcpConnection::TcpConnection() {
-}

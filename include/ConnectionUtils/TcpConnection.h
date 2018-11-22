@@ -9,11 +9,9 @@
 
 class TcpConnection {
 public:
-    TcpConnection();
-    ~TcpConnection();
-    void tcpSendTo(Uint8 id, const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients);
-    void tcpSendAll(const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients);
-    void tcpSendAllExcept(Uint8 id, const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients);
+    static void tcpSendTo(Uint8 id, const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients);
+    static void tcpSendAll(const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients);
+    static void tcpSendAllExcept(Uint8 id, const BasePacket &packet, std::vector<std::unique_ptr<Client>> &clients);
 
 private:
 };
