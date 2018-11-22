@@ -1,6 +1,3 @@
-
-#include <NetManager.h>
-
 #include "Main.h"
 
 NetManager::NetManager()
@@ -187,7 +184,7 @@ void NetManager::disconnectClient(Uint8 id) {
 
     if(foundClient){
         PlayerDisconnectedPacket playerDisconnectedPacket(id);
-        tcpConnection.tcp_send_all(playerDisconnectedPacket,clients);
+        tcpConnection.tcpSendAll(playerDisconnectedPacket, clients);
         std::cout << "After: " << clients.size() << std::endl;
     }
 
@@ -277,5 +274,70 @@ Uint8 NetManager::getAvailableRoomId() {
             return id;
     }
     return id;
+}
+
+void NetManager::processUdp() {
+
+    // receive all pending udp packets
+    while(SDLNet_UDP_Recv(UDP_socket, &UDP_packet))
+    {
+        auto recvd = universalPacket.createFromContents();
+
+        if(recvd){
+
+            recvd->print();
+            //here will be all possibilities of received packets
+
+            switch (recvd->getType()){
+                case PT_HEARTBEAT:
+                {
+                    auto * heartbeatPacket = (HeartbeatPacket*)recvd.get();
+                    recvd->print();
+                    Client* sender = getClient(heartbeatPacket->getId());
+                    if(sender){
+                        sender->setUdpAddress(UDP_packet.address);
+                    }
+                    //send the server time to client
+                    SyncPacket syncPacket;
+                    syncPacket.setMode(SYNC_RETURN);
+                    syncPacket.setId(heartbeatPacket->getId());
+                    syncPacket.setTime(SDL_GetTicks());
+                    sender->udpSend(syncPacket);
+                    break;
+                }
+
+                case PT_SYNC:
+                {
+                    auto * syncPacket = (SyncPacket*)recvd.get();
+
+                    if(syncPacket->getMode() == SYNC_RETURN){
+                        Uint32 sendTime = (SDL_GetTicks()-syncPacket->getTime())/2;
+                        SyncPacket responseSyncPacket;
+                        responseSyncPacket.setMode(SYNC_SET);
+                        responseSyncPacket.setId(syncPacket->getId());
+                        Client* sender = getClient(syncPacket->getId());
+                        responseSyncPacket.setTime(SDL_GetTicks()+sendTime);
+                        if(sender){
+                            sender->udpSend(responseSyncPacket);
+                        }
+                        else{
+                            std::cout << "An unknown client tried to sync" << std::endl;
+                        }
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    recvd->print();
+                    std::cout<< "UDP packet type not recognised" << std::endl;
+                }
+            }
+
+
+        }
+    }
+
+
 }
 
