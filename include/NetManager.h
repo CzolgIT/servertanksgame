@@ -11,16 +11,24 @@ public:
     void update();
     void acceptClient();
     void processTcp();
+    void setHostId(Uint8 hostId);
+    void setMapId(Uint8 mapId);
+
     void processUdp();
     void createRoom(Uint8 hostId, int maxClients);
     void deleteRoom(Uint8 id);
 
+
     Room* getRoom(Uint8 id);
     Uint8 getAvailableRoomId();
 
+
+
+    Uint8 getMapId();
+    Uint8 getHostId();
     Uint8 getAvailableId();
     Client* getClient(Uint8 id);
-    void disconnectClient(Uint8 id);
+    bool disconnectClient(Uint8 id);
     
 private:
     std::vector<std::unique_ptr<Client>> clients;
@@ -33,6 +41,9 @@ private:
     UDPsocket UDP_socket; //for gameplay
     UDPpacket UDP_packet;
     UniversalPacket universalPacket;
+    Uint8 hostId;
+    Uint8 mapId;
+
 };
 
 #endif

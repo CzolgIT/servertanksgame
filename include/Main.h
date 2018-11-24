@@ -20,6 +20,8 @@
 #include "Packets/JoinResponsePacket.h"
 #include "Packets/UniversalPacket.h"
 #include "Packets/HeartbeatPacket.h"
+#include "Packets/GameInfoPacket.h"
+#include "Packets/HostChangedPacket.h"
 #include "Packets/PlayerDisconnectedPacket.h"
 #include "Packets/PlayerJoinedPacket.h"
 #include "Packets/PlayerReadyPacket.h"

@@ -14,6 +14,7 @@ enum JoinResponse : Uint8{
 // data[0] -> packet type
 // data[1] -> response
 // data[2] -> given id
+// data[3] -> isHostRoleGiven
 
 class JoinResponsePacket : public BasePacket{
 public:
@@ -22,9 +23,11 @@ public:
     
     void setResponse(JoinResponse joinResponse);
     void setId(Uint8 id);
+    void setIsHost(bool b);
 
     JoinResponse getResponse() const;
-    Uint8 getId() const ;
+    Uint8 getId() const;
+    bool isHost();
 };
 
 #endif

@@ -15,6 +15,8 @@ enum PacketType : Uint8{
     PT_PLAYER_READY = 6,
     PT_SYNC = 7,
     PT_START_REQUEST = 8,
+    PT_HOST_CHANGED = 9,
+    PT_GAME_INFO = 10,
     PT_UNKNOWN = 0xff
 };
 

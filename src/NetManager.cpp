@@ -1,3 +1,6 @@
+
+#include <NetManager.h>
+
 #include "Main.h"
 
 NetManager::NetManager()
@@ -84,13 +87,16 @@ void NetManager::acceptClient()
             JoinResponsePacket joinResponsePacket;
             joinResponsePacket.setResponse(JR_OK);
             joinResponsePacket.setId(getAvailableId());
+            //if you are first player
+            if(clients.size()==1){
+                joinResponsePacket.setIsHost(true);
+            }
             if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int) joinResponsePacket.getSize()){
             
                 std::cout << "error x2\n";
                 return;
                 
             }
-            //todo: add new player and do some stuff
 
             clients.push_back(std::unique_ptr<Client>(new Client(joinResponsePacket.getId(),new_socket,UDP_socket)));
 
@@ -167,7 +173,7 @@ Client *NetManager::getClient(Uint8 id) {
     return nullptr;
 }
 
-void NetManager::disconnectClient(Uint8 id) {
+bool NetManager::disconnectClient(Uint8 id) {
 
     bool foundClient = false;
     std::cout << "Before: " << clients.size() << std::endl;
@@ -183,6 +189,8 @@ void NetManager::disconnectClient(Uint8 id) {
         PlayerDisconnectedPacket playerDisconnectedPacket(id);
         TcpConnection::tcpSendAll(playerDisconnectedPacket, clients);
         std::cout << "After: " << clients.size() << std::endl;
+        //if only one player stays in the room, give him the host role
+        this->setHostId(clients.back()->getId());
     }
 
 }
@@ -225,7 +233,7 @@ void NetManager::processTcp() {
     }
 
 }
-
+//temporary disabled - we will operate on one room only so who Room class is useless
 void NetManager::createRoom(Uint8 hostId, int maxClients) {
     rooms.push_back(std::unique_ptr<Room>(new Room()));
 
@@ -272,6 +280,8 @@ Uint8 NetManager::getAvailableRoomId() {
     }
     return id;
 }
+
+//---------------------------------------------
 
 void NetManager::processUdp() {
 
@@ -336,5 +346,21 @@ void NetManager::processUdp() {
     }
 
 
+}
+
+Uint8 NetManager::getHostId() {
+    return this->hostId;
+}
+
+void NetManager::setHostId(Uint8 hostId) {
+    this->hostId = hostId;
+}
+
+void NetManager::setMapId(Uint8 mapId) {
+    this->mapId = mapId;
+}
+
+Uint8 NetManager::getMapId() {
+    return this->mapId;
 }
 
