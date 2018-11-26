@@ -142,6 +142,7 @@ void NetManager::update()
             std::cout << numready << std::endl;
         acceptClient();
         processTcp();
+        processUdp();
     }
     
     
