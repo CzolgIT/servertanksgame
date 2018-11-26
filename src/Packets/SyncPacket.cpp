@@ -2,9 +2,7 @@
 // Created by inql on 18.11.18.
 //
 
-#include <Packets/SyncPacket.h>
-
-#include "Packets/SyncPacket.h"
+#include "Main.h"
 
 SyncPacket::SyncPacket() : BasePacket(PT_SYNC, SYNC_PACKET_SIZE) {
 

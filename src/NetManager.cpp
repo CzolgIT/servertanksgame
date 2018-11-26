@@ -193,6 +193,8 @@ bool NetManager::disconnectClient(Uint8 id) {
         this->setHostId(clients.back()->getId());
     }
 
+    return foundClient;
+
 }
 
 void NetManager::processTcp() {
