@@ -33,6 +33,9 @@ NetManager::NetManager()
 	}
 
     std::cout << "Server listening on port: " << SERVERPORT << std::endl;
+
+    UDP_packet.data = universalPacket.getData();
+    UDP_packet.maxlen = universalPacket.getSize();
     
     //Allocate the socket set
     TCP_SocketSet = SDLNet_AllocSocketSet(MAX_CLIENTS+1);
@@ -138,8 +141,6 @@ void NetManager::update()
     
         // Check if any sockets are ready
         int numready = SDLNet_CheckSockets(TCP_SocketSet,0);
-        if(numready>0)
-            std::cout << numready << std::endl;
         acceptClient();
         processTcp();
         processUdp();
