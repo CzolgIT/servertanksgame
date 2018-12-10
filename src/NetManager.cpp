@@ -1,6 +1,3 @@
-
-#include <NetManager.h>
-
 #include "Main.h"
 
 NetManager::NetManager()
@@ -73,10 +70,6 @@ void NetManager::acceptClient()
     
     if(new_socket != nullptr)
     {
-        std::cout << "lol" << std::endl;
-        SDL_Log("Connected to client %s:%i", SDLNet_ResolveIP(&address), SDLNet_Read16(&address.port));
-        std::cout << "XD" << clients.size() << std::endl;
-
         JoinRequestPacket joinRequestPacket;
         
         if(SDLNet_TCP_Recv(new_socket, joinRequestPacket.getData(), joinRequestPacket.getSize()) <=0)
@@ -160,6 +153,7 @@ Uint8 NetManager::getAvailableId() {
             return id;
     }
     return id;
+
 
 
 

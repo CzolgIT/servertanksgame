@@ -1,6 +1,7 @@
 #ifndef NetManager_h
 #define NetManager_h
 
+#include <sstream>
 #include "Main.h"
 
 class NetManager
@@ -34,7 +35,6 @@ private:
     std::vector<std::unique_ptr<Client>> clients;
 
     std::vector<std::unique_ptr<Room>> rooms;
-
     IPaddress address;
     TCPsocket TCP_socket; //for connectivity
     SDLNet_SocketSet TCP_SocketSet;
@@ -45,5 +45,12 @@ private:
     Uint8 mapId;
 
 };
+
+template<class T>
+std::string toString(const T&t){
+    std::ostringstream stream;
+    stream << t;
+    return stream.str();
+}
 
 #endif

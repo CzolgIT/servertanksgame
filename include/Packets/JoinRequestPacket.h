@@ -11,5 +11,15 @@ class JoinRequestPacket : public BasePacket
 public:
     JoinRequestPacket() :BasePacket(PT_JOIN_REQUEST, JOINREQUEST_PACKET_SIZE){}
     ~JoinRequestPacket(){}
+
+    void setNickname(std::string nick);
+
+    std::string getNickname();
+
+
+private:
+    Uint64 nickname;
+
+    void uint64ToString();
 };
 

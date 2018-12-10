@@ -28,6 +28,7 @@ public:
     Uint8 getId();
     Uint32 getTime();
 
+    void print()const override;
 
 
 };

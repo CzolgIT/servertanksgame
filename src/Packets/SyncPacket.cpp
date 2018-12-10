@@ -1,7 +1,6 @@
 //
 // Created by inql on 18.11.18.
 //
-
 #include "Main.h"
 
 SyncPacket::SyncPacket() : BasePacket(PT_SYNC, SYNC_PACKET_SIZE) {
@@ -40,4 +39,8 @@ Uint8 SyncPacket::getId() {
 
 Uint32 SyncPacket::getTime() {
     return SDLNet_Read32(&data[3]);
+}
+
+void SyncPacket::print() const {
+    std::cout << "SyncPacket info: ID:" << (Uint8)data[2] << " mode: " << (SyncMode)data[1] << std::endl;
 }
