@@ -186,7 +186,9 @@ bool NetManager::disconnectClient(Uint8 id) {
         TcpConnection::tcpSendAll(playerDisconnectedPacket, clients);
         std::cout << "After: " << clients.size() << std::endl;
         //if only one player stays in the room, give him the host role
-        this->setHostId(clients.back()->getId());
+//        tutaj sprawdzic debilu
+//        czy vector nie jest pusty XDDD
+//        this->setHostId(clients.back()->getId());
     }
 
     return foundClient;
