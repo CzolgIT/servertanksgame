@@ -7,6 +7,16 @@
 #include <chrono>
 #include <iomanip>
 
+#include <cstdio>
+#include <sstream>
+#include <fstream>
+#include <cmath>
+#include <typeinfo>
+#include <queue>
+#include <atomic>
+#include <algorithm>
+#include <mutex>
+
 #ifdef __APPLE__
     #include <SDL2/SDL.h>
     #include <SDL2_net/SDL_net.h>
@@ -36,7 +46,29 @@
 
 #include "NetManager.h"
 
+#include "Engine/Collisions/Vector2D.h"
+#include "Engine/Collisions/Projection.h"
+#include "Engine/Collisions/Collider.h"
+
+
+#include "Engine/GameObject/_GameObject.h"
+#include "Engine/GameObject/Bullet.h"
+#include "Engine/GameObject/Player.h"
+#include "Engine/GameObject/Wall.h"
+#include "Engine/Map.h"
+#include "Engine/_Scene.h"
+#include "Engine/MpManager.h"
+
+
+#define delete_object(x) {delete x; x = nullptr;}
 
 #define SERVERIP "127.0.0.1" //temporary for testing
 #define SERVERPORT 7777 //temporary for testing
 #define MAX_CLIENTS 10 //lol
+
+
+#define TANKMAXSPEED 200
+#define TANKMAXDIR 128
+#define TANKACCELERATION 3
+#define TANKSCALE 0.5
+#define BULLETSPEED 500
