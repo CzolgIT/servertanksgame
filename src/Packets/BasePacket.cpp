@@ -1,4 +1,4 @@
-#include"Main.h"
+#include "Main.h"
 
 BasePacket::BasePacket( PacketType type, unsigned int packetSize ):
         size((packetSize > 1) ? packetSize : 1) // size should be always 1 or greater
@@ -9,9 +9,7 @@ BasePacket::BasePacket( PacketType type, unsigned int packetSize ):
             data[0] = type;
             
         }
-BasePacket::~BasePacket()
-{
-}
+BasePacket::~BasePacket() = default;
 
 PacketType BasePacket::getType() const
 {
@@ -35,4 +33,20 @@ void BasePacket::print() const
 }
 
 
+Uint32 floatToUint32(float f)
+{
+    Uint32 i = 0;
+    char* iPtr = (char*)&i;
+    char* fPtr = (char*)&f;
+    memcpy(iPtr, fPtr, 4);
+    return i;
+}
 
+float Uint32toFloat(Uint32 i)
+{
+    float f = 0;
+    char* fPtr = (char*)&f;
+    char* iPtr = (char*)&i;
+    memcpy(fPtr, iPtr, 4);
+    return f;
+}

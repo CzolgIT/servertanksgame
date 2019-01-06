@@ -337,8 +337,10 @@ void NetManager::processUdp() {
                 case PT_EVENT:
                 {
                     auto * eventPacket = (EventPacket*)recvd.get();
-                    bool * keys = eventPacket->GetKeys();
-                    std::cout << "UP: " <<  keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << std::endl;
+                    bool * keys = eventPacket->getKeys();
+                    Uint32 time = eventPacket->getTime();
+                    std::cout << "UP: " <<  keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << "Z:" << keys[4] << "X:" << keys[5] << "SPACE:" << keys[6] << std::endl;
+                    std::cout << "TIME: " << time << "ms" << std::endl;
                 }
                 break;
                 default:
