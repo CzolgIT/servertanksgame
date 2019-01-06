@@ -17,6 +17,7 @@ enum PacketType : Uint8{
     PT_START_REQUEST = 8,
     PT_HOST_CHANGED = 9,
     PT_GAME_INFO = 10,
+    PT_EVENT = 11,
     PT_UNKNOWN = 0xff
 };
 
@@ -24,23 +25,23 @@ class BasePacket
 {
 protected:
     BasePacket( PacketType type, unsigned int packetSize );
-        // Content of the packet 
+        // Content of the packet
         std::unique_ptr<Uint8[]> data;
-        
+
         unsigned int size;
-    
-        
+
+
 public:
     virtual ~BasePacket();
-    
+
     //return the type of the packet
-    
+
     virtual PacketType getType() const;
-    
+
     virtual Uint8* getData() const;
-    
+
     virtual unsigned int getSize() const;
-    
+
     virtual void print() const;
 };
 

@@ -37,6 +37,7 @@
 #include "Packets/PlayerReadyPacket.h"
 #include "Packets/StartGameRequestPacket.h"
 #include "Packets/SyncPacket.h"
+#include "Packets/EventPacket.h"
 
 #include "Models/Client.h"
 #include "Room.h"
