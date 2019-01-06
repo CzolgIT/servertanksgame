@@ -30,6 +30,8 @@ std::unique_ptr<BasePacket> UniversalPacket::createFromContents()
             return constructPacket(new JoinRequestPacket);
         case PT_JOIN_RESPONSE:
             return constructPacket(new JoinResponsePacket);
+        case PT_EVENT:
+            return constructPacket(new EventPacket);
         default:
             return nullptr;
     }
