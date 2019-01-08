@@ -20,6 +20,7 @@ enum PacketType : Uint8{
     PT_EVENT = 11,
     PT_MAP_INFO = 12,
     PT_INFO_REQUEST = 13,
+    PT_CURRENT_POSITION = 14,
     PT_UNKNOWN = 0xff
 };
 

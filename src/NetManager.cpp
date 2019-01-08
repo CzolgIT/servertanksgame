@@ -306,7 +306,6 @@ Uint8 NetManager::getAvailableRoomId() {
 void NetManager::processUdp()
 {
 
-    bool * keys = nullptr;
     // receive all pending udp packets
     while(SDLNet_UDP_Recv(UDP_socket, &UDP_packet))
     {
@@ -398,19 +397,5 @@ Uint8 NetManager::getMapId() {
 void NetManager::monitoring()
 {
     std::cout << "\x1B[2J\x1B[H";
-    for (auto &client : clients) {
-
-        bool keys[] = {client->getKeys(0), client->getKeys(1), client->getKeys(2), client->getKeys(3),
-                       client->getKeys(4), client->getKeys(5), client->getKeys(6)};
-
-        std::cout << "PLAYER: " << int(client->getId()) << "[ "
-                << ( keys[0] ? "^" : " " ) << " , "
-                  << ( keys[1] ? "v" : " " ) << " , "
-                  << ( keys[2] ? "<" : " " ) << " , "
-                  << ( keys[3] ? ">" : " " ) << " , "
-                  << ( keys[4] ? "Z" : " " ) << " , "
-                  << ( keys[5] ? "X" : " " ) << " , "
-                  << ( keys[6] ? "_" : " " ) << " ]\n";
-    }
-
+    for (auto &client : clients) client->print();
 }

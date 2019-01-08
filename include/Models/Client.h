@@ -18,6 +18,22 @@ public:
     void setITowerDirection(int iTowerDirection);
     void setKeys(int x, bool keys);
 
+    float getX() const;
+
+    void setX(float x);
+
+    float getY() const;
+
+    void setY(float y);
+
+    float getTankDirection() const;
+
+    void setTankDirection(float tankDirection);
+
+    float getTowerDirection() const;
+
+    void setTowerDirection(float towerDirection);
+
     TCPsocket getTcpSocket();
     Uint8 getId();
     SDL_Point getPosition();
@@ -40,6 +56,8 @@ private:
 
     SDL_Point position;
     int iDirection, iTowerDirection;
+    float x,y;
+    float tankDirection,towerDirection;
     bool keys[7]; // up down left right z x space
 };
 

@@ -26,6 +26,7 @@
 #endif
 
 #include "Packets/BasePacket.h"
+#include "Packets/CurrentPositionPacket.h"
 #include "Packets/JoinRequestPacket.h"
 #include "Packets/JoinResponsePacket.h"
 #include "Packets/UniversalPacket.h"

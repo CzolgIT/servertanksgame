@@ -35,7 +35,7 @@ Uint8 EventPacket::getId() {
 }
 
 Uint32 EventPacket::getTime() {
-    SDLNet_Read32(&data[9]);
+    return SDLNet_Read32(&data[9]);
 }
 
 void EventPacket::print() const {

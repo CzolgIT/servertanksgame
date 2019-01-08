@@ -84,7 +84,15 @@ int Client::getITowerDirection() {
 }
 
 void Client::print() {
-    std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << getPosition().x << "," << getPosition().y << ")|" << "iDirection:" << getIDirection() << "iTowerDirection" << getITowerDirection() << std::endl;
+    std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << getPosition().x << "," << getPosition().y << ")|" << "iDirection:" << getIDirection() << "iTowerDirection" << getITowerDirection() << "\n" <<
+            "[ "
+            << ( keys[0] ? "^" : " " ) << " , "
+            << ( keys[1] ? "v" : " " ) << " , "
+            << ( keys[2] ? "<" : " " ) << " , "
+            << ( keys[3] ? ">" : " " ) << " , "
+            << ( keys[4] ? "Z" : " " ) << " , "
+            << ( keys[5] ? "X" : " " ) << " , "
+            << ( keys[6] ? "_" : " " ) << " ]\n";
 }
 
 void Client::setKeys(int x,bool keys)
@@ -95,4 +103,36 @@ void Client::setKeys(int x,bool keys)
 bool Client::getKeys(int i)
 {
     return keys[i];
+}
+
+float Client::getX() const {
+    return x;
+}
+
+void Client::setX(float x) {
+    Client::x = x;
+}
+
+float Client::getY() const {
+    return y;
+}
+
+void Client::setY(float y) {
+    Client::y = y;
+}
+
+float Client::getTankDirection() const {
+    return tankDirection;
+}
+
+void Client::setTankDirection(float tankDirection) {
+    Client::tankDirection = tankDirection;
+}
+
+float Client::getTowerDirection() const {
+    return towerDirection;
+}
+
+void Client::setTowerDirection(float towerDirection) {
+    Client::towerDirection = towerDirection;
 }
