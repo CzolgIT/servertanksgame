@@ -8,22 +8,22 @@
 #include "Main.h"
 
 //(packet type + playerId + x + y + tankrot + turretrot)
-#define CURRENT_POSITION_PACKET_SIZE (1+1+4+4+4+4)
+#define CURRENT_POSITION_PACKET_SIZE (1+1+2+2+2+2)
 
 class CurrentPositionPacket : public BasePacket{
 public:
     CurrentPositionPacket();
     void setPlayerId(Uint8 playerId);
-    void setX(Uint32 x);
-    void setY(Uint32 y);
-    void setTankRotation(Uint32 tankRotation);
-    void setTurretRotation(Uint32 turretRotation);
+    void setX(Uint16 x);
+    void setY(Uint16 y);
+    void setTankRotation(Uint16 tankRotation);
+    void setTurretRotation(Uint16 turretRotation);
 
     Uint8 getPlayerId() const;
-    Uint32 getX() const;
-    Uint32 getY() const;
-    Uint32 getTankRotation() const;
-    Uint32 getTurretRotation() const;
+    Uint16 getX() const;
+    Uint16 getY() const;
+    Uint16 getTankRotation() const;
+    Uint16 getTurretRotation() const;
 
     void print() const override;
 };

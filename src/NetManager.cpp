@@ -358,14 +358,24 @@ void NetManager::processUdp()
                 {
                     auto * eventPacket = (EventPacket*)recvd.get();
                     Client* sender = getClient(eventPacket->getId());
-                    if(sender!= nullptr){
-                        for(int i=0;i<7;i++)
-                        {
-                            sender->setKeys(i,eventPacket->getKeys(i));
+                    if(sender!= nullptr) {
+                        for (int i = 0; i < 7; i++) {
+                            sender->setKeys(i, eventPacket->getKeys(i));
                         }
+
+                        Uint32 time = eventPacket->getTime();
+
+                        //todo: tutaj liczenie pozycji
                         sender->move();
+
+                        CurrentPositionPacket currentPositionPacket;
+                        currentPositionPacket.setPlayerId(sender->getId());
+                        currentPositionPacket.setX(static_cast<Uint16>(sender->getPosition().x));
+                        currentPositionPacket.setY(static_cast<Uint16>(sender->getPosition().y));
+                        currentPositionPacket.setTankRotation(static_cast<Uint16>(sender->getIDirection()));
+                        currentPositionPacket.setTurretRotation(static_cast<Uint16>(sender->getITowerDirection()));
+                        UdpConnection::udpSendAll(currentPositionPacket,clients);
                     }
-                    Uint32 time = eventPacket->getTime();
                 }
                 break;
                 default:
