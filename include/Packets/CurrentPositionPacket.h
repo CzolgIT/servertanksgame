@@ -20,10 +20,10 @@ public:
     void setTurretRotation(Uint32 turretRotation);
 
     Uint8 getPlayerId() const;
-    Uint32 getX();
-    Uint32 getY();
-    Uint32 getTankRotation();
-    Uint32 getTurretRotation();
+    Uint32 getX() const;
+    Uint32 getY() const;
+    Uint32 getTankRotation() const;
+    Uint32 getTurretRotation() const;
 
     void print() const override;
 };
