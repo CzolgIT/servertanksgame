@@ -11,40 +11,40 @@ void CurrentPositionPacket::setPlayerId(Uint8 playerId) {
     data[1] = playerId;
 }
 
-void CurrentPositionPacket::setX(Uint32 x) {
-    SDLNet_Write32(x, &data[2]);
+void CurrentPositionPacket::setX(Uint16 x) {
+    SDLNet_Write16(x, &data[2]);
 }
 
-void CurrentPositionPacket::setY(Uint32 y) {
-    SDLNet_Write32(y, &data[6]);
+void CurrentPositionPacket::setY(Uint16 y) {
+    SDLNet_Write16(y, &data[4]);
 }
 
-void CurrentPositionPacket::setTankRotation(Uint32 tankRotation) {
-    SDLNet_Write32(tankRotation, &data[10]);
+void CurrentPositionPacket::setTankRotation(Uint16 tankRotation) {
+    SDLNet_Write16(tankRotation, &data[6]);
 }
 
-void CurrentPositionPacket::setTurretRotation(Uint32 turretRotation) {
-    SDLNet_Write32(turretRotation, &data[14]);
+void CurrentPositionPacket::setTurretRotation(Uint16 turretRotation) {
+    SDLNet_Write16(turretRotation, &data[8]);
 }
 
 Uint8 CurrentPositionPacket::getPlayerId() const {
     return data[1];
 }
 
-Uint32 CurrentPositionPacket::getX() const {
-    return SDLNet_Read32(&data[2]);
+Uint16 CurrentPositionPacket::getX() const {
+    return SDLNet_Read16(&data[2]);
 }
 
-Uint32 CurrentPositionPacket::getY() const {
-    return SDLNet_Read32(&data[6]);
+Uint16 CurrentPositionPacket::getY() const {
+    return SDLNet_Read16(&data[4]);
 }
 
-Uint32 CurrentPositionPacket::getTankRotation() const {
-    return SDLNet_Read32(&data[10]);
+Uint16 CurrentPositionPacket::getTankRotation() const {
+    return SDLNet_Read16(&data[6]);
 }
 
-Uint32 CurrentPositionPacket::getTurretRotation() const {
-    return SDLNet_Read32(&data[14]);
+Uint16 CurrentPositionPacket::getTurretRotation() const {
+    return SDLNet_Read16(&data[8]);
 }
 
 void CurrentPositionPacket::print() const {

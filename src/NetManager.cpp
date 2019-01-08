@@ -367,10 +367,10 @@ void NetManager::processUdp()
                         //todo: tutaj liczenie pozycji
                         CurrentPositionPacket currentPositionPacket;
                         currentPositionPacket.setPlayerId(sender->getId());
-                        currentPositionPacket.setX(static_cast<Uint32>(sender->getPosition().x));
-                        currentPositionPacket.setY(static_cast<Uint32>(sender->getPosition().y));
-                        currentPositionPacket.setTankRotation(static_cast<Uint32>(sender->getIDirection()));
-                        currentPositionPacket.setTurretRotation(static_cast<Uint32>(sender->getITowerDirection()));
+                        currentPositionPacket.setX(static_cast<Uint16>(sender->getPosition().x));
+                        currentPositionPacket.setY(static_cast<Uint16>(sender->getPosition().y));
+                        currentPositionPacket.setTankRotation(static_cast<Uint16>(sender->getIDirection()));
+                        currentPositionPacket.setTurretRotation(static_cast<Uint16>(sender->getITowerDirection()));
                         UdpConnection::udpSendAll(currentPositionPacket,clients);
                     }
                 }
