@@ -66,3 +66,23 @@ SDL_Point Client::getPosition() {
 bool Client::needsUdpAddress() {
     return !hasUDPAddress;
 }
+
+void Client::setIDirection(int iDirection) {
+    this->iDirection = iDirection;
+}
+
+void Client::setITowerDirection(int iTowerDirection) {
+    this->iTowerDirection = iTowerDirection;
+}
+
+int Client::getIDirection() {
+    return this->iDirection;
+}
+
+int Client::getITowerDirection() {
+    return this->iTowerDirection;
+}
+
+void Client::print() {
+    std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << getPosition().x << "," << getPosition().y << ")|" << "iDirection:" << getIDirection() << "iTowerDirection" << getITowerDirection() << std::endl;
+}
