@@ -84,7 +84,7 @@ int Client::getITowerDirection() {
 }
 
 void Client::print() {
-    std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << getPosition().x << "," << getPosition().y << ")|" << "iDirection:" << getIDirection() << "iTowerDirection" << getITowerDirection() << "\n" <<
+    std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << position.x << "," << y << ")|" << "iDirection:" << iDirection << "iTowerDirection" << iTowerDirection << "\n" <<
             "[ "
             << ( keys[0] ? "^" : " " ) << " , "
             << ( keys[1] ? "v" : " " ) << " , "
@@ -139,14 +139,14 @@ void Client::setTowerDirection(float towerDirection) {
 
 void Client::move()
 {
-    float timeStep = 10;
+    float timeStep = 0.00833333;
 
-    moveSpeed = accelerate( keys[0] , moveSpeed , 0 , TANKMAXSPEED , timeStep );
-    moveSpeed = accelerate( keys[1] , moveSpeed , 0 , -TANKMAXSPEED , timeStep );
-    directionSpeed = accelerate( keys[2] , directionSpeed , 0 , TANKMAXDIR , timeStep );
-    directionSpeed = accelerate( keys[3] , directionSpeed , 0 , -TANKMAXDIR , timeStep );
-    towerSpeed = accelerate( keys[4] , towerSpeed , 0 , TANKMAXDIR , timeStep );
-    towerSpeed = accelerate( keys[5] , towerSpeed , 0 , -TANKMAXDIR , timeStep );
+    moveSpeed = accelerate(keys[0] , moveSpeed , 0 , TANKMAXSPEED , timeStep );
+    moveSpeed = accelerate(keys[1] , moveSpeed , 0 , -TANKMAXSPEED , timeStep );
+    directionSpeed = accelerate(keys[3] , directionSpeed , 0 , TANKMAXDIR , timeStep );
+    directionSpeed = accelerate(keys[2] , directionSpeed , 0 , -TANKMAXDIR , timeStep );
+    towerSpeed = accelerate(keys[5] , towerSpeed , 0 , TANKMAXDIR , timeStep );
+    towerSpeed = accelerate(keys[4] , towerSpeed , 0 , -TANKMAXDIR , timeStep );
 
 
     double xm = cos((iDirection) *M_PI/180) * moveSpeed * timeStep;
@@ -172,11 +172,10 @@ void Client::move()
 
 }
 
-float Client::accelerate( int scanCode , float what , float from , float to , float timeStep )
+float Client::accelerate(bool isPressed, float what , float from , float to , float timeStep )
 {
-    const Uint8 *state = SDL_GetKeyboardState(nullptr);
 
-    if (state[scanCode])
+    if (isPressed)
     {
         if ( from < to ? what < to : what > to )
         {

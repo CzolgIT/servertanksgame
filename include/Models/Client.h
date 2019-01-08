@@ -35,7 +35,7 @@ public:
     void setTowerDirection(float towerDirection);
 
     void move();
-    float accelerate( int scanCode , float what , float from , float to , float timeStep );
+    float accelerate(bool isPressed, float what , float from , float to , float timeStep );
 
 
     TCPsocket getTcpSocket();
