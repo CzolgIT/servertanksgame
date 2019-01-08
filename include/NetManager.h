@@ -44,9 +44,6 @@ private:
     UniversalPacket universalPacket;
     Uint8 hostId;
     Uint8 mapId;
-
-    bool keysss[10][10] = {false};
-
 };
 
 template<class T>

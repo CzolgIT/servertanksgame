@@ -65,7 +65,8 @@
 
 #define delete_object(x) {delete x; x = nullptr;}
 
-#define SERVERIP "25.63.145.1" //temporary for testing
+//#define SERVERIP "25.63.145.1" //temporary for testing
+#define SERVERIP "127.0.0.1"
 #define SERVERPORT 7777 //temporary for testing
 #define MAX_CLIENTS 10 //lol
 

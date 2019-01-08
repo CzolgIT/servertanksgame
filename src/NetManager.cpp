@@ -222,8 +222,14 @@ void NetManager::processTcp() {
                             }
                             else if(infoRequestPacket->getRequested() == RT_PLAYER_LIST){
                                 //send player joined packets with players id
+                                Uint8 requesterId = infoRequestPacket->getId();
                                 for(size_t i = 0; i<clients.size(); i++){
                                     PlayerJoinedPacket currentPlayer;
+                                    if(clients[i]->getId()!=requesterId){
+                                        currentPlayer.setId(clients[i]->getId());
+                                        getClient(requesterId)->tcpSend(currentPlayer);
+                                    }
+
                                 }
                             }
                         }
@@ -352,15 +358,14 @@ void NetManager::processUdp()
                 case PT_EVENT:
                 {
                     auto * eventPacket = (EventPacket*)recvd.get();
-                    for (auto &client : clients)
-                        if (client->getId() == eventPacket->getId())
-                            for(int i=0;i<7;i++)
-                            {
-                                client->setKeys(i,eventPacket->getKeys(i));
-                            }
-
+                    Client* sender = getClient(eventPacket->getId());
+                    if(sender!= nullptr){
+                        for(int i=0;i<7;i++)
+                        {
+                            sender->setKeys(i,eventPacket->getKeys(i));
+                        }
+                    }
                     Uint32 time = eventPacket->getTime();
-                    //std::cout << "TIME: " << time << "ms" << std::endl;
                 }
                 break;
                 default:
@@ -399,7 +404,7 @@ void NetManager::monitoring()
                        client->getKeys(4), client->getKeys(5), client->getKeys(6)};
 
         std::cout << "PLAYER: " << int(client->getId()) << "[ "
-                  << keys[0] << " , "
+                << ( keys[0] ? "^" : " " ) << " , "
                   << ( keys[1] ? "v" : " " ) << " , "
                   << ( keys[2] ? "<" : " " ) << " , "
                   << ( keys[3] ? ">" : " " ) << " , "
