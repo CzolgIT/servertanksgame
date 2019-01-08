@@ -18,6 +18,8 @@ enum PacketType : Uint8{
     PT_HOST_CHANGED = 9,
     PT_GAME_INFO = 10,
     PT_EVENT = 11,
+    PT_MAP_INFO = 12,
+    PT_INFO_REQUEST = 13,
     PT_UNKNOWN = 0xff
 };
 

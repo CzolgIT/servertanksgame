@@ -213,6 +213,18 @@ void NetManager::processTcp() {
                             auto * packet = (PlayerDisconnectedPacket*)recvd.get();
                             disconnectClient(packet->getId());
                         }
+                        else if(recvd->getType() == PT_INFO_REQUEST){
+                            auto * infoRequestPacket = (InfoRequestPacket*)recvd.get();
+                            if(infoRequestPacket->getRequested() == RT_MAP_DATA){
+                                //send current map
+                            }
+                            else if(infoRequestPacket->getRequested() == RT_PLAYER_LIST){
+                                //send player joined packets with players id
+                                for(size_t i = 0; i<clients.size(); i++){
+                                    PlayerJoinedPacket currentPlayer;
+                                }
+                            }
+                        }
 
                     }
                 }
