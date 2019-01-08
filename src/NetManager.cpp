@@ -128,19 +128,20 @@ void NetManager::acceptClient()
 
 void NetManager::update()
 {
-        bool quit = false;
+    bool quit = false;
 
     while(!quit){
-
 
         // Check if any sockets are ready
         int numready = SDLNet_CheckSockets(TCP_SocketSet,0);
         acceptClient();
         processTcp();
         processUdp();
+
+        //calculate()
+        monitoring();
+        SDL_Delay(10);
     }
-
-
 }
 
 Uint8 NetManager::getAvailableId() {
@@ -298,6 +299,7 @@ Uint8 NetManager::getAvailableRoomId() {
 
 void NetManager::processUdp()
 {
+
     bool * keys = nullptr;
     // receive all pending udp packets
     while(SDLNet_UDP_Recv(UDP_socket, &UDP_packet))
@@ -345,17 +347,20 @@ void NetManager::processUdp()
                             std::cout << "An unknown client tried to sync" << std::endl;
                         }
                     }
-
                     break;
                 }
                 case PT_EVENT:
                 {
                     auto * eventPacket = (EventPacket*)recvd.get();
-                    keys = eventPacket->getKeys();
+                    for (auto &client : clients)
+                        if (client->getId() == eventPacket->getId())
+                            for(int i=0;i<7;i++)
+                            {
+                                client->setKeys(i,eventPacket->getKeys(i));
+                            }
+
                     Uint32 time = eventPacket->getTime();
-//                    std::cout << "\x1B[2J\x1B[H";
-//                    std::cout << "UP: " <<  keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << "Z:" << keys[4] << "X:" << keys[5] << "SPACE:" << keys[6] << std::endl;
-//                    std::cout << "TIME: " << time << "ms" << std::endl;
+                    //std::cout << "TIME: " << time << "ms" << std::endl;
                 }
                 break;
                 default:
@@ -365,16 +370,7 @@ void NetManager::processUdp()
                 }
                 break;
             }
-
-
         }
-    }
-    if ( keys != nullptr)
-    {
-        std::cout << "\x1B[2J\x1B[H";
-        std::cout << "UP: " << keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << "Z:"
-                  << keys[4] << "X:" << keys[5] << "SPACE:" << keys[6] << std::endl;
-        //std::cout << "TIME: " << time << "ms" << std::endl;
     }
 }
 
@@ -392,4 +388,24 @@ void NetManager::setMapId(Uint8 mapId) {
 
 Uint8 NetManager::getMapId() {
     return this->mapId;
+}
+
+void NetManager::monitoring()
+{
+    std::cout << "\x1B[2J\x1B[H";
+    for (auto &client : clients) {
+
+        bool keys[] = {client->getKeys(0), client->getKeys(1), client->getKeys(2), client->getKeys(3),
+                       client->getKeys(4), client->getKeys(5), client->getKeys(6)};
+
+        std::cout << "PLAYER: " << int(client->getId()) << "[ "
+                  << keys[0] << " , "
+                  << ( keys[1] ? "v" : " " ) << " , "
+                  << ( keys[2] ? "<" : " " ) << " , "
+                  << ( keys[3] ? ">" : " " ) << " , "
+                  << ( keys[4] ? "Z" : " " ) << " , "
+                  << ( keys[5] ? "X" : " " ) << " , "
+                  << ( keys[6] ? "_" : " " ) << " ]\n";
+    }
+
 }

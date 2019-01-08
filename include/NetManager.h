@@ -19,6 +19,7 @@ public:
     void createRoom(Uint8 hostId, int maxClients);
     void deleteRoom(Uint8 id);
 
+    void monitoring();
 
     Room* getRoom(Uint8 id);
     Uint8 getAvailableRoomId();
@@ -43,6 +44,8 @@ private:
     UniversalPacket universalPacket;
     Uint8 hostId;
     Uint8 mapId;
+
+    bool keysss[10][10] = {false};
 
 };
 

@@ -86,3 +86,13 @@ int Client::getITowerDirection() {
 void Client::print() {
     std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << getPosition().x << "," << getPosition().y << ")|" << "iDirection:" << getIDirection() << "iTowerDirection" << getITowerDirection() << std::endl;
 }
+
+void Client::setKeys(int x,bool keys)
+{
+    this->keys[x] = keys;
+}
+
+bool Client::getKeys(int i)
+{
+    return keys[i];
+}

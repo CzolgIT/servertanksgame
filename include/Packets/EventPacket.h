@@ -15,7 +15,7 @@ public:
     void setId(Uint8 id);
     void setKeys(bool *keys);
     void setTime(Uint32 time);
-    bool * getKeys();
+    bool getKeys(int x);
     Uint8 getId();
     Uint32 getTime();
     ~EventPacket();

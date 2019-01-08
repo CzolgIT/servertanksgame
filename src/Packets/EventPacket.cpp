@@ -17,17 +17,9 @@ void EventPacket::setKeys(bool *keys)
     data[8] = keys[6];
 }
 
-bool * EventPacket::getKeys()
+bool EventPacket::getKeys(int x)
 {
-    bool * keys = new bool[7];
-    keys[0] = data[2];
-    keys[1] = data[3];
-    keys[2] = data[4];
-    keys[3] = data[5];
-    keys[4] = data[6];
-    keys[5] = data[7];
-    keys[6] = data[8];
-    return keys;
+    return bool(data[x+2]);
 }
 
 void EventPacket::setId(Uint8 id) {

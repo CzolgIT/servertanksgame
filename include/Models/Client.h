@@ -16,12 +16,14 @@ public:
     void setPosition(SDL_Point newPosition);
     void setIDirection(int iDirection);
     void setITowerDirection(int iTowerDirection);
+    void setKeys(int x, bool keys);
 
     TCPsocket getTcpSocket();
     Uint8 getId();
     SDL_Point getPosition();
     int getIDirection();
     int getITowerDirection();
+    bool getKeys(int i);
 
     bool needsUdpAddress();
 
@@ -38,6 +40,7 @@ private:
 
     SDL_Point position;
     int iDirection, iTowerDirection;
+    bool keys[7]; // up down left right z x space
 };
 
 
