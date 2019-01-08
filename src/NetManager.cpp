@@ -363,6 +363,7 @@ void NetManager::processUdp()
                         {
                             sender->setKeys(i,eventPacket->getKeys(i));
                         }
+                        sender->move();
                     }
                     Uint32 time = eventPacket->getTime();
                 }

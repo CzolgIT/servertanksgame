@@ -34,6 +34,10 @@ public:
 
     void setTowerDirection(float towerDirection);
 
+    void move();
+    float accelerate( int scanCode , float what , float from , float to , float timeStep );
+
+
     TCPsocket getTcpSocket();
     Uint8 getId();
     SDL_Point getPosition();
@@ -54,11 +58,12 @@ private:
 
     SDLNet_SocketSet* SockSet;
 
-    SDL_Point position;
-    int iDirection, iTowerDirection;
-    float x,y;
-    float tankDirection,towerDirection;
+    SDL_Point position={128,128};
+    int iDirection=0, iTowerDirection=0;
+    float x=0,y=0;
+    float tankDirection=0,towerDirection=0;
     bool keys[7]; // up down left right z x space
+    float moveSpeed=0,directionSpeed=0,towerSpeed=0;
 };
 
 

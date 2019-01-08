@@ -136,3 +136,61 @@ float Client::getTowerDirection() const {
 void Client::setTowerDirection(float towerDirection) {
     Client::towerDirection = towerDirection;
 }
+
+void Client::move()
+{
+    float timeStep = 10;
+
+    moveSpeed = accelerate( keys[0] , moveSpeed , 0 , TANKMAXSPEED , timeStep );
+    moveSpeed = accelerate( keys[1] , moveSpeed , 0 , -TANKMAXSPEED , timeStep );
+    directionSpeed = accelerate( keys[2] , directionSpeed , 0 , TANKMAXDIR , timeStep );
+    directionSpeed = accelerate( keys[3] , directionSpeed , 0 , -TANKMAXDIR , timeStep );
+    towerSpeed = accelerate( keys[4] , towerSpeed , 0 , TANKMAXDIR , timeStep );
+    towerSpeed = accelerate( keys[5] , towerSpeed , 0 , -TANKMAXDIR , timeStep );
+
+
+    double xm = cos((iDirection) *M_PI/180) * moveSpeed * timeStep;
+    double ym = sin((iDirection) *M_PI/180) * moveSpeed * timeStep;
+
+    x += xm; //-blocked.x;
+    y += ym; //-blocked.y;
+
+    position.x = int(x);
+    position.y = int(y);
+
+    tankDirection += directionSpeed * timeStep ;
+    towerDirection += directionSpeed * timeStep + towerSpeed * timeStep;
+
+    if ( tankDirection > 360 ) tankDirection -= 360;
+    if ( towerDirection > 360 ) towerDirection -= 360;
+
+    if ( tankDirection < 0 ) tankDirection += 360;
+    if ( towerDirection < 0 ) towerDirection += 360;
+
+    iDirection = int(tankDirection);
+    iTowerDirection = int(towerDirection);
+
+}
+
+float Client::accelerate( int scanCode , float what , float from , float to , float timeStep )
+{
+    const Uint8 *state = SDL_GetKeyboardState(nullptr);
+
+    if (state[scanCode])
+    {
+        if ( from < to ? what < to : what > to )
+        {
+            what += to * timeStep * TANKACCELERATION ;
+            if ( from < to ? what > to : what < to ) what = to;
+        }
+    }
+    else
+    {
+        if ( from < to ? what > from : what < from )
+        {
+            what -= to * timeStep * TANKACCELERATION;
+            if ( from < to ? what < from : what > from ) what = from;
+        }
+    }
+    return what;
+}
