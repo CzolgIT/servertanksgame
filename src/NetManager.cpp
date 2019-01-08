@@ -132,6 +132,7 @@ void NetManager::update()
 
     while(!quit){
 
+
         // Check if any sockets are ready
         int numready = SDLNet_CheckSockets(TCP_SocketSet,0);
         acceptClient();
@@ -295,8 +296,9 @@ Uint8 NetManager::getAvailableRoomId() {
 
 //---------------------------------------------
 
-void NetManager::processUdp() {
-
+void NetManager::processUdp()
+{
+    bool * keys = nullptr;
     // receive all pending udp packets
     while(SDLNet_UDP_Recv(UDP_socket, &UDP_packet))
     {
@@ -304,14 +306,14 @@ void NetManager::processUdp() {
 
         if(recvd){
 
-            recvd->print();
+            //recvd->print();
             //here will be all possibilities of received packets
 
             switch (recvd->getType()){
                 case PT_HEARTBEAT:
                 {
                     auto * heartbeatPacket = (HeartbeatPacket*)recvd.get();
-                    recvd->print();
+                    //recvd->print();
                     Client* sender = getClient(heartbeatPacket->getId());
                     if(sender){
                         sender->setUdpAddress(UDP_packet.address);
@@ -349,10 +351,11 @@ void NetManager::processUdp() {
                 case PT_EVENT:
                 {
                     auto * eventPacket = (EventPacket*)recvd.get();
-                    bool * keys = eventPacket->getKeys();
+                    keys = eventPacket->getKeys();
                     Uint32 time = eventPacket->getTime();
-                    std::cout << "UP: " <<  keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << "Z:" << keys[4] << "X:" << keys[5] << "SPACE:" << keys[6] << std::endl;
-                    std::cout << "TIME: " << time << "ms" << std::endl;
+//                    std::cout << "\x1B[2J\x1B[H";
+//                    std::cout << "UP: " <<  keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << "Z:" << keys[4] << "X:" << keys[5] << "SPACE:" << keys[6] << std::endl;
+//                    std::cout << "TIME: " << time << "ms" << std::endl;
                 }
                 break;
                 default:
@@ -366,8 +369,13 @@ void NetManager::processUdp() {
 
         }
     }
-
-
+    if ( keys != nullptr)
+    {
+        std::cout << "\x1B[2J\x1B[H";
+        std::cout << "UP: " << keys[0] << "DOWN: " << keys[1] << "LEFT: " << keys[2] << "RIGHT: " << keys[3] << "Z:"
+                  << keys[4] << "X:" << keys[5] << "SPACE:" << keys[6] << std::endl;
+        //std::cout << "TIME: " << time << "ms" << std::endl;
+    }
 }
 
 Uint8 NetManager::getHostId() {
