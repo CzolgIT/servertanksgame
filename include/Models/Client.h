@@ -19,24 +19,19 @@ public:
     void setKeys(int x, bool keys);
 
     float getX() const;
-
     void setX(float x);
-
     float getY() const;
-
     void setY(float y);
-
     float getTankDirection() const;
-
     void setTankDirection(float tankDirection);
-
     float getTowerDirection() const;
-
     void setTowerDirection(float towerDirection);
 
     void move( float timeStep );
     float accelerate(bool isPressed, float what , float from , float to , float timeStep );
-
+    SDL_Point shootPosition();
+    void setBulletsPointer( std::vector<Bullet *> *bullets );
+    void setClientsPointer( std::vector<std::unique_ptr<Client>> *clients );
 
     TCPsocket getTcpSocket();
     Uint8 getId();
@@ -64,6 +59,11 @@ private:
     float tankDirection=0,towerDirection=0;
     bool keys[7]={false}; // up down left right z x space
     float moveSpeed=0,directionSpeed=0,towerSpeed=0;
+
+    bool readyToShoot=false;
+    float shootLoading=0;
+    std::vector<Bullet *> *bullets;
+    std::vector<std::unique_ptr<Client>> *clients;
 };
 
 

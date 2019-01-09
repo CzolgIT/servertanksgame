@@ -94,7 +94,9 @@ void Client::print() {
             << ( keys[4] ? "Z" : " " ) << " , "
             << ( keys[5] ? "X" : " " ) << " , "
             << ( keys[6] ? "_" : " " ) << " ]\n"
+            << "            reloading: " << shootLoading << "\n"
             << "-----------------------------------------------------------\n";
+
 }
 
 void Client::setKeys(int x,bool keys)
@@ -168,6 +170,30 @@ void Client::move( float timeStep )
 
     iDirection = int(tankDirection);
     iTowerDirection = int(towerDirection);
+
+    // SZCZELANIE
+
+    if (!readyToShoot)
+    {
+        shootLoading += timeStep;
+        if ( shootLoading >=1 )
+        {
+            readyToShoot=true;
+            shootLoading=0;
+        }
+    }
+
+    if (keys[6] && readyToShoot)
+    {
+        readyToShoot=false;
+        Bullet * bullet = new Bullet(shootPosition(),towerDirection);
+        bullets->push_back(bullet);
+
+        // todo: DAWID BINKUS WEZ TO WYSLIJ
+        //UdpConnection::udpSendAll( )
+    }
+
+
 }
 
 float Client::accelerate(bool isPressed, float what , float from , float to , float timeStep )
@@ -190,4 +216,22 @@ float Client::accelerate(bool isPressed, float what , float from , float to , fl
         }
     }
     return what;
+}
+
+SDL_Point Client::shootPosition()
+{
+    SDL_Point punkt;
+    punkt.x = (int)(position.x+(cos(double(iTowerDirection) *M_PI/180) * 60));
+    punkt.y = (int)(position.y+(sin(double(iTowerDirection) *M_PI/180) * 60));
+    return punkt;
+}
+
+void Client::setBulletsPointer( std::vector<Bullet *> *bullets )
+{
+    this->bullets = bullets;
+}
+
+void Client::setClientsPointer( std::vector<std::unique_ptr<Client>> *clients )
+{
+    this->clients = clients;
 }

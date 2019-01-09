@@ -24,8 +24,6 @@ public:
     Room* getRoom(Uint8 id);
     Uint8 getAvailableRoomId();
 
-
-
     Uint8 getMapId();
     Uint8 getHostId();
     Uint8 getAvailableId();
@@ -33,7 +31,9 @@ public:
     bool disconnectClient(Uint8 id);
     
 private:
+
     std::vector<std::unique_ptr<Client>> clients;
+    std::vector<Bullet *> bullets;
 
     std::vector<std::unique_ptr<Room>> rooms;
     IPaddress address;

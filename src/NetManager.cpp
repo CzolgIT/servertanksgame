@@ -103,9 +103,8 @@ void NetManager::acceptClient()
             clients.back()->attachSocketSet(&TCP_SocketSet);
 
             std::cout << "Client joined with ID: " << (int) clients.back()->getId() << std::endl;
-
-
-
+            clients.back()->setBulletsPointer( &bullets );
+            clients.back()->setClientsPointer( &clients );
         }
         else
         {
@@ -142,6 +141,9 @@ void NetManager::update()
 
         for (auto& client: clients )
             client->move(timer->getStepTime());
+
+        for (auto& bullet: bullets )
+            bullet->move(timer->getStepTime());
 
         monitoring();
         SDL_Delay(1);
@@ -417,4 +419,5 @@ void NetManager::monitoring()
     std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "\n";
     std::cout << "-----------------------------------------------------------\n";
     for (auto &client : clients) client->print();
+    for (auto &bullet : bullets) bullet->print();
 }

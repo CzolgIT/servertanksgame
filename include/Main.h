@@ -43,6 +43,7 @@
 #include "Packets/EventPacket.h"
 
 #include "Timer.h"
+#include "Models/Bullet.h"
 #include "Models/Client.h"
 #include "Room.h"
 
