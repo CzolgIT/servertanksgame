@@ -103,7 +103,10 @@ void NetManager::acceptClient()
             clients.back()->attachSocketSet(&TCP_SocketSet);
 
             std::cout << "Client joined with ID: " << (int) clients.back()->getId() << std::endl;
-
+            //sending packet to another players
+            PlayerJoinedPacket playerJoinedPacket;
+            playerJoinedPacket.setId(clients.back()->getId());
+            TcpConnection::tcpSendAllExcept(clients.back()->getId(),playerJoinedPacket,clients);
 
 
         }
@@ -222,6 +225,7 @@ void NetManager::processTcp() {
                             disconnectClient(packet->getId());
                         }
                         else if(recvd->getType() == PT_INFO_REQUEST){
+                            recvd->print();
                             auto * infoRequestPacket = (InfoRequestPacket*)recvd.get();
                             if(infoRequestPacket->getRequested() == RT_MAP_DATA){
                                 //send current map
@@ -234,9 +238,11 @@ void NetManager::processTcp() {
                                     if(clients[i]->getId()!=requesterId){
                                         currentPlayer.setId(clients[i]->getId());
                                         getClient(requesterId)->tcpSend(currentPlayer);
+                                        currentPlayer.print();
                                     }
-
                                 }
+                                LastPlayerSentPacket lastPlayerSentPacket;
+                                getClient(requesterId)->tcpSend(lastPlayerSentPacket);
                             }
                         }
 

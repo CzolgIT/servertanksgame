@@ -26,6 +26,8 @@
 #endif
 
 #include "Packets/BasePacket.h"
+#include "Packets/BulletInfoPacket.h"
+#include "Packets/LastPlayerSentPacket.h"
 #include "Packets/CurrentPositionPacket.h"
 #include "Packets/JoinRequestPacket.h"
 #include "Packets/JoinResponsePacket.h"

@@ -21,6 +21,8 @@ enum PacketType : Uint8{
     PT_MAP_INFO = 12,
     PT_INFO_REQUEST = 13,
     PT_CURRENT_POSITION = 14,
+    PT_LAST_PLAYER_SENT = 15,
+    PT_BULLET_INFO = 16,
     PT_UNKNOWN = 0xff
 };
 
