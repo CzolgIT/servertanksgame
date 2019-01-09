@@ -1,8 +1,6 @@
 //
 // Created by inql on 07.01.19.
 //
-#include <Packets/InfoRequestPacket.h>
-
 #include "Main.h"
 
 InfoRequestPacket::InfoRequestPacket() : BasePacket(PT_INFO_REQUEST, INFOREQUEST_PACKET_SIZE) {
