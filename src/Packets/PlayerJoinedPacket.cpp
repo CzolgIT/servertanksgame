@@ -15,13 +15,13 @@ PlayerJoinedPacket::PlayerJoinedPacket(Uint8 id):PlayerJoinedPacket() {
 PlayerJoinedPacket::~PlayerJoinedPacket() = default;
 
 void PlayerJoinedPacket::setId(Uint8 id) {
-    this->id = id;
+    data[2] = id;
 }
 
 Uint8 PlayerJoinedPacket::getId() {
-    return id;
+    return data[2];
 }
 
 void PlayerJoinedPacket::print() const {
-    std::cout << "Player ID: " << (int)this->id << "has joined." << std::endl;
+    std::cout << "Player ID: " << (int)data[2]<< "has joined." << std::endl;
 }

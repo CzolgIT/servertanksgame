@@ -34,3 +34,11 @@ int Bullet::getClientId()
 {
     return clientId;
 }
+
+SDL_Point Bullet::getPosition() {
+    return position;
+}
+
+int Bullet::getDirection() {
+    return direction;
+}

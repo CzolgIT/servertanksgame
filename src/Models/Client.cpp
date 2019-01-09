@@ -195,7 +195,14 @@ void Client::move( float timeStep )
         bullets->push_back(bullet);
 
         // todo: DAWID BINKUS WEZ TO WYSLIJ
-        //UdpConnection::udpSendAll( )
+        BulletInfoPacket bulletInfoPacket;
+        bulletInfoPacket.setX(static_cast<Uint16>(bullet->getPosition().x));
+        bulletInfoPacket.setY(static_cast<Uint16>(bullet->getPosition().y));
+        bulletInfoPacket.setPlayerId(static_cast<Uint8>(bullet->getClientId()));
+        bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
+        bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
+        UdpConnection::udpSendAll(bulletInfoPacket, reinterpret_cast<std::vector<std::unique_ptr<Client>> &>(clients));
+
     }
 
 

@@ -12,7 +12,8 @@ public:
     void print();
     int getId();
     int getClientId();
-
+    SDL_Point getPosition();
+    int getDirection();
 private:
 
     int id;

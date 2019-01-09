@@ -110,7 +110,15 @@ void NetManager::acceptClient()
             PlayerJoinedPacket playerJoinedPacket;
             playerJoinedPacket.setId(clients.back()->getId());
             TcpConnection::tcpSendAllExcept(clients.back()->getId(),playerJoinedPacket,clients);
-
+            Uint8 requesterId = clients.back()->getId();
+            for (auto &client : clients) {
+                PlayerJoinedPacket currentPlayer;
+                if(client->getId()!=requesterId){
+                    currentPlayer.setId(client->getId());
+                    getClient(requesterId)->tcpSend(currentPlayer);
+                    currentPlayer.print();
+                }
+            }
 
         }
         else
@@ -238,17 +246,17 @@ void NetManager::processTcp() {
                             }
                             else if(infoRequestPacket->getRequested() == RT_PLAYER_LIST){
                                 //send player joined packets with players id
-                                Uint8 requesterId = infoRequestPacket->getId();
-                                for(size_t i = 0; i<clients.size(); i++){
-                                    PlayerJoinedPacket currentPlayer;
-                                    if(clients[i]->getId()!=requesterId){
-                                        currentPlayer.setId(clients[i]->getId());
-                                        getClient(requesterId)->tcpSend(currentPlayer);
-                                        currentPlayer.print();
-                                    }
-                                }
-                                LastPlayerSentPacket lastPlayerSentPacket;
-                                getClient(requesterId)->tcpSend(lastPlayerSentPacket);
+//                                Uint8 requesterId = infoRequestPacket->getId();
+//                                for(size_t i = 0; i<clients.size(); i++){
+//                                    PlayerJoinedPacket currentPlayer;
+//                                    if(clients[i]->getId()!=requesterId){
+//                                        currentPlayer.setId(clients[i]->getId());
+//                                        getClient(requesterId)->tcpSend(currentPlayer);
+//                                        currentPlayer.print();
+//                                    }
+//                                }
+//                                LastPlayerSentPacket lastPlayerSentPacket;
+//                                getClient(requesterId)->tcpSend(lastPlayerSentPacket);
                             }
                         }
 
