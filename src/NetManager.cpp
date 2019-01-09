@@ -429,5 +429,4 @@ void NetManager::monitoring()
     std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "\n";
     std::cout << "-----------------------------------------------------------\n";
     for (auto &client : clients) client->print();
-    for (auto &bullet : bullets) bullet->print();
 }

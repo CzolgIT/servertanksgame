@@ -84,8 +84,8 @@ int Client::getITowerDirection() {
 }
 
 void Client::print() {
-    std::cout << "Player       position: [ " << position.x << " , " << position.y << " ]\n"
-            "ID: " << int(getId()) <<"      directions: [ "<< iDirection << " , " << iTowerDirection << " ]\n"
+    std::cout << "Player (" << int(getId()) << ")   position: [ " << position.x << " , " << position.y << " ]\n"
+            <<"             directions: [ "<< iDirection << " , " << iTowerDirection << " ]\n"
             "             keyboard: [ "
             << ( keys[0] ? "^" : " " ) << " , "
             << ( keys[1] ? "v" : " " ) << " , "
@@ -97,6 +97,8 @@ void Client::print() {
             << "            reloading: " << shootLoading << "\n"
             << "-----------------------------------------------------------\n";
 
+    for(auto* bullet : *bullets ) { if (bullet->getClientId() == id ) bullet->print(); }
+    std::cout << "-----------------------------------------------------------\n";
 }
 
 void Client::setKeys(int x,bool keys)
@@ -186,7 +188,10 @@ void Client::move( float timeStep )
     if (keys[6] && readyToShoot)
     {
         readyToShoot=false;
-        Bullet * bullet = new Bullet(shootPosition(),towerDirection);
+
+        int newId = bullets->empty()? 1 : int(bullets->size()+1);
+
+        Bullet * bullet = new Bullet(shootPosition(),iTowerDirection,newId,id);
         bullets->push_back(bullet);
 
         // todo: DAWID BINKUS WEZ TO WYSLIJ

@@ -1,7 +1,9 @@
 #include "Main.h"
 
-Bullet::Bullet( SDL_Point position , int direction )
+Bullet::Bullet( SDL_Point position , int direction , int id , int clientId )
 {
+    this->id = id;
+    this->clientId = 1;
     this->position = position;
     this->direction = direction;
     this->x = position.x;
@@ -17,7 +19,18 @@ void Bullet::move( float timeStep )
     position.y = int(y);
 }
 
-void Bullet::print() {
-    std::cout << "Bullet       position: [ " << position.x << " , " << position.y << " ]\n"
-              << "-----------------------------------------------------------\n";
+void Bullet::print()
+{
+    std::cout << "Bullet (" << id << ")   position: [ " << position.x << " , " << position.y << " ]\n";
+
+}
+
+int Bullet::getId()
+{
+    return id;
+}
+
+int Bullet::getClientId()
+{
+    return clientId;
 }
