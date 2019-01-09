@@ -44,6 +44,7 @@ private:
     UniversalPacket universalPacket;
     Uint8 hostId;
     Uint8 mapId;
+    Timer* timer;
 };
 
 template<class T>

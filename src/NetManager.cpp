@@ -44,6 +44,8 @@ NetManager::NetManager()
 
     SDLNet_TCP_AddSocket(TCP_SocketSet,TCP_socket);
     SDLNet_CheckSockets(TCP_SocketSet,0);
+
+    timer = new Timer();
 }
 
 
@@ -138,9 +140,13 @@ void NetManager::update()
         processTcp();
         processUdp();
 
-        //calculate()
+        for (auto& client: clients )
+            client->move(timer->getStepTime());
+
         monitoring();
-        SDL_Delay(10);
+        SDL_Delay(1);
+
+        timer->update();
     }
 }
 
@@ -366,7 +372,7 @@ void NetManager::processUdp()
                         Uint32 time = eventPacket->getTime();
 
                         //todo: tutaj liczenie pozycji
-                        sender->move();
+                        //sender->move();
 
                         CurrentPositionPacket currentPositionPacket;
                         currentPositionPacket.setPlayerId(sender->getId());
@@ -408,5 +414,7 @@ Uint8 NetManager::getMapId() {
 void NetManager::monitoring()
 {
     std::cout << "\x1B[2J\x1B[H";
+    std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "\n";
+    std::cout << "-----------------------------------------------------------\n";
     for (auto &client : clients) client->print();
 }

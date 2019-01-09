@@ -84,15 +84,17 @@ int Client::getITowerDirection() {
 }
 
 void Client::print() {
-    std::cout << "Player info:|ID:" << (int)getId() << "|Position:(" << position.x << "," << y << ")|" << "iDirection:" << iDirection << "iTowerDirection" << iTowerDirection << "\n" <<
-            "[ "
+    std::cout << "Player       position: [ " << position.x << " , " << position.y << " ]\n"
+            "ID: " << int(getId()) <<"      directions: [ "<< iDirection << " , " << iTowerDirection << " ]\n"
+            "             keyboard: [ "
             << ( keys[0] ? "^" : " " ) << " , "
             << ( keys[1] ? "v" : " " ) << " , "
             << ( keys[2] ? "<" : " " ) << " , "
             << ( keys[3] ? ">" : " " ) << " , "
             << ( keys[4] ? "Z" : " " ) << " , "
             << ( keys[5] ? "X" : " " ) << " , "
-            << ( keys[6] ? "_" : " " ) << " ]\n";
+            << ( keys[6] ? "_" : " " ) << " ]\n"
+            << "-----------------------------------------------------------\n";
 }
 
 void Client::setKeys(int x,bool keys)
@@ -137,17 +139,14 @@ void Client::setTowerDirection(float towerDirection) {
     Client::towerDirection = towerDirection;
 }
 
-void Client::move()
+void Client::move( float timeStep )
 {
-    float timeStep = 0.00833333;
-
     moveSpeed = accelerate(keys[0] , moveSpeed , 0 , TANKMAXSPEED , timeStep );
     moveSpeed = accelerate(keys[1] , moveSpeed , 0 , -TANKMAXSPEED , timeStep );
     directionSpeed = accelerate(keys[3] , directionSpeed , 0 , TANKMAXDIR , timeStep );
     directionSpeed = accelerate(keys[2] , directionSpeed , 0 , -TANKMAXDIR , timeStep );
     towerSpeed = accelerate(keys[5] , towerSpeed , 0 , TANKMAXDIR , timeStep );
     towerSpeed = accelerate(keys[4] , towerSpeed , 0 , -TANKMAXDIR , timeStep );
-
 
     double xm = cos((iDirection) *M_PI/180) * moveSpeed * timeStep;
     double ym = sin((iDirection) *M_PI/180) * moveSpeed * timeStep;
@@ -169,7 +168,6 @@ void Client::move()
 
     iDirection = int(tankDirection);
     iTowerDirection = int(towerDirection);
-
 }
 
 float Client::accelerate(bool isPressed, float what , float from , float to , float timeStep )

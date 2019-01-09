@@ -42,6 +42,7 @@
 #include "Packets/SyncPacket.h"
 #include "Packets/EventPacket.h"
 
+#include "Timer.h"
 #include "Models/Client.h"
 #include "Room.h"
 

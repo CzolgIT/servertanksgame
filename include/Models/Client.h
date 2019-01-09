@@ -34,7 +34,7 @@ public:
 
     void setTowerDirection(float towerDirection);
 
-    void move();
+    void move( float timeStep );
     float accelerate(bool isPressed, float what , float from , float to , float timeStep );
 
 
@@ -60,9 +60,9 @@ private:
 
     SDL_Point position={128,128};
     int iDirection=0, iTowerDirection=0;
-    float x=0,y=0;
+    float x=128,y=128;
     float tankDirection=0,towerDirection=0;
-    bool keys[7]; // up down left right z x space
+    bool keys[7]={false}; // up down left right z x space
     float moveSpeed=0,directionSpeed=0,towerSpeed=0;
 };
 
