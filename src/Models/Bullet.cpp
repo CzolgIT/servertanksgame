@@ -3,7 +3,7 @@
 Bullet::Bullet( SDL_Point position , int direction , int id , int clientId )
 {
     this->id = id;
-    this->clientId = 1;
+    this->clientId = clientId;
     this->position = position;
     this->direction = direction;
     this->x = position.x;

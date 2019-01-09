@@ -156,12 +156,13 @@ void NetManager::update()
 
         for (auto& client: clients )
             client->move(timer->getStepTime());
-
         for (auto& bullet: bullets )
             bullet->move(timer->getStepTime());
 
+
+
         monitoring();
-        SDL_Delay(1);
+        SDL_Delay(5);
 
         timer->update();
     }

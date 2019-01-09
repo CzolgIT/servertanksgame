@@ -201,7 +201,7 @@ void Client::move( float timeStep )
         bulletInfoPacket.setPlayerId(static_cast<Uint8>(bullet->getClientId()));
         bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
         bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
-        UdpConnection::udpSendAll(bulletInfoPacket, reinterpret_cast<std::vector<std::unique_ptr<Client>> &>(clients));
+        UdpConnection::udpSendAll(bulletInfoPacket, *clients );
 
     }
 
