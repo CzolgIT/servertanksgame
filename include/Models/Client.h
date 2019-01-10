@@ -38,8 +38,11 @@ public:
     SDL_Point getPosition();
     int getIDirection();
     int getITowerDirection();
-    bool getKeys(int i);
+    int getTankSpeed();
+    int getRotationSpeed();
+    int getTurretRotationSpeed();
 
+    bool getKeys(int i);
     bool needsUdpAddress();
 
     void print();
@@ -58,7 +61,7 @@ private:
     float x=128,y=128;
     float tankDirection=0,towerDirection=0;
     bool keys[7]={false}; // up down left right z x space
-    float moveSpeed=0,directionSpeed=0,towerSpeed=0;
+    float tankSpeed=0,rotationSpeed=0,turretRotationSpeed=0;
 
     bool readyToShoot=false;
     float shootLoading=0;

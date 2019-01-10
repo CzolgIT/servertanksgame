@@ -85,17 +85,18 @@ int Client::getITowerDirection() {
 
 void Client::print() {
     std::cout << "Player (" << int(getId()) << ")   position: [ " << position.x << " , " << position.y << " ]\n"
-            <<"             directions: [ "<< iDirection << " , " << iTowerDirection << " ]\n"
-            "             keyboard: [ "
-            << ( keys[0] ? "^" : " " ) << " , "
-            << ( keys[1] ? "v" : " " ) << " , "
-            << ( keys[2] ? "<" : " " ) << " , "
-            << ( keys[3] ? ">" : " " ) << " , "
-            << ( keys[4] ? "Z" : " " ) << " , "
-            << ( keys[5] ? "X" : " " ) << " , "
-            << ( keys[6] ? "_" : " " ) << " ]\n"
-            << "            reloading: " << shootLoading << "\n"
-            << "-----------------------------------------------------------\n";
+              <<"             directions: [ "<< iDirection << " , " << iTowerDirection << " ]\n"
+              <<"                speed: [ " << int(tankSpeed) << " , " << int(rotationSpeed) << " , " << int(turretRotationSpeed) << " ]\n"
+              <<"             keyboard: [ "
+                << ( keys[0] ? "^" : " " ) << " , "
+                << ( keys[1] ? "v" : " " ) << " , "
+                << ( keys[2] ? "<" : " " ) << " , "
+                << ( keys[3] ? ">" : " " ) << " , "
+                << ( keys[4] ? "Z" : " " ) << " , "
+                << ( keys[5] ? "X" : " " ) << " , "
+                << ( keys[6] ? "_" : " " ) << " ]\n"
+              << "            reloading: " << shootLoading << "\n"
+              << "-----------------------------------------------------------\n";
 
     for(auto* bullet : *bullets ) { if (bullet->getClientId() == id ) bullet->print(); }
     std::cout << "-----------------------------------------------------------\n";
@@ -145,15 +146,15 @@ void Client::setTowerDirection(float towerDirection) {
 
 void Client::move( float timeStep )
 {
-    moveSpeed = accelerate(keys[0] , moveSpeed , 0 , TANKMAXSPEED , timeStep );
-    moveSpeed = accelerate(keys[1] , moveSpeed , 0 , -TANKMAXSPEED , timeStep );
-    directionSpeed = accelerate(keys[3] , directionSpeed , 0 , TANKMAXDIR , timeStep );
-    directionSpeed = accelerate(keys[2] , directionSpeed , 0 , -TANKMAXDIR , timeStep );
-    towerSpeed = accelerate(keys[5] , towerSpeed , 0 , TANKMAXDIR , timeStep );
-    towerSpeed = accelerate(keys[4] , towerSpeed , 0 , -TANKMAXDIR , timeStep );
+    tankSpeed = accelerate(keys[0] , tankSpeed , 0 , TANKMAXSPEED , timeStep );
+    tankSpeed = accelerate(keys[1] , tankSpeed , 0 , -TANKMAXSPEED , timeStep );
+    rotationSpeed = accelerate(keys[3] , rotationSpeed , 0 , TANKMAXDIR , timeStep );
+    rotationSpeed = accelerate(keys[2] , rotationSpeed , 0 , -TANKMAXDIR , timeStep );
+    turretRotationSpeed = accelerate(keys[5] , turretRotationSpeed , 0 , TANKMAXDIR , timeStep );
+    turretRotationSpeed = accelerate(keys[4] , turretRotationSpeed , 0 , -TANKMAXDIR , timeStep );
 
-    double xm = cos((iDirection) *M_PI/180) * moveSpeed * timeStep;
-    double ym = sin((iDirection) *M_PI/180) * moveSpeed * timeStep;
+    double xm = cos((iDirection) *M_PI/180) * tankSpeed * timeStep;
+    double ym = sin((iDirection) *M_PI/180) * tankSpeed * timeStep;
 
     x += xm; //-blocked.x;
     y += ym; //-blocked.y;
@@ -161,8 +162,8 @@ void Client::move( float timeStep )
     position.x = int(x);
     position.y = int(y);
 
-    tankDirection += directionSpeed * timeStep ;
-    towerDirection += directionSpeed * timeStep + towerSpeed * timeStep;
+    tankDirection += rotationSpeed * timeStep ;
+    towerDirection += rotationSpeed * timeStep + turretRotationSpeed * timeStep;
 
     if ( tankDirection > 360 ) tankDirection -= 360;
     if ( towerDirection > 360 ) towerDirection -= 360;
@@ -194,7 +195,6 @@ void Client::move( float timeStep )
         Bullet * bullet = new Bullet(shootPosition(),iTowerDirection,newId,id);
         bullets->push_back(bullet);
 
-        // todo: DAWID BINKUS WEZ TO WYSLIJ
         BulletInfoPacket bulletInfoPacket;
         bulletInfoPacket.setX(static_cast<Uint16>(bullet->getPosition().x));
         bulletInfoPacket.setY(static_cast<Uint16>(bullet->getPosition().y));
@@ -202,10 +202,7 @@ void Client::move( float timeStep )
         bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
         bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
         UdpConnection::udpSendAll(bulletInfoPacket, *clients );
-
     }
-
-
 }
 
 float Client::accelerate(bool isPressed, float what , float from , float to , float timeStep )
@@ -246,4 +243,19 @@ void Client::setBulletsPointer( std::vector<Bullet *> *bullets )
 void Client::setClientsPointer( std::vector<std::unique_ptr<Client>> *clients )
 {
     this->clients = clients;
+}
+
+int Client::getTankSpeed()
+{
+    return int(tankSpeed);
+}
+
+int Client::getRotationSpeed()
+{
+    return int(rotationSpeed);
+}
+
+int Client::getTurretRotationSpeed()
+{
+    return int(turretRotationSpeed);
 }
