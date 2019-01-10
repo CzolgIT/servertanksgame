@@ -98,7 +98,23 @@ void Client::print() {
               << "            reloading: " << shootLoading << "\n"
               << "-----------------------------------------------------------\n";
 
-    for(auto* bullet : *bullets ) { if (bullet->getClientId() == id ) bullet->print(); }
+    auto bullet_iterator = bullets->begin();
+    while(bullet_iterator != bullets->end())
+    {
+        if ((*bullet_iterator)->todestroy)
+        {
+            delete *bullet_iterator;
+            bullet_iterator = bullets->erase(bullet_iterator);
+        }
+        else
+            ++bullet_iterator;
+    }
+
+    for(auto* bullet : *bullets )
+    {
+        if (bullet->getClientId() == id )
+            bullet->print();
+    }
     std::cout << "-----------------------------------------------------------\n";
 }
 

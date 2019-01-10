@@ -14,6 +14,9 @@ public:
     int getClientId();
     SDL_Point getPosition();
     int getDirection();
+
+    bool todestroy;
+
 private:
 
     int id;
@@ -22,6 +25,7 @@ private:
     SDL_Point position;
     float x;
     float y;
+
 
 };
 

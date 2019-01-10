@@ -160,12 +160,9 @@ void NetManager::update()
             CurrentPositionPacket currentPositionPacket;
             currentPositionPacket.setFromClient(dynamic_cast<Client *>(client.get()) );
             UdpConnection::udpSendAll(currentPositionPacket,clients);
-
         }
         for (auto& bullet: bullets )
             bullet->move(timer->getStepTime());
-
-
 
         monitoring();
         SDL_Delay(10);

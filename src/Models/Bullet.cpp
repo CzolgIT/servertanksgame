@@ -17,12 +17,14 @@ void Bullet::move( float timeStep )
 
     position.x = int(x);
     position.y = int(y);
+
+    if ( x< 0 || x > 4096 || y<0 || y> 4096 )
+        todestroy=true;
 }
 
 void Bullet::print()
 {
     std::cout << "Bullet (" << id << ")   position: [ " << position.x << " , " << position.y << " ]\n";
-
 }
 
 int Bullet::getId()
@@ -42,3 +44,4 @@ SDL_Point Bullet::getPosition() {
 int Bullet::getDirection() {
     return direction;
 }
+
