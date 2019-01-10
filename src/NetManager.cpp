@@ -154,15 +154,21 @@ void NetManager::update()
         processTcp();
         processUdp();
 
-        for (auto& client: clients )
+        for (auto &client: clients )
+        {
             client->move(timer->getStepTime());
+            CurrentPositionPacket currentPositionPacket;
+            currentPositionPacket.setFromClient(dynamic_cast<Client *>(client.get()) );
+            UdpConnection::udpSendAll(currentPositionPacket,clients);
+
+        }
         for (auto& bullet: bullets )
             bullet->move(timer->getStepTime());
 
 
 
         monitoring();
-        SDL_Delay(5);
+        SDL_Delay(10);
 
         timer->update();
     }
@@ -389,12 +395,6 @@ void NetManager::processUdp()
                         for (int i = 0; i < 7; i++) {
                             sender->setKeys(i, eventPacket->getKeys(i));
                         }
-
-                        Uint32 time = eventPacket->getTime();
-
-                        CurrentPositionPacket currentPositionPacket;
-                        currentPositionPacket.setFromClient( sender );
-                        UdpConnection::udpSendAll(currentPositionPacket,clients);
                     }
                 }
                 break;
