@@ -26,6 +26,8 @@ public:
     void setTankDirection(float tankDirection);
     float getTowerDirection() const;
     void setTowerDirection(float towerDirection);
+    void setNickname(std::string nickname);
+    std::string getNickname();
 
     void move( float timeStep );
     float accelerate(bool isPressed, float what , float from , float to , float timeStep );
@@ -53,6 +55,7 @@ private:
     UDPpacket udpPacket;
     Uint8 id;
     bool hasUDPAddress;
+    std::string nickname;
 
     SDLNet_SocketSet* SockSet;
 

@@ -39,7 +39,7 @@ Uint16 BulletInfoPacket::getY() const {
     return SDLNet_Read16(&data[5]);
 }
 Uint16 BulletInfoPacket::getAngle() const {
-    SDLNet_Read16(&data[7]);
+    return SDLNet_Read16(&data[7]);
 }
 void BulletInfoPacket::print() const {
     std::cout << "BulletInfoPacketID:" << (int)getPlayerId() << "BulletID:" << (int)getBulletId() << " X:" << (int)getX() << "Y:" << (int)getY() << " Angle:" << (int)getAngle() << std::endl;

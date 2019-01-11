@@ -96,6 +96,7 @@ void Client::print() {
                 << ( keys[5] ? "X" : " " ) << " , "
                 << ( keys[6] ? "_" : " " ) << " ]\n"
               << "            reloading: " << shootLoading << "\n"
+              << "             nickname: " << nickname << "\n"
               << "-----------------------------------------------------------\n";
 
     auto bullet_iterator = bullets->begin();
@@ -275,3 +276,14 @@ int Client::getTurretRotationSpeed()
 {
     return int(turretRotationSpeed);
 }
+
+void Client::setNickname(std::string nickname)
+{
+    this->nickname = nickname;
+}
+
+std::string Client::getNickname()
+{
+    return nickname;
+}
+

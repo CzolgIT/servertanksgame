@@ -8,9 +8,9 @@ PlayerJoinedPacket::PlayerJoinedPacket():BasePacket(PT_PLAYER_JOINED,PLAYERJOINE
 
 }
 
-PlayerJoinedPacket::PlayerJoinedPacket(Uint8 id):PlayerJoinedPacket() {
-    setId(id);
-}
+//PlayerJoinedPacket::PlayerJoinedPacket(Uint8 id):PlayerJoinedPacket() {
+//    setId(id);
+//}
 
 PlayerJoinedPacket::~PlayerJoinedPacket() = default;
 

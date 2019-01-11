@@ -81,7 +81,6 @@ void NetManager::acceptClient()
         }
         if(clients.size() < MAX_CLIENTS)
         {
-
             JoinResponsePacket joinResponsePacket;
             joinResponsePacket.setResponse(JR_OK);
             joinResponsePacket.setId(getAvailableId());
@@ -101,8 +100,9 @@ void NetManager::acceptClient()
             SDLNet_TCP_AddSocket(TCP_SocketSet, clients.back()->getTcpSocket());
             SDLNet_CheckSockets(TCP_SocketSet,0);
             clients.back()->attachSocketSet(&TCP_SocketSet);
+            clients.back()->setNickname(joinRequestPacket.getNickname());
 
-            std::cout << "Client joined with ID: " << (int) clients.back()->getId() << std::endl;
+            std::cout << "Client joined with ID: " << (int) clients.back()->getId() << " and nickname: "<< clients.back()->getNickname() << std::endl;
             clients.back()->setBulletsPointer( &bullets );
             clients.back()->setClientsPointer( &clients );
 
@@ -149,7 +149,9 @@ void NetManager::update()
     while(!quit){
 
         // Check if any sockets are ready
-        int numready = SDLNet_CheckSockets(TCP_SocketSet,0);
+        //int numready =
+        SDLNet_CheckSockets(TCP_SocketSet,0);
+
         acceptClient();
         processTcp();
         processUdp();
@@ -166,7 +168,6 @@ void NetManager::update()
 
         monitoring();
         SDL_Delay(10);
-
         timer->update();
     }
 }

@@ -12,7 +12,7 @@
 class PlayerJoinedPacket : public BasePacket {
 public:
     PlayerJoinedPacket();
-    PlayerJoinedPacket(Uint8 id);
+    //PlayerJoinedPacket(Uint8 id);
     ~PlayerJoinedPacket();
 
     void setId(Uint8 id);
@@ -24,7 +24,9 @@ public:
     void print()const override;
 
 private:
-    Uint8 id;
+
+    //Uint8 id;
+
 };
 
 
