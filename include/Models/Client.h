@@ -32,8 +32,10 @@ public:
     void move( float timeStep );
     float accelerate(bool isPressed, float what , float from , float to , float timeStep );
     SDL_Point shootPosition();
+    bool isReadyToShoot();
+    void setUnableToShoot();
+
     void setBulletsPointer( std::vector<Bullet *> *bullets );
-    void setClientsPointer( std::vector<std::unique_ptr<Client>> *clients );
 
     TCPsocket getTcpSocket();
     Uint8 getId();
@@ -78,8 +80,8 @@ private:
 
     bool readyToShoot=false;
     float shootLoading=0;
+
     std::vector<Bullet *> *bullets;
-    std::vector<std::unique_ptr<Client>> *clients;
 
 };
 

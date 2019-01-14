@@ -201,23 +201,6 @@ void Client::move( float timeStep )
         }
     }
 
-    if (keys[6] && readyToShoot)
-    {
-        readyToShoot=false;
-
-        int newId = bullets->empty()? 1 : int(bullets->size()+1);
-
-        Bullet * bullet = new Bullet(shootPosition(),iTowerDirection,newId,id);
-        bullets->push_back(bullet);
-
-        BulletInfoPacket bulletInfoPacket;
-        bulletInfoPacket.setX(static_cast<Uint16>(bullet->getPosition().x));
-        bulletInfoPacket.setY(static_cast<Uint16>(bullet->getPosition().y));
-        bulletInfoPacket.setPlayerId(static_cast<Uint8>(bullet->getClientId()));
-        bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
-        bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
-        UdpConnection::udpSendAll(bulletInfoPacket, *clients );
-    }
 }
 
 float Client::accelerate(bool isPressed, float what , float from , float to , float timeStep )
@@ -253,11 +236,6 @@ SDL_Point Client::shootPosition()
 void Client::setBulletsPointer( std::vector<Bullet *> *bullets )
 {
     this->bullets = bullets;
-}
-
-void Client::setClientsPointer( std::vector<std::unique_ptr<Client>> *clients )
-{
-    this->clients = clients;
 }
 
 int Client::getTankSpeed()
@@ -310,4 +288,14 @@ void Client::doDamage(int damage)
 Collider* Client::getCollider()
 {
     return collider;
+}
+
+bool Client::isReadyToShoot()
+{
+    return readyToShoot;
+}
+
+void Client::setUnableToShoot()
+{
+    this->readyToShoot=false;
 }

@@ -97,7 +97,11 @@ void NetManager::acceptClient()
 
             }
 
-            clients.push_back(std::unique_ptr<Client>(new Client(joinResponsePacket.getId(),new_socket,UDP_socket)));
+            Client * klient = new Client(joinResponsePacket.getId(),new_socket,UDP_socket);
+
+            clients.push_back(std::unique_ptr<Client>(klient));
+
+            klient->setBulletsPointer( &bullets );
 
             SDLNet_TCP_AddSocket(TCP_SocketSet, clients.back()->getTcpSocket());
             SDLNet_CheckSockets(TCP_SocketSet,0);
@@ -105,8 +109,6 @@ void NetManager::acceptClient()
             clients.back()->setNickname(joinRequestPacket.getNickname());
 
             std::cout << "Client joined with ID: " << (int) clients.back()->getId() << " and nickname: "<< clients.back()->getNickname() << std::endl;
-            clients.back()->setBulletsPointer( &bullets );
-            clients.back()->setClientsPointer( &clients );
 
             //sending packet to another players
             PlayerJoinedPacket playerJoinedPacket;

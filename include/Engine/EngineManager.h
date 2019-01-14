@@ -17,6 +17,8 @@ private:
     std::vector<std::unique_ptr<Client>>* clients;
     std::vector<Bullet *>* bullets;
 
+    int bulletIdCounter;
+
 };
 
 #endif
