@@ -10,7 +10,7 @@ void CurrentPositionPacket::setTurretRotation(Uint16 turretRotation) { SDLNet_Wr
 void CurrentPositionPacket::setTankSpeed(Uint16 tankSpeed) { SDLNet_Write16(tankSpeed, &data[10]); }
 void CurrentPositionPacket::setRotationSpeed(Uint16 rotationSpeed) { SDLNet_Write16(rotationSpeed, &data[12]); }
 void CurrentPositionPacket::setTurretRotationSpeed(Uint16 turretRotationSpeed) { SDLNet_Write16(turretRotationSpeed, &data[14]); }
-
+void CurrentPositionPacket::setActualHp(Uint8 actHp) {data[16] = actHp;}
 void CurrentPositionPacket::setFromClient(Client* client)
 {
     data[1] = client->getId();
@@ -21,6 +21,7 @@ void CurrentPositionPacket::setFromClient(Client* client)
     SDLNet_Write16(static_cast<Uint16>(client->getTankSpeed()), &data[10]);
     SDLNet_Write16(static_cast<Uint16>(client->getRotationSpeed()), &data[12]);
     SDLNet_Write16(static_cast<Uint16>(client->getTurretRotationSpeed()), &data[14]);
+    data[16] = client->getActHp();
 }
 
 Uint8 CurrentPositionPacket::getPlayerId() const { return data[1]; }
@@ -31,6 +32,7 @@ Uint16 CurrentPositionPacket::getTurretRotation() const { return SDLNet_Read16(&
 Uint16 CurrentPositionPacket::getTankSpeed() const { return SDLNet_Read16(&data[10]); }
 Uint16 CurrentPositionPacket::getRotationSpeed() const { return SDLNet_Read16(&data[12]); }
 Uint16 CurrentPositionPacket::getTurretRotationSpeed() const { return SDLNet_Read16(&data[14]); }
+Uint8 CurrentPositionPacket::getActualHp() const {return data[16];}
 
 void CurrentPositionPacket::print() const
 {

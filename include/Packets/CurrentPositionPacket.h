@@ -5,8 +5,8 @@
 #include "Models/Bullet.h"
 #include "Models/Client.h"
 
-//(packet type + playerId + x + y + tankrot + turretrot + speed + rotspeed + turretspeed)
-#define CURRENT_POSITION_PACKET_SIZE (1+1+2+2+2+2+2+2+2)
+//(packet type + playerId + x + y + tankrot + turretrot + speed + rotspeed + turretspeed + actualhp)
+#define CURRENT_POSITION_PACKET_SIZE (1+1+2+2+2+2+2+2+2+1)
 
 class CurrentPositionPacket : public BasePacket{
 public:
@@ -20,6 +20,7 @@ public:
     void setTankSpeed(Uint16 tankSpeed);
     void setRotationSpeed(Uint16 rotationSpeed);
     void setTurretRotationSpeed(Uint16 turretRotationSpeed);
+    void setActualHp(Uint8 actHp);
 
     void setFromClient(Client* client);
 
@@ -31,6 +32,7 @@ public:
     Uint16 getTankSpeed() const;
     Uint16 getRotationSpeed() const;
     Uint16 getTurretRotationSpeed() const;
+    Uint8 getActualHp() const;
 
     void print() const override;
 };

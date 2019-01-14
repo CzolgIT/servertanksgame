@@ -287,3 +287,11 @@ std::string Client::getNickname()
     return nickname;
 }
 
+Uint8 Client::getActHp() const {
+    return actHp;
+}
+
+void Client::setActHp(Uint8 actHp) {
+    Client::actHp = actHp;
+}
+

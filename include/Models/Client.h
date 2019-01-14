@@ -43,7 +43,11 @@ public:
     int getTankSpeed();
     int getRotationSpeed();
     int getTurretRotationSpeed();
-    
+
+    Uint8 getActHp() const;
+
+    void setActHp(Uint8 actHp);
+
     bool getKeys(int i);
     bool needsUdpAddress();
 
@@ -56,7 +60,7 @@ private:
     Uint8 id;
     bool hasUDPAddress;
     std::string nickname;
-
+    Uint8 actHp;
     SDLNet_SocketSet* SockSet;
 
     SDL_Point position={128,128};
