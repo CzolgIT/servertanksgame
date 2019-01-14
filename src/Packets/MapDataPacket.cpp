@@ -3,31 +3,30 @@
 //
 #include "Main.h"
 
-MapDataPacket::MapDataPacket(Uint8 mapWidth, Uint8 mapHeight) : BasePacket(PT_MAP_INFO,
-                                                                           static_cast<unsigned int>(1 + 2 + mapHeight * mapWidth)) {
-
+MapDataPacket::MapDataPacket() : BasePacket(PT_MAP_INFO,MAP_PACKET_SIZE) {
 }
 
 MapDataPacket::~MapDataPacket() = default;
 
-void MapDataPacket::setMapData(char *data) {
-    memcpy(&data[3],data,getMapHeight()*getMapWidth());
+void MapDataPacket::setMapData(char *map) {
+    memcpy(&data[1],map,getMapHeight()*getMapWidth());
 }
 
-Uint8 MapDataPacket::getMapWidth() const {
-    return data[2];
+int MapDataPacket::getMapWidth() const {
+    return 8;
 }
 
-Uint8 MapDataPacket::getMapHeight() const {
-    return data[3];
+int MapDataPacket::getMapHeight() const {
+    return 8;
 }
+
 
 char *MapDataPacket::getMapData() const {
-    return (char*)&data[3];
+    return (char*)data[1];
 }
 
 void MapDataPacket::print() const {
-    std::cout << "Received map data of width" << getMapWidth() << " and height" << getMapHeight() << std::endl;
+    std::cout << "Got data " << getMapData() << std::endl;
 }
 
 

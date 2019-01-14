@@ -105,10 +105,21 @@ void NetManager::acceptClient()
 
             SDLNet_TCP_AddSocket(TCP_SocketSet, clients.back()->getTcpSocket());
             SDLNet_CheckSockets(TCP_SocketSet,0);
+
+
             clients.back()->attachSocketSet(&TCP_SocketSet);
             clients.back()->setNickname(joinRequestPacket.getNickname());
 
             std::cout << "Client joined with ID: " << (int) clients.back()->getId() << " and nickname: "<< clients.back()->getNickname() << std::endl;
+
+            //Wysylanie mapy
+
+//            MapDataPacket mapDataPacket;
+//            char * map = new char[64];
+//            Map::getMapFromFile(map);
+//            std::cout << map <<  std::endl;
+//            mapDataPacket.setMapData(map);
+//            clients.back()->tcpSend(mapDataPacket);
 
             //sending packet to another players
             PlayerJoinedPacket playerJoinedPacket;

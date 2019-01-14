@@ -6,16 +6,16 @@
 #define SERVERTANKSGAME_MAPDATAPACKET_H
 
 #include "Main.h"
-
+#define MAP_PACKET_SIZE (1 + 8 * 8)
 class MapDataPacket : public BasePacket
 {
 public:
-    MapDataPacket(Uint8 mapWidth, Uint8 mapHeight);
+    MapDataPacket();
     ~MapDataPacket();
 
     void setMapData(char * data);
-    Uint8 getMapWidth() const;
-    Uint8 getMapHeight() const;
+    int getMapWidth() const;
+    int getMapHeight() const;
     char * getMapData() const;
 
     void print() const override;

@@ -9,6 +9,8 @@ public:
 
     explicit Map();
 
+    static char * getMapFromFile(char * pointer);
+
 };
 
 #endif
