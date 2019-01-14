@@ -60,6 +60,28 @@ void EngineManager::checkColliders()
         }
     }
 
+    if (clients->size() > 1)
+        for (auto &client1: *clients)
+        {
+            for (auto &client2: *clients)
+            {
+                Collider *col1 = client1->getCollider();
+                Collider *col2 = client2->getCollider();
+                Vector2D col = Collider::areColliding(col1, col2);
+
+                if (col.x != 0 || col.y != 0)
+                {
+                    client1->setX(client1->getX()+col.x);
+                    client1->setY(client1->getY()+col.y);
+
+                    client2->setX(client2->getX()-col.x);
+                    client2->setY(client2->getY()-col.y);
+                }
+
+
+            }
+        }
+
     auto bullet_iterator = bullets->begin();
     while(bullet_iterator != bullets->end())
     {
