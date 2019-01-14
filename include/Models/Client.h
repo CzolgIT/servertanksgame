@@ -45,7 +45,7 @@ public:
     int getTurretRotationSpeed();
 
     Uint8 getActHp() const;
-
+    Collider* getCollider();
     void setActHp(Uint8 actHp);
 
     bool getKeys(int i);
@@ -60,12 +60,15 @@ private:
     Uint8 id;
     bool hasUDPAddress;
     std::string nickname;
-    Uint8 actHp;
+    Uint8 actHp = 100;
     SDLNet_SocketSet* SockSet;
 
+    // GameObject
     SDL_Point position={128,128};
-    int iDirection=0, iTowerDirection=0;
     float x=128,y=128;
+    Collider *collider;
+
+    int iDirection=0, iTowerDirection=0;
     float tankDirection=0,towerDirection=0;
     bool keys[7]={false}; // up down left right z x space
     float tankSpeed=0,rotationSpeed=0,turretRotationSpeed=0;
@@ -74,6 +77,7 @@ private:
     float shootLoading=0;
     std::vector<Bullet *> *bullets;
     std::vector<std::unique_ptr<Client>> *clients;
+
 };
 
 

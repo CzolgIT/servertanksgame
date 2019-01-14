@@ -1,11 +1,13 @@
 #include "Main.h"
 
-Client::Client(Uint8 ID,TCPsocket tcpsock, UDPsocket udpsock):
+Client::Client(Uint8 ID,TCPsocket tcpsock, UDPsocket udpsock) :
 tcpSocket(tcpsock),
 udpSocket(udpsock),
 id(ID)
 {
+    this->collider = new Collider(x,y,85,65,iDirection);
 }
+
 Client::~Client()
 {
 
@@ -99,18 +101,6 @@ void Client::print() {
               << "             nickname: " << nickname << "\n"
               << "-----------------------------------------------------------\n";
 
-    auto bullet_iterator = bullets->begin();
-    while(bullet_iterator != bullets->end())
-    {
-        if ((*bullet_iterator)->todestroy)
-        {
-            delete *bullet_iterator;
-            bullet_iterator = bullets->erase(bullet_iterator);
-        }
-        else
-            ++bullet_iterator;
-    }
-
     for(auto* bullet : *bullets )
     {
         if (bullet->getClientId() == id )
@@ -173,8 +163,14 @@ void Client::move( float timeStep )
     double xm = cos((iDirection) *M_PI/180) * tankSpeed * timeStep;
     double ym = sin((iDirection) *M_PI/180) * tankSpeed * timeStep;
 
+
     x += xm; //-blocked.x;
     y += ym; //-blocked.y;
+
+    if (x<50)   x=50;
+    if (x>4046) x=4046;
+    if (y<50)   y=50;
+    if (y>4046) y=4046;
 
     position.x = int(x);
     position.y = int(y);
@@ -190,6 +186,8 @@ void Client::move( float timeStep )
 
     iDirection = int(tankDirection);
     iTowerDirection = int(towerDirection);
+
+    collider->update(x,y,85,65,iDirection);
 
     // SZCZELANIE
 
@@ -291,7 +289,15 @@ Uint8 Client::getActHp() const {
     return actHp;
 }
 
-void Client::setActHp(Uint8 actHp) {
-    Client::actHp = actHp;
+void Client::setActHp(Uint8 actHp)
+{
+    if ( this->actHp > 0 )
+        this->actHp = actHp;
+    if ( actHp < 0)
+        this->actHp = 0;
 }
 
+Collider* Client::getCollider()
+{
+    return collider;
+}

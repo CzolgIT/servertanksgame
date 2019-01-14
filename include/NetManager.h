@@ -32,6 +32,8 @@ public:
     
 private:
 
+    EngineManager* engineManager;
+
     std::vector<std::unique_ptr<Client>> clients;
     std::vector<Bullet *> bullets;
 
@@ -45,6 +47,9 @@ private:
     Uint8 hostId;
     Uint8 mapId;
     Timer* timer;
+
+
+
 };
 
 template<class T>

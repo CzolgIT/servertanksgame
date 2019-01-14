@@ -8,6 +8,8 @@ Bullet::Bullet( SDL_Point position , int direction , int id , int clientId )
     this->direction = direction;
     this->x = position.x;
     this->y = position.y;
+
+    this->collider = new Collider( x , y , 36 , 12 , direction );
 }
 
 void Bullet::move( float timeStep )
@@ -20,6 +22,8 @@ void Bullet::move( float timeStep )
 
     if ( x< 0 || x > 4096 || y<0 || y> 4096 )
         todestroy=true;
+
+    collider->update( x , y , 36 , 12 , direction );
 }
 
 void Bullet::print()
@@ -45,3 +49,7 @@ int Bullet::getDirection() {
     return direction;
 }
 
+Collider* Bullet::getCollider()
+{
+    return collider;
+}

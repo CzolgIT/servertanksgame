@@ -13,8 +13,10 @@ class _GameObject
 public:
 
     _GameObject( float x, float y, int width, int height , ObjectType type);
+
     // virtual void Start() // not used
-    virtual void update(){}
+    //virtual void update(){}
+
     virtual void move( float timeStep ){}
     virtual void handleEvent(SDL_Event& e){}
     virtual void destroy();

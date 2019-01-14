@@ -46,6 +46,8 @@ NetManager::NetManager()
     SDLNet_CheckSockets(TCP_SocketSet,0);
 
     timer = new Timer();
+
+    engineManager = new EngineManager( &clients , &bullets );
 }
 
 
@@ -158,15 +160,8 @@ void NetManager::update( int argc )
         processTcp();
         processUdp();
 
-        for (auto &client: clients )
-        {
-            client->move(timer->getStepTime());
-            CurrentPositionPacket currentPositionPacket;
-            currentPositionPacket.setFromClient(dynamic_cast<Client *>(client.get()) );
-            UdpConnection::udpSendAll(currentPositionPacket,clients);
-        }
-        for (auto& bullet: bullets )
-            bullet->move(timer->getStepTime());
+        engineManager->move(timer->getStepTime());
+        engineManager->checkColliders();
 
         if (argc > 1)
             monitoring();

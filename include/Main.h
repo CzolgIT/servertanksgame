@@ -25,6 +25,11 @@
     #include <SDL2/SDL_net.h>
 #endif
 
+#include "Engine/Collisions/Vector2D.h"
+#include "Engine/Collisions/Projection.h"
+#include "Engine/Collisions/Collider.h"
+#include "Engine/GameObject/_GameObject.h"
+
 #include "Packets/BasePacket.h"
 #include "Packets/BulletInfoPacket.h"
 #include "Packets/LastPlayerSentPacket.h"
@@ -48,31 +53,26 @@
 #include "Models/Bullet.h"
 #include "Models/Client.h"
 #include "Room.h"
+#include "Engine/EngineManager.h"
 
 #include "ConnectionUtils/TcpConnection.h"
 #include "ConnectionUtils/UdpConnection.h"
 
 #include "NetManager.h"
 
-#include "Engine/Collisions/Vector2D.h"
-#include "Engine/Collisions/Projection.h"
-#include "Engine/Collisions/Collider.h"
-
-
-#include "Engine/GameObject/_GameObject.h"
+//#include "Engine/GameObject/_GameObject.h"
 #include "Engine/GameObject/Bullet.h"
 #include "Engine/GameObject/Player.h"
 #include "Engine/GameObject/Wall.h"
 #include "Engine/Map.h"
 #include "Engine/_Scene.h"
-#include "Engine/MpManager.h"
 
 
 #define delete_object(x) {delete x; x = nullptr;}
 
 //#define SERVERIP "25.63.145.1" //temporary for testing
-#define SERVERIP "153.19.7.230"
-//#define SERVERIP "127.0.0.1"
+//#define SERVERIP "153.19.7.230"
+#define SERVERIP "127.0.0.1"
 #define SERVERPORT 7777 //temporary for testing
 #define MAX_CLIENTS 100 //lol
 

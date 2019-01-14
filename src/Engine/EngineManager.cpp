@@ -1,68 +1,59 @@
 #include "Main.h"
 
-MpManager::MpManager(int color): _Scene()
+EngineManager::EngineManager( std::vector<std::unique_ptr<Client>>* clients , std::vector<Bullet *>* bullets )
 {
-    player = new Player( 128 , 128 );
-    gameObjects.push_back(player);
-    auto map = new Map();
-    map->loadFromFile( &gameObjects );
-    std::cout << "Zaczyna sie gra" << std::endl;
+    this->clients = clients;
+    this->bullets = bullets;
+}
+
+void EngineManager::move( double stepTime )
+{
+    for (auto &client: *clients )
+    {
+        client->move(stepTime);
+        CurrentPositionPacket currentPositionPacket;
+        currentPositionPacket.setFromClient(dynamic_cast<Client *>(client.get()) );
+        UdpConnection::udpSendAll(currentPositionPacket,*clients);
+    }
+    for (auto& bullet: *bullets )
+        bullet->move(stepTime);
 }
 
 
-void MpManager::handleEvents()
+void EngineManager::checkColliders()
 {
-   SDL_Event eventHandler;
-    while ( SDL_PollEvent( &eventHandler ) != 0 )
+    for (auto &client: *clients)
     {
-        if ( eventHandler.type == SDL_QUIT )
+        for (auto &bullet: *bullets)
         {
-            running = false;
-            flagReturn = -1;
-            break;
-        }
+            Collider *col1 = client->getCollider();
+            Collider *col2 = bullet->getCollider();
 
-        if( eventHandler.type == SDL_KEYDOWN) // && eventHandler.key.repeat == 0 )
-        {
-            if (eventHandler.key.keysym.sym == SDLK_ESCAPE)
+            Vector2D col = Collider::areColliding(col1, col2);
+
+            if (col.x != 0 || col.y != 0)
             {
-                running = false;
-                //netManager->disconnectPlayer();
-                flagReturn = 0;
-                break;
+                client->setActHp( uint8_t(client->getActHp()-10) );
+                bullet->todestroy = true;
             }
-            if (eventHandler.key.keysym.sym == SDLK_SPACE)
-            {
-//                SDL_Point punkt = player->shootPosition();
-//                auto* bullet = new Bullet(punkt.x , punkt.y , player->getTowDir());
-//                gameObjects.push_back(bullet);
-            }
-        }
-        for (auto &gameObject : gameObjects) {
-            gameObject->handleEvent( eventHandler );
         }
     }
 
-    CheckColliders();
-
-//    for (auto &gameObject : gameObjects) {
-//        if(gameObject->shouldBeDestroy()){
-//            gameObject->destroy();
-//            delete_object(gameObject);
-//            gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObject), gameObjects.end());
-//        }
-//        else
-//            gameObject->move( 0 );
-//}       // TO DO Step time
+    auto bullet_iterator = bullets->begin();
+    while(bullet_iterator != bullets->end())
+    {
+        if ((*bullet_iterator)->todestroy)
+        {
+            delete *bullet_iterator;
+            bullet_iterator = bullets->erase(bullet_iterator);
+        }
+        else
+            ++bullet_iterator;
+    }
 }
 
-void MpManager::sendPackets()
-{
-    
-}
 
-void MpManager::CheckColliders()
-{
+
 //    Collider * col1 = nullptr;
 //    Collider * col2 = nullptr;
 //
@@ -107,5 +98,4 @@ void MpManager::CheckColliders()
 //            }
 //        }
 //    }
-}
 

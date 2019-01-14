@@ -16,6 +16,7 @@ public:
     int getDirection();
 
     bool todestroy;
+    Collider* getCollider();
 
 private:
 
@@ -25,6 +26,8 @@ private:
     SDL_Point position;
     float x;
     float y;
+
+    Collider *collider;
 
 
 };
