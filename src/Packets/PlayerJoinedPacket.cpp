@@ -4,7 +4,9 @@
 #include "Main.h"
 
 PlayerJoinedPacket::PlayerJoinedPacket():BasePacket(PT_PLAYER_JOINED,PLAYERJOINED_PACKET_SIZE) {
-
+    for(int i=2; i<12; i++){
+        data[i] = (Uint8)0;
+    }
 }
 
 //PlayerJoinedPacket::PlayerJoinedPacket(Uint8 id):PlayerJoinedPacket() {
@@ -26,16 +28,9 @@ void PlayerJoinedPacket::print() const {
 }
 
 void PlayerJoinedPacket::setNickname(std::string nickname) {
-    data[2] = (Uint8)nickname[0];
-    data[3] = (Uint8)nickname[1];
-    data[4] = (Uint8)nickname[2];
-    data[5] = (Uint8)nickname[3];
-    data[6] = (Uint8)nickname[4];
-    data[7] = (Uint8)nickname[5];
-    data[8] = (Uint8)nickname[6];
-    data[9] = (Uint8)nickname[7];
-    data[10] = (Uint8)nickname[8];
-    data[11] = (Uint8)nickname[9];
+    for(int i =0; i<nickname.length(); i++){
+        data[i+2] = (Uint8)nickname[i];
+    }
 }
 
 std::string PlayerJoinedPacket::getNickname() const {
