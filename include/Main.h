@@ -28,7 +28,6 @@
 #include "Engine/Collisions/Vector2D.h"
 #include "Engine/Collisions/Projection.h"
 #include "Engine/Collisions/Collider.h"
-#include "Engine/GameObject/_GameObject.h"
 
 #include "Packets/BasePacket.h"
 #include "Packets/BulletInfoPacket.h"
@@ -60,12 +59,7 @@
 
 #include "NetManager.h"
 
-//#include "Engine/GameObject/_GameObject.h"
-#include "Engine/GameObject/Bullet.h"
-#include "Engine/GameObject/Player.h"
-#include "Engine/GameObject/Wall.h"
 #include "Engine/Map.h"
-#include "Engine/_Scene.h"
 
 
 #define delete_object(x) {delete x; x = nullptr;}
