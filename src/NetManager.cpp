@@ -142,7 +142,7 @@ void NetManager::acceptClient()
 }
 
 
-void NetManager::update()
+void NetManager::update( int argc )
 {
     bool quit = false;
 
@@ -166,7 +166,9 @@ void NetManager::update()
         for (auto& bullet: bullets )
             bullet->move(timer->getStepTime());
 
-        monitoring();
+        if (argc > 1)
+            monitoring();
+
         SDL_Delay(10);
         timer->update();
     }

@@ -9,7 +9,7 @@ class NetManager
 public:
     NetManager();
     ~NetManager();
-    void update();
+    void update( int argc );
     void acceptClient();
     void processTcp();
     void setHostId(Uint8 hostId);
