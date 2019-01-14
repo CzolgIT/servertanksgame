@@ -51,6 +51,7 @@
 #include "Timer.h"
 #include "Models/Bullet.h"
 #include "Models/Client.h"
+#include "Models/Wall.h"
 #include "Room.h"
 #include "Engine/EngineManager.h"
 
@@ -60,6 +61,7 @@
 #include "NetManager.h"
 
 #include "Engine/Map.h"
+
 
 
 #define delete_object(x) {delete x; x = nullptr;}

@@ -13,7 +13,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_net REQUIRED)
 
 file(GLOB SOURCES "src/*.cpp" "src/*/*.cpp" "src/*/*/*.cpp")
-add_executable(servertanksgame ${SOURCES})
+add_executable(servertanksgame ${SOURCES} include/Models/Wall.h src/Models/Wall.cpp)
 
 # use cmake/FindSDL2*.cmake
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
