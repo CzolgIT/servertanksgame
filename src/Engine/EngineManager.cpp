@@ -33,7 +33,8 @@ void EngineManager::checkColliders()
 
             if (col.x != 0 || col.y != 0)
             {
-                client->setActHp( uint8_t(client->getActHp()-10) );
+                client->doDamage( 10 );
+
                 bullet->todestroy = true;
             }
         }

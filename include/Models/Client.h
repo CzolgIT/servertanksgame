@@ -52,6 +52,7 @@ public:
     bool needsUdpAddress();
 
     void print();
+    void doDamage(int damage);
     
 private:
     TCPsocket tcpSocket;
@@ -60,7 +61,9 @@ private:
     Uint8 id;
     bool hasUDPAddress;
     std::string nickname;
-    Uint8 actHp = 100;
+
+    int actHp = 100;
+
     SDLNet_SocketSet* SockSet;
 
     // GameObject

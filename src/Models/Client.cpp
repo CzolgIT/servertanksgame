@@ -285,16 +285,26 @@ std::string Client::getNickname()
     return nickname;
 }
 
-Uint8 Client::getActHp() const {
-    return actHp;
+Uint8 Client::getActHp() const
+{
+    return uint8_t(actHp);
 }
 
 void Client::setActHp(Uint8 actHp)
 {
-    if ( this->actHp > 0 )
-        this->actHp = actHp;
-    if ( actHp < 0)
-        this->actHp = 0;
+    this->actHp = actHp;
+}
+
+void Client::doDamage(int damage)
+{
+    if (this->actHp > 0)
+        this->actHp -= damage;
+
+    if (this->actHp<1)
+    {
+        actHp = 100;
+        position = {128, 128};
+    }
 }
 
 Collider* Client::getCollider()
