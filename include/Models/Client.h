@@ -43,7 +43,7 @@ public:
     int getTankSpeed();
     int getRotationSpeed();
     int getTurretRotationSpeed();
-
+    
     bool getKeys(int i);
     bool needsUdpAddress();
 

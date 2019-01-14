@@ -7,7 +7,7 @@
 
 #include "Main.h"
 
-#define PLAYERJOINED_PACKET_SIZE (1+1+8)
+#define PLAYERJOINED_PACKET_SIZE (1+1+10+8)
 
 class PlayerJoinedPacket : public BasePacket {
 public:
@@ -20,6 +20,9 @@ public:
 
     Uint8 getId();
     //todo: get initial position
+
+    void setNickname(std::string nickname);
+    std::string getNickname() const;
 
     void print()const override;
 
