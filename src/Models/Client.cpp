@@ -100,13 +100,6 @@ void Client::print() {
               << "            reloading: " << shootLoading << "\n"
               << "             nickname: " << nickname << "\n"
               << "-----------------------------------------------------------\n";
-
-    for(auto* bullet : *bullets )
-    {
-        if (bullet->getClientId() == id )
-            bullet->print();
-    }
-    std::cout << "-----------------------------------------------------------\n";
 }
 
 void Client::setKeys(int x,bool keys)

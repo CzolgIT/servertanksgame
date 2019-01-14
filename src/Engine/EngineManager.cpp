@@ -21,8 +21,9 @@ void EngineManager::move( double stepTime )
         {
             client->setUnableToShoot();
 
-            Bullet * bullet = new Bullet(client->shootPosition(),client->getITowerDirection(),bulletIdCounter,client->getId());
+            Bullet * bullet = new Bullet(client->shootPosition(),client->getITowerDirection(),bulletIdCounter++,client->getId());
             bullets->push_back(bullet);
+
             BulletInfoPacket bulletInfoPacket;
             bulletInfoPacket.setX(static_cast<Uint16>(bullet->getPosition().x));
             bulletInfoPacket.setY(static_cast<Uint16>(bullet->getPosition().y));
@@ -30,6 +31,7 @@ void EngineManager::move( double stepTime )
             bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
             bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
             UdpConnection::udpSendAll(bulletInfoPacket, *clients );
+
         }
     }
 

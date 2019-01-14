@@ -8,6 +8,7 @@ Bullet::Bullet( SDL_Point position , int direction , int id , int clientId )
     this->direction = direction;
     this->x = position.x;
     this->y = position.y;
+    this->todestroy = false;
 
     this->collider = new Collider( x , y , 36 , 12 , direction );
 }
