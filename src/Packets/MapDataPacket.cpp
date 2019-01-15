@@ -22,7 +22,12 @@ int MapDataPacket::getMapHeight() const {
 
 
 char *MapDataPacket::getMapData() const {
-    return (char*)data[1];
+    char * ret = new char[64];
+    for (int i=1; i < 64+1; i++)
+    {
+        ret[i-1] = (char)data[i];
+    }
+    return ret;
 }
 
 void MapDataPacket::print() const {
