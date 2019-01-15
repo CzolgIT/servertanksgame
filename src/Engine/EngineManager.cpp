@@ -121,6 +121,15 @@ void EngineManager::checkColliders()
     {
         if ((*bullet_iterator)->todestroy)
         {
+            BulletInfoPacket bulletInfoPacket;
+            bulletInfoPacket.setX(static_cast<Uint16>(0));
+            bulletInfoPacket.setY(static_cast<Uint16>(0));
+            bulletInfoPacket.setPlayerId(static_cast<Uint8>((*bullet_iterator)->getClientId()));
+            bulletInfoPacket.setAngle(static_cast<Uint16>((*bullet_iterator)->getDirection()));
+            bulletInfoPacket.setBulletId(static_cast<Uint8>((*bullet_iterator)->getId()));
+            UdpConnection::udpSendAll(bulletInfoPacket, *clients );
+
+
             delete *bullet_iterator;
             bullet_iterator = bullets->erase(bullet_iterator);
         }
