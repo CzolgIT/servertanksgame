@@ -35,8 +35,8 @@ std::vector<Wall*>  Map::getColliders()
         {
             if (map[x*MAP_WIDTH+y]== 'X')
             {
-                SDL_Point pos = {x+160*x,y+160*y};
-                Wall * wall = new Wall(pos,160,160);
+                SDL_Point pos = {x+FIELD_SIZE*x,y+FIELD_SIZE*y};
+                Wall * wall = new Wall(pos,FIELD_SIZE,FIELD_SIZE);
                 colliders.push_back(wall);
             }
         }
