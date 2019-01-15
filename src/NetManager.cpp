@@ -128,6 +128,31 @@ void NetManager::acceptClient()
                 }
             }
 
+            for (auto &spawn: Map::getSpawnPoints())
+            {
+                float sum = 0;
+                for (auto &other: clients)
+                {
+                    Collider *col1 = other->getCollider();
+
+                    Vector2D col = Collider::areColliding(col1, spawn);
+
+                    if (col.x != 0 || col.y != 0)
+                    {
+                        sum+=abs(col.x);
+                        sum+=abs(col.y);
+                    }
+                }
+                if (sum == 0)
+                {
+                    clients.back()->setX(spawn->center->x);
+                    clients.back()->setY(spawn->center->y);
+                    return;
+                }
+            }
+
+
+
         }
         else
         {

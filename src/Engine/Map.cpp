@@ -22,6 +22,33 @@ char * Map::getMapFromFile(char * pointer)
 
 }
 
+std::vector<Collider*> Map::getSpawnPoints()
+{
+    std::vector<Collider*> colliders;
+
+    char * map = new char[MAP_HEIGHT*MAP_WIDTH];
+    Map::getMapFromFile(map);
+
+    for (int x = 0; x < MAP_WIDTH; x++)
+    {
+        for (int y = 0; y < MAP_HEIGHT; y++)
+        {
+            if (map[x*MAP_WIDTH+y]== 'S')
+            {
+                Collider * collider = new Collider(x+FIELD_SIZE*x,y+FIELD_SIZE*y,FIELD_SIZE+FIELD_SIZE/2,FIELD_SIZE+FIELD_SIZE/2);
+                colliders.push_back(collider);
+            }
+        }
+
+    }
+
+
+
+    return colliders;
+
+
+}
+
 std::vector<Wall*>  Map::getColliders()
 {
     std::vector<Wall*> colliders;

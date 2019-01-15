@@ -17,7 +17,7 @@ public:
 
     static std::vector<Wall*> getColliders();
 
-
+    static std::vector<Collider*> getSpawnPoints();
 };
 
 #endif

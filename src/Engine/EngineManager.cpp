@@ -2,6 +2,8 @@
 
 EngineManager::EngineManager( std::vector<std::unique_ptr<Client>>* clients , std::vector<Bullet *>* bullets )
 {
+
+
     this->clients = clients;
     this->bullets = bullets;
     this->bulletIdCounter = 1;
