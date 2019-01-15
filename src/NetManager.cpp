@@ -112,16 +112,6 @@ void NetManager::acceptClient()
 
             std::cout << "Client joined with ID: " << (int) clients.back()->getId() << " and nickname: "<< clients.back()->getNickname() << std::endl;
 
-            //Wysylanie mapy
-
-            MapDataPacket mapDataPacket;
-            char * map = new char[64];
-            Map::getMapFromFile(map);
-            std::cout << map <<  std::endl;
-            mapDataPacket.setMapData(map);
-            clients.back()->tcpSend(mapDataPacket);
-
-
             //sending packet to another players
             PlayerJoinedPacket playerJoinedPacket;
             playerJoinedPacket.setId(clients.back()->getId());
@@ -260,7 +250,13 @@ void NetManager::processTcp() {
                             recvd->print();
                             auto * infoRequestPacket = (InfoRequestPacket*)recvd.get();
                             if(infoRequestPacket->getRequested() == RT_MAP_DATA){
-                                //send current map
+                                MapDataPacket mapDataPacket;
+                                char * map = new char[64];
+                                Map::getMapFromFile(map);
+                                std::cout << map <<  std::endl;
+                                mapDataPacket.setMapData(map);
+                                (*client)->tcpSend(mapDataPacket);
+                                std::cout << "Map send " << std::endl;
                             }
                             else if(infoRequestPacket->getRequested() == RT_PLAYER_LIST){
                                 //send player joined packets with players id
