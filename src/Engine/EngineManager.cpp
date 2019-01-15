@@ -5,6 +5,7 @@ EngineManager::EngineManager( std::vector<std::unique_ptr<Client>>* clients , st
     this->clients = clients;
     this->bullets = bullets;
     this->bulletIdCounter = 1;
+    this->walls = Map::getColliders();
 }
 
 void EngineManager::move( double stepTime )
@@ -56,6 +57,39 @@ void EngineManager::checkColliders()
                 client->doDamage( 10 );
 
                 bullet->todestroy = true;
+            }
+        }
+    }
+
+    for (auto &bullet: *bullets)
+    {
+        for (auto &wall: walls)
+        {
+            Collider *col1 = bullet->getCollider();
+            Collider *col2 = wall->getCollider();
+
+            Vector2D col = Collider::areColliding(col1, col2);
+
+            if (col.x != 0 || col.y != 0)
+            {
+                bullet->todestroy = true;
+            }
+        }
+    }
+
+    for (auto &client: *clients)
+    {
+        for (auto &wall: walls)
+        {
+            Collider *col1 = client->getCollider();
+            Collider *col2 = wall->getCollider();
+
+            Vector2D col = Collider::areColliding(col1, col2);
+
+            if (col.x != 0 || col.y != 0)
+            {
+                client->setX(client->getX()+col.x*3);
+                client->setY(client->getY()+col.y*3);
             }
         }
     }

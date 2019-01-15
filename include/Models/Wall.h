@@ -11,15 +11,13 @@ class Wall
 {
 public:
 
-    Wall( SDL_Point position, int id);
-    void print();
-    int getId();
+    Wall( SDL_Point position,int width, int height);
+    void print();;
     SDL_Point getPosition();
     Collider* getCollider();
 
 private:
 
-    int id;
     SDL_Point position;
     float x;
     float y;

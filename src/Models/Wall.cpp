@@ -4,17 +4,12 @@
 
 #include "Main.h"
 
-Wall::Wall(SDL_Point position, int id) {
+Wall::Wall(SDL_Point position, int width, int height) {
 
     this->position = position;
-    this->id = id;
-
+    collider = new Collider(position.x,position.y,width,height,0);
 }
 
-int Wall::getId()
-{
-    return id;
-}
 
 SDL_Point Wall::getPosition() {
     return position;
