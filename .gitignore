@@ -108,3 +108,9 @@ fabric.properties
 
 #.directory
 .directory
+CMakeFiles/*
+CMakeCache.txt
+cmake_install.cmake
+assets/.DS_Store
+Makefile
+servertanksgame
