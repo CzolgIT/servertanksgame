@@ -114,3 +114,4 @@ cmake_install.cmake
 assets/.DS_Store
 Makefile
 servertanksgame
+.DS_Store
