@@ -92,14 +92,14 @@ void EngineManager::checkColliders()
             {
                 client->setX(client->getX()+col.x*3);
                 client->setY(client->getY()+col.y*3);
-                int speed = client->getTankSpeed();
 
-                if (speed>0)
-                    client->setTankSpeed(speed-20);
-                if (speed<0)
-                    client->setTankSpeed(speed+20);
-                if (speed>-20 && speed<20)
-                    client->setTankSpeed(0);
+//                int speed = client->getTankSpeed();
+//                if (speed>0)
+//                    client->setTankSpeed(speed-20);
+//                if (speed<0)
+//                    client->setTankSpeed(speed+20);
+//                if (speed>-20 && speed<20)
+//                    client->setTankSpeed(0);
             }
         }
     }
@@ -117,11 +117,11 @@ void EngineManager::checkColliders()
                 {
                     client1->setX(client1->getX()+col.x);
                     client1->setY(client1->getY()+col.y);
-                    client1->setTankSpeed(client1->getTankSpeed()-20);
+                    //client1->setTankSpeed(client1->getTankSpeed()-20);
 
                     client2->setX(client2->getX()-col.x);
                     client2->setY(client2->getY()-col.y);
-                    client2->setTankSpeed(client2->getTankSpeed()-20);
+                    //client2->setTankSpeed(client2->getTankSpeed()-20);
                 }
 
 
