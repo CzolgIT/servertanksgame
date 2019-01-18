@@ -160,10 +160,10 @@ void Client::move( float timeStep )
     x += xm; //-blocked.x;
     y += ym; //-blocked.y;
 
-    if (x<50)   x=50;
-    if (x>4046) x=4046;
-    if (y<50)   y=50;
-    if (y>4046) y=4046;
+//    if (x<50)   x=50;
+//    if (x>4046) x=4046;
+//    if (y<50)   y=50;
+//    if (y>4046) y=4046;
 
     position.x = int(x);
     position.y = int(y);
@@ -234,6 +234,11 @@ void Client::setBulletsPointer( std::vector<Bullet *> *bullets )
 int Client::getTankSpeed()
 {
     return int(tankSpeed);
+}
+
+void Client::setTankSpeed(int tankSpeed)
+{
+    this->tankSpeed = tankSpeed;
 }
 
 int Client::getRotationSpeed()

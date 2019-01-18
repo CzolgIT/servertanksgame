@@ -3,8 +3,8 @@
 
 #include "Main.h"
 
-#define MAP_WIDTH  8
-#define MAP_HEIGHT  8
+#define MAP_WIDTH  32
+#define MAP_HEIGHT  32
 #define FIELD_SIZE 64
 
 class Map

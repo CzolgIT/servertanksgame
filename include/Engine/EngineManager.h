@@ -16,9 +16,7 @@ private:
 
     std::vector<std::unique_ptr<Client>>* clients;
     std::vector<Bullet *>* bullets;
-
     std::vector<Wall *> walls;
-
     int bulletIdCounter;
 
 };

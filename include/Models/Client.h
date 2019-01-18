@@ -6,17 +6,28 @@
 class Client
 {
 public:
+
     Client(Uint8 ID, TCPsocket tcpsock, UDPsocket udpsock);
     ~Client();
-    
+
+    // Networking
     void udpSend(const BasePacket &packet);
     void tcpSend(const BasePacket &packet);
     void setUdpAddress(IPaddress address);
     void attachSocketSet(SDLNet_SocketSet *socketSet);
+    TCPsocket getTcpSocket();
+    Uint8 getId();
+
+    void setNickname(std::string nickname);
+    std::string getNickname();
+    void setKeys(int x, bool keys);
+    bool getKeys(int i);
+    bool needsUdpAddress();
+
     void setPosition(SDL_Point newPosition);
     void setIDirection(int iDirection);
     void setITowerDirection(int iTowerDirection);
-    void setKeys(int x, bool keys);
+
 
     float getX() const;
     void setX(float x);
@@ -26,8 +37,8 @@ public:
     void setTankDirection(float tankDirection);
     float getTowerDirection() const;
     void setTowerDirection(float towerDirection);
-    void setNickname(std::string nickname);
-    std::string getNickname();
+
+    void setTankSpeed(int tankSpeed);
 
     void move( float timeStep );
     float accelerate(bool isPressed, float what , float from , float to , float timeStep );
@@ -37,8 +48,6 @@ public:
 
     void setBulletsPointer( std::vector<Bullet *> *bullets );
 
-    TCPsocket getTcpSocket();
-    Uint8 getId();
     SDL_Point getPosition();
     int getIDirection();
     int getITowerDirection();
@@ -50,8 +59,7 @@ public:
     Collider* getCollider();
     void setActHp(Uint8 actHp);
 
-    bool getKeys(int i);
-    bool needsUdpAddress();
+
 
     void print();
     void doDamage(int damage);

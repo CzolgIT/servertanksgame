@@ -4,7 +4,7 @@
 #include "Main.h"
 
 // Larger than the largest packet that will be received
-#define UNIVERSAL_PACKET_SIZE 100
+#define UNIVERSAL_PACKET_SIZE 32*32+10
 
 class UniversalPacket{
 public:

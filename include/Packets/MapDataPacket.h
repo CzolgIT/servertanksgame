@@ -6,7 +6,7 @@
 #define SERVERTANKSGAME_MAPDATAPACKET_H
 
 #include "Main.h"
-#define MAP_PACKET_SIZE (1 + 8 * 8)
+#define MAP_PACKET_SIZE (1 + 32 * 32)
 class MapDataPacket : public BasePacket
 {
 public:
