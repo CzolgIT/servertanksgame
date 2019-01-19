@@ -35,7 +35,7 @@ std::vector<Collider*> Map::getSpawnPoints()
         {
             if (map[x*MAP_WIDTH+y]== 'S')
             {
-                Collider * collider = new Collider(x+FIELD_SIZE*x,y+FIELD_SIZE*y,FIELD_SIZE+FIELD_SIZE/2,FIELD_SIZE+FIELD_SIZE/2);
+                Collider * collider = new Collider(FIELD_SIZE*x,FIELD_SIZE*y,FIELD_SIZE+FIELD_SIZE,FIELD_SIZE+FIELD_SIZE);
                 colliders.push_back(collider);
             }
         }
@@ -60,7 +60,7 @@ std::vector<Wall*>  Map::getColliders()
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            if (map[x*MAP_WIDTH+y]== 'X')
+            if (map[y*MAP_WIDTH+x]== 'X')
             {
                 SDL_Point pos = {FIELD_SIZE*x,FIELD_SIZE*y};
                 Wall * wall = new Wall(pos,FIELD_SIZE,FIELD_SIZE);
