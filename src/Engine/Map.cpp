@@ -70,6 +70,14 @@ std::vector<Wall*>  Map::getColliders()
 
     }
 
+    Wall * upper = new Wall({FIELD_SIZE*MAP_WIDTH/2,-48},FIELD_SIZE*32,32);
+    colliders.push_back(upper);
+    Wall * down = new Wall({FIELD_SIZE*MAP_WIDTH/2,FIELD_SIZE*MAP_HEIGHT-16},FIELD_SIZE*32,32);
+    colliders.push_back(down);
+    Wall * right = new Wall( {FIELD_SIZE*MAP_WIDTH-16,FIELD_SIZE*MAP_HEIGHT/2},32,FIELD_SIZE*MAP_HEIGHT);
+    colliders.push_back(right);
+    Wall * left = new Wall( {-48,FIELD_SIZE*MAP_HEIGHT/2},32,FIELD_SIZE*MAP_HEIGHT);
+    colliders.push_back(left);
 
     return colliders;
 }
