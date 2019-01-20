@@ -168,14 +168,15 @@ void EngineManager::checkColliders()
     }
 }
 
-void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client) {
-
+void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client)
+{
     ScoreInfoPacket infoPacket;
     infoPacket.setPlayerStatsId(client->getId());
     infoPacket.setPlayerKills(static_cast<Uint8>(client->getScore()));
     infoPacket.setPlayerDeaths(static_cast<Uint8>(client->getDeaths()));
     infoPacket.print();
     TcpConnection::tcpSendAll(infoPacket,*clients);
+
 }
 
 

@@ -22,6 +22,8 @@ void CurrentPositionPacket::setFromClient(Client* client)
     SDLNet_Write16(static_cast<Uint16>(client->getRotationSpeed()), &data[12]);
     SDLNet_Write16(static_cast<Uint16>(client->getTurretRotationSpeed()), &data[14]);
     data[16] = client->getActHp();
+    data[17] = static_cast<Uint8>(client->getScore());
+    data[18] = static_cast<Uint8>(client->getDeaths());
 }
 
 Uint8 CurrentPositionPacket::getPlayerId() const { return data[1]; }
