@@ -48,6 +48,7 @@
 #include "Packets/StartGameRequestPacket.h"
 #include "Packets/SyncPacket.h"
 #include "Packets/EventPacket.h"
+#include "Packets/ScoreInfoPacket.h"
 
 #include "Timer.h"
 #include "Models/Bullet.h"

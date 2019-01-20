@@ -24,6 +24,7 @@ enum PacketType : Uint8{
     PT_LAST_PLAYER_SENT = 15,
     PT_BULLET_INFO = 16,
     PT_PLAYER_DEAD = 17,
+    PT_SCORE_INFO = 18,
     PT_UNKNOWN = 0xff
 };
 
