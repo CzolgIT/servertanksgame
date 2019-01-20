@@ -279,6 +279,7 @@ void Client::doDamage(int damage)
 
     if (this->actHp<1)
     {
+        setDeaths(getDeaths()+1);
         actHp = 100;
         position = {128, 128};
     }
@@ -305,4 +306,20 @@ bool Client::isIsPlayerReady() const {
 
 void Client::setIsPlayerReady(bool isPlayerReady) {
     Client::isPlayerReady = isPlayerReady;
+}
+
+int Client::getScore() const {
+    return score;
+}
+
+void Client::setScore(int score) {
+    Client::score = score;
+}
+
+int Client::getDeaths() const {
+    return deaths;
+}
+
+void Client::setDeaths(int deaths) {
+    Client::deaths = deaths;
 }

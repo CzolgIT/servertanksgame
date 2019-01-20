@@ -62,7 +62,10 @@ public:
     Collider* getCollider();
     void setActHp(Uint8 actHp);
 
-
+    int getScore() const;
+    void setScore(int score);
+    int getDeaths() const;
+    void setDeaths(int death);
 
     void print();
     void doDamage(int damage);
@@ -79,6 +82,9 @@ private:
 
     bool isPlayerReady;
     SDLNet_SocketSet* SockSet;
+
+    int score = 0;
+    int deaths = 0;
 
     // GameObject
     SDL_Point position={128,128};

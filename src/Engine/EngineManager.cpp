@@ -59,7 +59,12 @@ void EngineManager::checkColliders()
             if (col.x != 0 || col.y != 0)
             {
                 client->doDamage( 10 );
-
+                for(auto& cli: *clients)
+                {
+                    if(cli->getId()==bullet->getClientId()){
+                        cli->setScore(cli->getScore()+1);
+                    }
+                }
                 bullet->todestroy = true;
             }
         }
