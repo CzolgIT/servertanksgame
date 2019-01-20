@@ -58,12 +58,14 @@ void EngineManager::checkColliders()
             if (col.x != 0 || col.y != 0)
             {
                 client->doDamage( 10 );
-                if (client->getActHp() < 1)
-                for(auto& cli: *clients)
-                {
-                    if(cli->getId()==bullet->getClientId()){
-                        cli->setScore(cli->getScore()+1);
+                if (client->getActHp() < 1) {
+                    for (auto &cli: *clients) {
+                        if (cli->getId() == bullet->getClientId()) {
+                            cli->setScore(cli->getScore() + 1);
+                        }
                     }
+                    // Wysylanie pakietu
+
                 }
                 bullet->todestroy = true;
             }
