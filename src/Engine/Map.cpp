@@ -5,7 +5,7 @@ Map::Map() {}
 char * Map::getMapFromFile(char * pointer)
 {
     //w, h - 64
-    std::ifstream infile("assets/maps/map1.txt");
+    std::ifstream infile("assets/maps/map2.txt");
     char temp;
 
     for (int x = 0; x < MAP_WIDTH; x++)
@@ -33,7 +33,7 @@ std::vector<Collider*> Map::getSpawnPoints()
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            if (map[y*MAP_WIDTH+x]== 'S')
+            if (map[y*MAP_WIDTH+x]== '0' || map[y*MAP_WIDTH+x]== 'A')
             {
                 Collider * collider = new Collider(FIELD_SIZE*x,FIELD_SIZE*y,FIELD_SIZE+FIELD_SIZE,FIELD_SIZE+FIELD_SIZE);
                 colliders.push_back(collider);
@@ -60,7 +60,7 @@ std::vector<Wall*>  Map::getColliders()
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            if (map[y*MAP_WIDTH+x]== 'X')
+            if (map[y*MAP_WIDTH+x]== '-' || map[y*MAP_WIDTH+x]== '|' || map[y*MAP_WIDTH+x]== 'V' || map[y*MAP_WIDTH+x]== 'W' ||map[y*MAP_WIDTH+x]== 'X' || map[y*MAP_WIDTH+x]== 'Y')
             {
                 SDL_Point pos = {FIELD_SIZE*x,FIELD_SIZE*y};
                 Wall * wall = new Wall(pos,FIELD_SIZE,FIELD_SIZE);
@@ -70,14 +70,14 @@ std::vector<Wall*>  Map::getColliders()
 
     }
 
-    Wall * upper = new Wall({FIELD_SIZE*MAP_WIDTH/2,-190},FIELD_SIZE*32,300);
-    colliders.push_back(upper);
-    Wall * down = new Wall({FIELD_SIZE*MAP_WIDTH/2,FIELD_SIZE*MAP_HEIGHT+120},FIELD_SIZE*32,300);
-    colliders.push_back(down);
-    Wall * right = new Wall( {FIELD_SIZE*MAP_WIDTH+120,FIELD_SIZE*MAP_HEIGHT/2},300,FIELD_SIZE*MAP_HEIGHT);
-    colliders.push_back(right);
-    Wall * left = new Wall( {-180,FIELD_SIZE*MAP_HEIGHT/2},300,FIELD_SIZE*MAP_HEIGHT);
-    colliders.push_back(left);
+//    Wall * upper = new Wall({FIELD_SIZE*MAP_WIDTH/2,-190},FIELD_SIZE*32,300);
+//    colliders.push_back(upper);
+//    Wall * down = new Wall({FIELD_SIZE*MAP_WIDTH/2,FIELD_SIZE*MAP_HEIGHT+120},FIELD_SIZE*32,300);
+//    colliders.push_back(down);
+//    Wall * right = new Wall( {FIELD_SIZE*MAP_WIDTH+120,FIELD_SIZE*MAP_HEIGHT/2},300,FIELD_SIZE*MAP_HEIGHT);
+//    colliders.push_back(right);
+//    Wall * left = new Wall( {-180,FIELD_SIZE*MAP_HEIGHT/2},300,FIELD_SIZE*MAP_HEIGHT);
+//    colliders.push_back(left);
 
     return colliders;
 }

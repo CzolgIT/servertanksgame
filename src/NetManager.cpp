@@ -261,7 +261,7 @@ void NetManager::processTcp() {
                             if(infoRequestPacket->getRequested() == RT_MAP_DATA)
                             {
                                 MapDataPacket mapDataPacket;
-                                char * map = new char[32 * 32];
+                                char * map = new char[64 * 64];
                                 Map::getMapFromFile(map);
                                 std::cout << map <<  std::endl;
                                 mapDataPacket.setMapData(map);
