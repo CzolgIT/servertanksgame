@@ -42,6 +42,7 @@
 #include "Packets/HostChangedPacket.h"
 #include "Packets/MapDataPacket.h"
 #include "Packets/PlayerDisconnectedPacket.h"
+#include "Packets/PlayerDeadPacket.h"
 #include "Packets/PlayerJoinedPacket.h"
 #include "Packets/PlayerReadyPacket.h"
 #include "Packets/StartGameRequestPacket.h"
