@@ -124,7 +124,7 @@ void Timer::update()
         second-=1;
         count=0;
     }
-
+    SDL_Delay(1);
     stepTime = getTicks() / 1000.f;
     start();
 }
