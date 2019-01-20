@@ -280,8 +280,9 @@ void Client::doDamage(int damage)
     if (this->actHp<1)
     {
         setDeaths(getDeaths()+1);
-        actHp = 100;
-        position = {128, 128};
+        //Wysylanie pakietu
+
+
     }
 }
 
