@@ -294,6 +294,7 @@ void NetManager::processTcp() {
                             std::cout << "pakiet o gotowości od gracza: "<< (int)packet->getId() << std::endl;
                             Client * client = getClient(packet->getId());
                             client->setIsPlayerReady(true);
+                            client->setActHp(100);
                             //spawn a player
                             for (auto &spawn: Map::getSpawnPoints())
                             {
