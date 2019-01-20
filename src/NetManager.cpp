@@ -277,6 +277,11 @@ void NetManager::processTcp() {
 //                                LastPlayerSentPacket lastPlayerSentPacket;
 //                                getClient(requesterId)->tcpSend(lastPlayerSentPacket);
                             }
+                            else if (infoRequestPacket->getRequested() == RT_SCORE)
+                            {
+
+
+                            }
 
                         }
                         else if(recvd->getType() == PT_PLAYER_READY){
