@@ -11,7 +11,8 @@
 
 enum RequestType : Uint8{
     RT_MAP_DATA = 0,
-    RT_PLAYER_LIST = 1
+    RT_PLAYER_LIST = 1,
+    RT_SCORE = 2
 };
 
 class InfoRequestPacket : public BasePacket{

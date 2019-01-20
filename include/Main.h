@@ -16,6 +16,7 @@
 #include <atomic>
 #include <algorithm>
 #include <mutex>
+#include <map>
 
 #ifdef __APPLE__
     #include <SDL2/SDL.h>
@@ -48,6 +49,7 @@
 #include "Packets/StartGameRequestPacket.h"
 #include "Packets/SyncPacket.h"
 #include "Packets/EventPacket.h"
+#include "Packets/ScoreInfoPacket.h"
 
 #include "Timer.h"
 #include "Models/Bullet.h"
