@@ -62,23 +62,18 @@ void EngineManager::checkColliders()
                     for (auto &cli: *clients) {
                         if (cli->getId() == bullet->getClientId()) {
                             cli->setScore(cli->getScore() + 1);
+                            PlayerDeadPacket pdp;
+                            pdp.setKillerId(cli->getId());
+                            pdp.setPlayerId(client->getId());
+                            TcpConnection::tcpSendAll(pdp,*clients);
+                            sendScoreInfo(cli);
+                            break;
                         }
                     }
                     // Wysylanie pakietu
                     client->setIsPlayerReady(false);
                     client->setDeaths(client->getDeaths() + 1);
-
-                    for(auto &killer : *clients){
-                        if(killer->getId()==bullet->getClientId()){
-                            killer->setScore(killer->getScore() +1);
-                            PlayerDeadPacket pdp;
-                            pdp.setKillerId(killer->getId());
-                            pdp.setPlayerId(client->getId());
-                            TcpConnection::tcpSendAll(pdp,*clients);
-                            sendScoreInfo(killer);
-                            sendScoreInfo(client);
-                        }
-                    }
+                    sendScoreInfo(client);
                 }
                 bullet->todestroy = true;
             }
@@ -177,6 +172,8 @@ void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client) {
 
     ScoreInfoPacket infoPacket;
     infoPacket.setPlayerStatsId(client->getId());
+    std::cout << "Score: " << client->getScore() << std::endl;
+    std::cout << "Deaths: " << client->getDeaths() << std::endl;
     infoPacket.setPlayerKills(static_cast<Uint8>(client->getScore()));
     infoPacket.setPlayerDeaths(static_cast<Uint8>(client->getDeaths()));
     TcpConnection::tcpSendAll(infoPacket,*clients);
