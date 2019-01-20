@@ -129,8 +129,8 @@ void NetManager::acceptClient()
                     getClient(requesterId)->tcpSend(currentPlayer);
                     currentPlayer.print();
                     scoreInfoPacket.setPlayerStatsId(client->getId());
-                    scoreInfoPacket.setPlayerKills(client->getScore());
-                    scoreInfoPacket.setPlayerDeaths(client->getDeaths());
+                    scoreInfoPacket.setPlayerKills(static_cast<Uint8>(client->getScore()));
+                    scoreInfoPacket.setPlayerDeaths(static_cast<Uint8>(client->getDeaths()));
                     getClient(requesterId)->tcpSend(scoreInfoPacket);
                 }
             }

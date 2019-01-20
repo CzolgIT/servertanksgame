@@ -177,8 +177,8 @@ void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client) {
 
     ScoreInfoPacket infoPacket;
     infoPacket.setPlayerStatsId(client->getId());
-    infoPacket.setPlayerKills(client->getScore());
-    infoPacket.setPlayerDeaths(client->getDeaths());
+    infoPacket.setPlayerKills(static_cast<Uint8>(client->getScore()));
+    infoPacket.setPlayerDeaths(static_cast<Uint8>(client->getDeaths()));
     TcpConnection::tcpSendAll(infoPacket,*clients);
 }
 
