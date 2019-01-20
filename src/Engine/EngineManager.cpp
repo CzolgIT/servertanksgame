@@ -65,7 +65,10 @@ void EngineManager::checkColliders()
                         }
                     }
                     // Wysylanie pakietu
-
+                    PlayerDeadPacket pdp;
+                    pdp.setKillerId(bullet->getClientId());
+                    pdp.setPlayerId(client->getId());
+                    UdpConnection::udpSendAll(pdp,*clients);
                 }
                 bullet->todestroy = true;
             }
