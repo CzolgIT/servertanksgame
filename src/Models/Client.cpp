@@ -147,8 +147,6 @@ void Client::setTowerDirection(float towerDirection) {
 
 void Client::move( float timeStep )
 {
-    if(this->isPlayerReady){
-
         tankSpeed = accelerate(keys[0] , tankSpeed , 0 , TANKMAXSPEED , timeStep );
         tankSpeed = accelerate(keys[1] , tankSpeed , 0 , -TANKMAXSPEED , timeStep );
         rotationSpeed = accelerate(keys[3] , rotationSpeed , 0 , TANKMAXDIR , timeStep );
@@ -187,16 +185,13 @@ void Client::move( float timeStep )
 
         // SZCZELANIE
 
-        if (!readyToShoot)
-        {
+        if (!readyToShoot) {
             shootLoading += timeStep;
-            if ( shootLoading >=1 )
-            {
-                readyToShoot=true;
-                shootLoading=0;
+            if (shootLoading >= 1) {
+                readyToShoot = true;
+                shootLoading = 0;
             }
         }
-    }
 
 
 }

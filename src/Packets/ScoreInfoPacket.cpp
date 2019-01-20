@@ -15,4 +15,22 @@ Uint8 ScoreInfoPacket::getPlayerId() {
     return (Uint8) data[1];
 }
 
+void ScoreInfoPacket::setPlayerStatsId(Uint8 id) {
+    data[2] = id;
+}
+
+Uint8 ScoreInfoPacket::getPlayerStatsId() {
+    return data[2];
+}
+
+void ScoreInfoPacket::setPlayerKills(Uint8 killCount) {
+    data[3] = killCount;
+}
+
+Uint8 ScoreInfoPacket::getPlayerKills() {
+    return data[3];
+}
+
+ScoreInfoPacket::~ScoreInfoPacket() = default;
+
 
