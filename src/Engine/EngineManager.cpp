@@ -58,12 +58,7 @@ void EngineManager::checkColliders()
             if (col.x != 0 || col.y != 0)
             {
                 client->doDamage( 10 );
-                if (client->getActHp() < 1) {
-                    for (auto &cli: *clients) {
-                        if (cli->getId() == bullet->getClientId()) {
-                            cli->setScore(cli->getScore() + 1);
-                        }
-                    }
+                if (client->getActHp() < 1 && client->isIsPlayerReady()) {
                     // Wysylanie pakietu
                     client->setIsPlayerReady(false);
                     client->setDeaths(client->getDeaths() + 1);
@@ -179,6 +174,7 @@ void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client) {
     infoPacket.setPlayerStatsId(client->getId());
     infoPacket.setPlayerKills(static_cast<Uint8>(client->getScore()));
     infoPacket.setPlayerDeaths(static_cast<Uint8>(client->getDeaths()));
+    infoPacket.print();
     TcpConnection::tcpSendAll(infoPacket,*clients);
 }
 

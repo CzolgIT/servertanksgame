@@ -1,8 +1,6 @@
 //
 // Created by mm on 1/20/19.
 //
-#include <Packets/ScoreInfoPacket.h>
-
 #include "Main.h"
 
 ScoreInfoPacket::ScoreInfoPacket() : BasePacket(PT_SCORE_INFO, SCORE_INFO_PACKET_SIZE) {
@@ -32,7 +30,9 @@ void ScoreInfoPacket::setPlayerDeaths(Uint8 death) {
 Uint8 ScoreInfoPacket::getPlayerDeaths() {
     return data[3];
 }
-
+void ScoreInfoPacket::print() const {
+    std::cout << "ScoreInfoPacket info: ID:" << (int)data[1] << " K: " << (int)data[2] << "D: "<<(int)data[3] << std::endl;
+}
 ScoreInfoPacket::~ScoreInfoPacket() = default;
 
 

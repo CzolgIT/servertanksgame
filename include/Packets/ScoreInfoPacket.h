@@ -22,6 +22,7 @@ public:
     void setPlayerDeaths(Uint8 deathCount);
     Uint8 getPlayerDeaths();
 
+    void print()const override;
 
     ~ScoreInfoPacket();
 };

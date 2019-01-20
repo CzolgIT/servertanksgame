@@ -100,6 +100,7 @@ void Client::print() {
               << "            reloading: " << shootLoading << "\n"
               << "             nickname: " << nickname << "\n"
               << "            readyness: " << isPlayerReady << "\n"
+              << "                  K/D: " << score << "/" << deaths << "\n"
               << "-----------------------------------------------------------\n";
 }
 
