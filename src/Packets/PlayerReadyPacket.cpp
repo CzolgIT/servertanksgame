@@ -11,11 +11,11 @@ PlayerReadyPacket::PlayerReadyPacket(Uint8 id) : PlayerReadyPacket() {
 }
 
 void PlayerReadyPacket::setId(Uint8 id) {
-    this->id = id;
+    data[1] = id;
 }
 
 Uint8 PlayerReadyPacket::getId() {
-    return this->id;
+    return data[1];
 }
 
 PlayerReadyPacket::~PlayerReadyPacket() = default;

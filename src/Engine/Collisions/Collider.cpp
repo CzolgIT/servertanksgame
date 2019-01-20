@@ -106,7 +106,7 @@ Vector2D Collider::areColliding(Collider * col1, Collider * col2)
         smallest.y*=-1;
     }
     smallest = (smallest*overlap).Normalize();
-    std::cout << overlap << std::endl;
+//    std::cout << overlap << std::endl;
     return smallest;
 }
 

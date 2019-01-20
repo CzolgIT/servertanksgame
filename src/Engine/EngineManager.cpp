@@ -14,27 +14,29 @@ void EngineManager::move( double stepTime )
 {
     for (auto &client: *clients )
     {
-        client->move(stepTime);
+        if(client->isIsPlayerReady()){
+            client->move(stepTime);
 
-        CurrentPositionPacket currentPositionPacket;
-        currentPositionPacket.setFromClient(dynamic_cast<Client *>(client.get()) );
-        UdpConnection::udpSendAll(currentPositionPacket,*clients);
+            CurrentPositionPacket currentPositionPacket;
+            currentPositionPacket.setFromClient(dynamic_cast<Client *>(client.get()) );
+            UdpConnection::udpSendAll(currentPositionPacket,*clients);
 
-        if (client->getKeys(6) && client->isReadyToShoot())
-        {
-            client->setUnableToShoot();
+            if (client->getKeys(6) && client->isReadyToShoot())
+            {
+                client->setUnableToShoot();
 
-            Bullet * bullet = new Bullet(client->shootPosition(),client->getITowerDirection(),bulletIdCounter++,client->getId());
-            bullets->push_back(bullet);
+                Bullet * bullet = new Bullet(client->shootPosition(),client->getITowerDirection(),bulletIdCounter++,client->getId());
+                bullets->push_back(bullet);
 
-            BulletInfoPacket bulletInfoPacket;
-            bulletInfoPacket.setX(static_cast<Uint16>(bullet->getPosition().x));
-            bulletInfoPacket.setY(static_cast<Uint16>(bullet->getPosition().y));
-            bulletInfoPacket.setPlayerId(static_cast<Uint8>(bullet->getClientId()));
-            bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
-            bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
-            UdpConnection::udpSendAll(bulletInfoPacket, *clients );
+                BulletInfoPacket bulletInfoPacket;
+                bulletInfoPacket.setX(static_cast<Uint16>(bullet->getPosition().x));
+                bulletInfoPacket.setY(static_cast<Uint16>(bullet->getPosition().y));
+                bulletInfoPacket.setPlayerId(static_cast<Uint8>(bullet->getClientId()));
+                bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
+                bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
+                UdpConnection::udpSendAll(bulletInfoPacket, *clients );
 
+            }
         }
     }
 

@@ -109,6 +109,7 @@ void NetManager::acceptClient()
 
             clients.back()->attachSocketSet(&TCP_SocketSet);
             clients.back()->setNickname(joinRequestPacket.getNickname());
+            clients.back()->setIsPlayerReady(false);
 
             std::cout << "Client joined with ID: " << (int) clients.back()->getId() << " and nickname: "<< clients.back()->getNickname() << std::endl;
 
@@ -117,6 +118,7 @@ void NetManager::acceptClient()
             playerJoinedPacket.setId(clients.back()->getId());
             playerJoinedPacket.setNickname(clients.back()->getNickname());
             TcpConnection::tcpSendAllExcept(clients.back()->getId(),playerJoinedPacket,clients);
+            //sending already joined players
             Uint8 requesterId = clients.back()->getId();
             for (auto &client : clients) {
                 PlayerJoinedPacket currentPlayer;
@@ -265,7 +267,7 @@ void NetManager::processTcp() {
 
                     if(recvd)
                     {
-                        recvd->print();
+//                        recvd->print();
 
                         if(recvd->getType() == PT_PLAYER_DISCONNECTED){
                             auto * packet = (PlayerDisconnectedPacket*)recvd.get();
@@ -298,6 +300,12 @@ void NetManager::processTcp() {
 //                                LastPlayerSentPacket lastPlayerSentPacket;
 //                                getClient(requesterId)->tcpSend(lastPlayerSentPacket);
                             }
+
+                        }
+                        else if(recvd->getType() == PT_PLAYER_READY){
+                            auto * packet = (PlayerReadyPacket*)recvd.get();
+                            std::cout << "pakiet o gotowości od gracza: "<< (int)packet->getId() << std::endl;
+                            getClient(packet->getId())->setIsPlayerReady(true);
                         }
 
                     }

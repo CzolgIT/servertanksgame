@@ -99,6 +99,7 @@ void Client::print() {
                 << ( keys[6] ? "_" : " " ) << " ]\n"
               << "            reloading: " << shootLoading << "\n"
               << "             nickname: " << nickname << "\n"
+              << "            readyness: " << isPlayerReady << "\n"
               << "-----------------------------------------------------------\n";
 }
 
@@ -296,4 +297,12 @@ bool Client::isReadyToShoot()
 void Client::setUnableToShoot()
 {
     this->readyToShoot=false;
+}
+
+bool Client::isIsPlayerReady() const {
+    return isPlayerReady;
+}
+
+void Client::setIsPlayerReady(bool isPlayerReady) {
+    Client::isPlayerReady = isPlayerReady;
 }

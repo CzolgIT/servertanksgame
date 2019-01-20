@@ -17,6 +17,9 @@ public:
     void attachSocketSet(SDLNet_SocketSet *socketSet);
     TCPsocket getTcpSocket();
     Uint8 getId();
+    bool isIsPlayerReady() const;
+
+    void setIsPlayerReady(bool isPlayerReady);
 
     void setNickname(std::string nickname);
     std::string getNickname();
@@ -74,6 +77,7 @@ private:
 
     int actHp = 100;
 
+    bool isPlayerReady;
     SDLNet_SocketSet* SockSet;
 
     // GameObject

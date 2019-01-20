@@ -34,6 +34,8 @@ std::unique_ptr<BasePacket> UniversalPacket::createFromContents()
             return constructPacket(new EventPacket);
         case PT_INFO_REQUEST:
             return constructPacket(new InfoRequestPacket);
+        case PT_PLAYER_READY:
+            return constructPacket(new PlayerReadyPacket);
         default:
             return nullptr;
     }
