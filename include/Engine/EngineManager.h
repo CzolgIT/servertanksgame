@@ -9,6 +9,7 @@ public:
 
     EngineManager( std::vector<std::unique_ptr<Client>>* clients , std::vector<Bullet *>* bullets );
 
+    void sendScoreInfo(std::unique_ptr<Client> &client);
     void checkColliders();
     void move( double stepTime );
 

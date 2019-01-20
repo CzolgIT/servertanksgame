@@ -75,15 +75,8 @@ void EngineManager::checkColliders()
                             pdp.setKillerId(killer->getId());
                             pdp.setPlayerId(client->getId());
                             UdpConnection::udpSendAll(pdp,*clients);
-                            ScoreInfoPacket infoPacket;
-                            infoPacket.setPlayerStatsId(killer->getId());
-                            infoPacket.setPlayerKills(killer->getScore());
-                            infoPacket.setPlayerDeaths(killer->getDeaths());
-                            UdpConnection::udpSendAll(infoPacket,*clients);
-                            infoPacket.setPlayerStatsId(client->getId());
-                            infoPacket.setPlayerKills(client->getScore());
-                            infoPacket.setPlayerDeaths(client->getDeaths());
-                            UdpConnection::udpSendAll(infoPacket,*clients);
+                            sendScoreInfo(killer);
+                            sendScoreInfo(client);
                         }
                     }
                 }
@@ -178,6 +171,15 @@ void EngineManager::checkColliders()
         else
             ++bullet_iterator;
     }
+}
+
+void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client) {
+
+    ScoreInfoPacket infoPacket;
+    infoPacket.setPlayerStatsId(client->getId());
+    infoPacket.setPlayerKills(client->getScore());
+    infoPacket.setPlayerDeaths(client->getDeaths());
+    UdpConnection::udpSendAll(infoPacket,*clients);
 }
 
 
