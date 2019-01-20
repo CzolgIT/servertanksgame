@@ -5,8 +5,8 @@
 #include "Models/Bullet.h"
 #include "Models/Client.h"
 
-//(packet type + playerId + x + y + tankrot + turretrot + speed + rotspeed + turretspeed + actualhp)
-#define CURRENT_POSITION_PACKET_SIZE (1+1+2+2+2+2+2+2+2+1)
+//(packet type + playerId + x + y + tankrot + turretrot + speed + rotspeed + turretspeed + actualhp + stats)
+#define CURRENT_POSITION_PACKET_SIZE (1+1+2+2+2+2+2+2+2+1+2)
 
 class CurrentPositionPacket : public BasePacket{
 public:
