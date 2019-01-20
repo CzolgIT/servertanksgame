@@ -16,6 +16,7 @@
 #include <atomic>
 #include <algorithm>
 #include <mutex>
+#include <map>
 
 #ifdef __APPLE__
     #include <SDL2/SDL.h>

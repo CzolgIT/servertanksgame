@@ -18,6 +18,7 @@ private:
     std::vector<Bullet *>* bullets;
     std::vector<Wall *> walls;
     int bulletIdCounter;
+    std::map<int,int> scoreMap;
 
 };
 

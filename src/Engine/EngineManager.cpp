@@ -66,10 +66,26 @@ void EngineManager::checkColliders()
                     }
                     // Wysylanie pakietu
                     client->setIsPlayerReady(false);
-                    PlayerDeadPacket pdp;
-                    pdp.setKillerId(bullet->getClientId());
-                    pdp.setPlayerId(client->getId());
-                    UdpConnection::udpSendAll(pdp,*clients);
+                    client->setDeaths(client->getDeaths() + 1);
+
+                    for(auto &killer : *clients){
+                        if(killer->getId()==bullet->getClientId()){
+                            killer->setScore(killer->getScore() +1);
+                            PlayerDeadPacket pdp;
+                            pdp.setKillerId(killer->getId());
+                            pdp.setPlayerId(client->getId());
+                            UdpConnection::udpSendAll(pdp,*clients);
+                            ScoreInfoPacket infoPacket;
+                            infoPacket.setPlayerStatsId(killer->getId());
+                            infoPacket.setPlayerKills(killer->getScore());
+                            infoPacket.setPlayerDeaths(killer->getDeaths());
+                            UdpConnection::udpSendAll(infoPacket,*clients);
+                            infoPacket.setPlayerStatsId(client->getId());
+                            infoPacket.setPlayerKills(client->getScore());
+                            infoPacket.setPlayerDeaths(client->getDeaths());
+                            UdpConnection::udpSendAll(infoPacket,*clients);
+                        }
+                    }
                 }
                 bullet->todestroy = true;
             }
