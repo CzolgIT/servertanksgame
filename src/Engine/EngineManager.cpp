@@ -74,7 +74,7 @@ void EngineManager::checkColliders()
                             PlayerDeadPacket pdp;
                             pdp.setKillerId(killer->getId());
                             pdp.setPlayerId(client->getId());
-                            UdpConnection::udpSendAll(pdp,*clients);
+                            TcpConnection::tcpSendAll(pdp,*clients);
                             sendScoreInfo(killer);
                             sendScoreInfo(client);
                         }
@@ -179,7 +179,7 @@ void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client) {
     infoPacket.setPlayerStatsId(client->getId());
     infoPacket.setPlayerKills(client->getScore());
     infoPacket.setPlayerDeaths(client->getDeaths());
-    UdpConnection::udpSendAll(infoPacket,*clients);
+    TcpConnection::tcpSendAll(infoPacket,*clients);
 }
 
 
