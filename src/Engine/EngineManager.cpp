@@ -59,10 +59,13 @@ void EngineManager::checkColliders()
             {
                 client->doDamage( 10 );
                 if (client->getActHp() < 1 && client->isIsPlayerReady()) {
-                    // Wysylanie pakietu
                     client->setIsPlayerReady(false);
                     client->setDeaths(client->getDeaths() + 1);
-
+                    //clear all input
+                    for(int i =0; i<7; i++){
+                        client->setKeys(i,false);
+                    }
+                    // Wysylanie pakietu
                     for(auto &killer : *clients){
                         if(killer->getId()==bullet->getClientId()){
                             killer->setScore(killer->getScore() +1);
@@ -70,8 +73,6 @@ void EngineManager::checkColliders()
                             pdp.setKillerId(killer->getId());
                             pdp.setPlayerId(client->getId());
                             TcpConnection::tcpSendAll(pdp,*clients);
-                            sendScoreInfo(killer);
-                            sendScoreInfo(client);
                         }
                     }
                 }
@@ -166,17 +167,6 @@ void EngineManager::checkColliders()
         else
             ++bullet_iterator;
     }
-}
-
-void EngineManager::sendScoreInfo(std::unique_ptr<Client> &client)
-{
-    ScoreInfoPacket infoPacket;
-    infoPacket.setPlayerStatsId(client->getId());
-    infoPacket.setPlayerKills(static_cast<Uint8>(client->getScore()));
-    infoPacket.setPlayerDeaths(static_cast<Uint8>(client->getDeaths()));
-    infoPacket.print();
-    TcpConnection::tcpSendAll(infoPacket,*clients);
-
 }
 
 
