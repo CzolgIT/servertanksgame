@@ -65,6 +65,7 @@ void EngineManager::checkColliders()
                         }
                     }
                     // Wysylanie pakietu
+                    client->setIsPlayerReady(false);
                     PlayerDeadPacket pdp;
                     pdp.setKillerId(bullet->getClientId());
                     pdp.setPlayerId(client->getId());

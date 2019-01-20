@@ -147,53 +147,57 @@ void Client::setTowerDirection(float towerDirection) {
 
 void Client::move( float timeStep )
 {
-    tankSpeed = accelerate(keys[0] , tankSpeed , 0 , TANKMAXSPEED , timeStep );
-    tankSpeed = accelerate(keys[1] , tankSpeed , 0 , -TANKMAXSPEED , timeStep );
-    rotationSpeed = accelerate(keys[3] , rotationSpeed , 0 , TANKMAXDIR , timeStep );
-    rotationSpeed = accelerate(keys[2] , rotationSpeed , 0 , -TANKMAXDIR , timeStep );
-    turretRotationSpeed = accelerate(keys[5] , turretRotationSpeed , 0 , TANKMAXDIR , timeStep );
-    turretRotationSpeed = accelerate(keys[4] , turretRotationSpeed , 0 , -TANKMAXDIR , timeStep );
+    if(this->isPlayerReady){
 
-    double xm = cos((iDirection) *M_PI/180) * tankSpeed * timeStep;
-    double ym = sin((iDirection) *M_PI/180) * tankSpeed * timeStep;
+        tankSpeed = accelerate(keys[0] , tankSpeed , 0 , TANKMAXSPEED , timeStep );
+        tankSpeed = accelerate(keys[1] , tankSpeed , 0 , -TANKMAXSPEED , timeStep );
+        rotationSpeed = accelerate(keys[3] , rotationSpeed , 0 , TANKMAXDIR , timeStep );
+        rotationSpeed = accelerate(keys[2] , rotationSpeed , 0 , -TANKMAXDIR , timeStep );
+        turretRotationSpeed = accelerate(keys[5] , turretRotationSpeed , 0 , TANKMAXDIR , timeStep );
+        turretRotationSpeed = accelerate(keys[4] , turretRotationSpeed , 0 , -TANKMAXDIR , timeStep );
+
+        double xm = cos((iDirection) *M_PI/180) * tankSpeed * timeStep;
+        double ym = sin((iDirection) *M_PI/180) * tankSpeed * timeStep;
 
 
-    x += xm; //-blocked.x;
-    y += ym; //-blocked.y;
+        x += xm; //-blocked.x;
+        y += ym; //-blocked.y;
 
 //    if (x<50)   x=50;
 //    if (x>4046) x=4046;
 //    if (y<50)   y=50;
 //    if (y>4046) y=4046;
 
-    position.x = int(x);
-    position.y = int(y);
+        position.x = int(x);
+        position.y = int(y);
 
-    tankDirection += rotationSpeed * timeStep ;
-    towerDirection += rotationSpeed * timeStep + turretRotationSpeed * timeStep;
+        tankDirection += rotationSpeed * timeStep ;
+        towerDirection += rotationSpeed * timeStep + turretRotationSpeed * timeStep;
 
-    if ( tankDirection > 360 ) tankDirection -= 360;
-    if ( towerDirection > 360 ) towerDirection -= 360;
+        if ( tankDirection > 360 ) tankDirection -= 360;
+        if ( towerDirection > 360 ) towerDirection -= 360;
 
-    if ( tankDirection < 0 ) tankDirection += 360;
-    if ( towerDirection < 0 ) towerDirection += 360;
+        if ( tankDirection < 0 ) tankDirection += 360;
+        if ( towerDirection < 0 ) towerDirection += 360;
 
-    iDirection = int(tankDirection);
-    iTowerDirection = int(towerDirection);
+        iDirection = int(tankDirection);
+        iTowerDirection = int(towerDirection);
 
-    collider->update(x,y,85,65,iDirection);
+        collider->update(x,y,85,65,iDirection);
 
-    // SZCZELANIE
+        // SZCZELANIE
 
-    if (!readyToShoot)
-    {
-        shootLoading += timeStep;
-        if ( shootLoading >=1 )
+        if (!readyToShoot)
         {
-            readyToShoot=true;
-            shootLoading=0;
+            shootLoading += timeStep;
+            if ( shootLoading >=1 )
+            {
+                readyToShoot=true;
+                shootLoading=0;
+            }
         }
     }
+
 
 }
 
