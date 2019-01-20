@@ -122,11 +122,16 @@ void NetManager::acceptClient()
             Uint8 requesterId = clients.back()->getId();
             for (auto &client : clients) {
                 PlayerJoinedPacket currentPlayer;
+                ScoreInfoPacket scoreInfoPacket;
                 if(client->getId()!=requesterId){
                     currentPlayer.setId(client->getId());
                     currentPlayer.setNickname(client->getNickname());
                     getClient(requesterId)->tcpSend(currentPlayer);
                     currentPlayer.print();
+                    scoreInfoPacket.setPlayerStatsId(client->getId());
+                    scoreInfoPacket.setPlayerKills(client->getScore());
+                    scoreInfoPacket.setPlayerDeaths(client->getDeaths());
+                    getClient(requesterId)->tcpSend(scoreInfoPacket);
                 }
             }
 
