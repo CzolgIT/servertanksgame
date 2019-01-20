@@ -276,14 +276,6 @@ void Client::doDamage(int damage)
 {
     if (this->actHp > 0)
         this->actHp -= damage;
-
-    if (this->actHp<1)
-    {
-        setDeaths(getDeaths()+1);
-        //Wysylanie pakietu
-
-
-    }
 }
 
 Collider* Client::getCollider()
