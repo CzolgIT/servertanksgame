@@ -81,8 +81,8 @@ private:
     SDLNet_SocketSet* SockSet;
 
     // GameObject
-    SDL_Point position={128,128};
-    float x=128,y=128;
+    SDL_Point position={-5000,-5000};
+    float x=-5000,y=-5000;
     Collider *collider;
 
     int iDirection=0, iTowerDirection=0;

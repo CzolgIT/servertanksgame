@@ -14,7 +14,6 @@ void EngineManager::move( double stepTime )
 {
     for (auto &client: *clients )
     {
-        if(client->isIsPlayerReady()){
             client->move(stepTime);
 
             CurrentPositionPacket currentPositionPacket;
@@ -36,7 +35,7 @@ void EngineManager::move( double stepTime )
                 bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
                 UdpConnection::udpSendAll(bulletInfoPacket, *clients );
 
-            }
+
         }
     }
 
