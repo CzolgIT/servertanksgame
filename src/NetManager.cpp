@@ -130,29 +130,6 @@ void NetManager::acceptClient()
                 }
             }
 
-            for (auto &spawn: Map::getSpawnPoints())
-            {
-                float sum = 0;
-                for (auto &other: clients)
-                {
-                    Collider *col1 = other->getCollider();
-
-                    Vector2D col = Collider::areColliding(col1, spawn);
-
-                    if (col.x != 0 || col.y != 0)
-                    {
-                        sum+=abs(col.x);
-                        sum+=abs(col.y);
-                    }
-                }
-                if (sum == 0)
-                {
-                    clients.back()->setX(spawn->center->x);
-                    clients.back()->setY(spawn->center->y);
-                    return;
-                }
-            }
-
 
 
         }
@@ -305,7 +282,31 @@ void NetManager::processTcp() {
                         else if(recvd->getType() == PT_PLAYER_READY){
                             auto * packet = (PlayerReadyPacket*)recvd.get();
                             std::cout << "pakiet o gotowości od gracza: "<< (int)packet->getId() << std::endl;
-                            getClient(packet->getId())->setIsPlayerReady(true);
+                            Client * client = getClient(packet->getId());
+                            client->setIsPlayerReady(true);
+                            //spawn a player
+                            for (auto &spawn: Map::getSpawnPoints())
+                            {
+                                float sum = 0;
+                                for (auto &other: clients)
+                                {
+                                    Collider *col1 = other->getCollider();
+
+                                    Vector2D col = Collider::areColliding(col1, spawn);
+
+                                    if (col.x != 0 || col.y != 0)
+                                    {
+                                        sum+=abs(col.x);
+                                        sum+=abs(col.y);
+                                    }
+                                }
+                                if (sum == 0)
+                                {
+                                    client->setX(spawn->center->x);
+                                    client->setY(spawn->center->y);
+                                    return;
+                                }
+                            }
                         }
 
                     }
