@@ -33,7 +33,7 @@ std::vector<Collider*> Map::getSpawnPoints()
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            if (map[x*MAP_WIDTH+y]== 'S')
+            if (map[y*MAP_WIDTH+x]== 'S')
             {
                 Collider * collider = new Collider(FIELD_SIZE*x,FIELD_SIZE*y,FIELD_SIZE+FIELD_SIZE,FIELD_SIZE+FIELD_SIZE);
                 colliders.push_back(collider);
