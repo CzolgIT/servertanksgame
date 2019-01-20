@@ -222,8 +222,8 @@ float Client::accelerate(bool isPressed, float what , float from , float to , fl
 SDL_Point Client::shootPosition()
 {
     SDL_Point punkt;
-    punkt.x = (int)(position.x+(cos(double(iTowerDirection) *M_PI/180) * 60));
-    punkt.y = (int)(position.y+(sin(double(iTowerDirection) *M_PI/180) * 60));
+    punkt.x = (int)(position.x+(cos(double(iTowerDirection) *M_PI/180) * 70));
+    punkt.y = (int)(position.y+(sin(double(iTowerDirection) *M_PI/180) * 70));
     return punkt;
 }
 

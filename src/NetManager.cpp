@@ -174,7 +174,7 @@ void NetManager::update( int argc )
         if (argc > 1)
             monitoring();
 
-        SDL_Delay(10);
+        //SDL_Delay(10);
         timer->update();
     }
 }
