@@ -130,7 +130,7 @@ void EngineManager::checkColliders()
                     if (col.x != 0 || col.y != 0) {
                         client1->setX(client1->getX() + col.x);
                         client1->setY(client1->getY() + col.y);
-                        client1->setTankSpeed(client1->getTankSpeed()-20);
+                        //client1->setTankSpeed(client1->getTankSpeed()-20);
 
                         client2->setX(client2->getX() - col.x);
                         client2->setY(client2->getY() - col.y);
