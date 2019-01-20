@@ -261,7 +261,7 @@ void NetManager::processTcp() {
                             if(infoRequestPacket->getRequested() == RT_MAP_DATA)
                             {
                                 MapDataPacket mapDataPacket;
-                                char * map = new char[32 * 32];
+                                char * map = new char[64 * 64];
                                 Map::getMapFromFile(map);
                                 std::cout << map <<  std::endl;
                                 mapDataPacket.setMapData(map);
@@ -294,6 +294,7 @@ void NetManager::processTcp() {
                             std::cout << "pakiet o gotowości od gracza: "<< (int)packet->getId() << std::endl;
                             Client * client = getClient(packet->getId());
                             client->setIsPlayerReady(true);
+                            client->setActHp(100);
                             //spawn a player
                             for (auto &spawn: Map::getSpawnPoints())
                             {
