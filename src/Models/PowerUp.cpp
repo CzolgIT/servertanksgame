@@ -6,6 +6,7 @@ PowerUp::PowerUp( int id , SDL_Point position , Uint8 powerUpType)
     this->position = position;
     this->powerUpType = PowerUpType(powerUpType);
     collider = new Collider(position.x,position.y,50,50,0);
+    this->todestroy = false;
 }
 
 PowerUp::~PowerUp() = default;
