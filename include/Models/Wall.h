@@ -21,6 +21,17 @@ private:
     SDL_Point position;
     float x;
     float y;
+    int width, height;
+public:
+    int getWidth() const;
+
+    void setWidth(int width);
+
+    int getHeight() const;
+
+    void setHeight(int height);
+
+private:
 
     Collider *collider;
 

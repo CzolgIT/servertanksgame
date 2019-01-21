@@ -69,15 +69,14 @@ std::vector<Wall*>  Map::getColliders()
         }
 
     }
-
-//    Wall * upper = new Wall({FIELD_SIZE*MAP_WIDTH/2,-190},FIELD_SIZE*32,300);
-//    colliders.push_back(upper);
-//    Wall * down = new Wall({FIELD_SIZE*MAP_WIDTH/2,FIELD_SIZE*MAP_HEIGHT+120},FIELD_SIZE*32,300);
-//    colliders.push_back(down);
-//    Wall * right = new Wall( {FIELD_SIZE*MAP_WIDTH+120,FIELD_SIZE*MAP_HEIGHT/2},300,FIELD_SIZE*MAP_HEIGHT);
-//    colliders.push_back(right);
-//    Wall * left = new Wall( {-180,FIELD_SIZE*MAP_HEIGHT/2},300,FIELD_SIZE*MAP_HEIGHT);
-//    colliders.push_back(left);
+    Wall * upper = new Wall({FIELD_SIZE*MAP_WIDTH/2,0},FIELD_SIZE*MAP_WIDTH,800);
+    colliders.push_back(upper);
+    Wall * down = new Wall({FIELD_SIZE*MAP_WIDTH/2,FIELD_SIZE*MAP_HEIGHT},FIELD_SIZE*MAP_HEIGHT,800);
+    colliders.push_back(down);
+    Wall * right = new Wall( {FIELD_SIZE*MAP_WIDTH,FIELD_SIZE*MAP_HEIGHT/2},800,FIELD_SIZE*MAP_HEIGHT);
+    colliders.push_back(right);
+    Wall * left = new Wall( {0,FIELD_SIZE*MAP_HEIGHT/2},800,FIELD_SIZE*MAP_HEIGHT);
+    colliders.push_back(left);
 
     return colliders;
 }

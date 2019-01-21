@@ -50,33 +50,36 @@ void EngineManager::checkColliders()
     {
         for (auto &bullet: *bullets)
         {
-            Collider *col1 = client->getCollider();
-            Collider *col2 = bullet->getCollider();
+            double distance = sqrt((bullet->getPosition().x-client->getPosition().x)*(bullet->getPosition().x-client->getPosition().x)
+                                   + (bullet->getPosition().y-client->getPosition().y)*(bullet->getPosition().y-client->getPosition().y));
+            if (distance < FIELD_SIZE) {
+                Collider *col1 = client->getCollider();
+                Collider *col2 = bullet->getCollider();
 
-            Vector2D col = Collider::areColliding(col1, col2);
+                Vector2D col = Collider::areColliding(col1, col2);
 
-            if (col.x != 0 || col.y != 0)
-            {
-                client->doDamage( 10 );
-                if (client->getActHp() < 1 && client->isIsPlayerReady()) {
-                    client->setIsPlayerReady(false);
-                    client->setDeaths(client->getDeaths() + 1);
-                    //clear all input
-                    for(int i =0; i<7; i++){
-                        client->setKeys(i,false);
-                    }
-                    // Wysylanie pakietu
-                    for(auto &killer : *clients){
-                        if(killer->getId()==bullet->getClientId()){
-                            killer->setScore(killer->getScore() +1);
-                            PlayerDeadPacket pdp;
-                            pdp.setKillerId(killer->getId());
-                            pdp.setPlayerId(client->getId());
-                            TcpConnection::tcpSendAll(pdp,*clients);
+                if (col.x != 0 || col.y != 0) {
+                    client->doDamage(10);
+                    if (client->getActHp() < 1 && client->isIsPlayerReady()) {
+                        client->setIsPlayerReady(false);
+                        client->setDeaths(client->getDeaths() + 1);
+                        //clear all input
+                        for (int i = 0; i < 7; i++) {
+                            client->setKeys(i, false);
+                        }
+                        // Wysylanie pakietu
+                        for (auto &killer : *clients) {
+                            if (killer->getId() == bullet->getClientId()) {
+                                killer->setScore(killer->getScore() + 1);
+                                PlayerDeadPacket pdp;
+                                pdp.setKillerId(killer->getId());
+                                pdp.setPlayerId(client->getId());
+                                TcpConnection::tcpSendAll(pdp, *clients);
+                            }
                         }
                     }
+                    bullet->todestroy = true;
                 }
-                bullet->todestroy = true;
             }
         }
     }
@@ -85,14 +88,19 @@ void EngineManager::checkColliders()
     {
         for (auto &wall: walls)
         {
-            Collider *col1 = bullet->getCollider();
-            Collider *col2 = wall->getCollider();
-
-            Vector2D col = Collider::areColliding(col1, col2);
-
-            if (col.x != 0 || col.y != 0)
+            double distance = sqrt((bullet->getPosition().x-wall->getPosition().x)*(bullet->getPosition().x-wall->getPosition().x)
+                    + (bullet->getPosition().y-wall->getPosition().y)*(bullet->getPosition().y-wall->getPosition().y));
+            if (distance < FIELD_SIZE)
             {
-                bullet->todestroy = true;
+                Collider *col1 = bullet->getCollider();
+                Collider *col2 = wall->getCollider();
+
+                Vector2D col = Collider::areColliding(col1, col2);
+
+                if (col.x != 0 || col.y != 0)
+                {
+                    bullet->todestroy = true;
+                }
             }
         }
     }
@@ -101,23 +109,28 @@ void EngineManager::checkColliders()
     {
         for (auto &wall: walls)
         {
-            Collider *col1 = client->getCollider();
-            Collider *col2 = wall->getCollider();
-
-            Vector2D col = Collider::areColliding(col1, col2);
-
-            if (col.x != 0 || col.y != 0)
+            double distance = sqrt((client->getPosition().x-wall->getPosition().x)*(client->getPosition().x-wall->getPosition().x)
+                                   + (client->getPosition().y-wall->getPosition().y)*(client->getPosition().y-wall->getPosition().y));
+            if (distance < FIELD_SIZE || wall->getHeight() > FIELD_SIZE || wall->getHeight() > FIELD_SIZE)
             {
-                client->setX(client->getX()+col.x*3);
-                client->setY(client->getY()+col.y*3);
+                Collider *col1 = client->getCollider();
+                Collider *col2 = wall->getCollider();
 
-                int speed = client->getTankSpeed();
-                if (speed>0)
-                    client->setTankSpeed(speed-20);
-                if (speed<0)
-                    client->setTankSpeed(speed+20);
-                if (speed>-20 && speed<20)
-                    client->setTankSpeed(0);
+                Vector2D col = Collider::areColliding(col1, col2);
+
+                if (col.x != 0 || col.y != 0)
+                {
+                    client->setX(client->getX()+col.x*3);
+                    client->setY(client->getY()+col.y*3);
+
+                    int speed = client->getTankSpeed();
+                    if (speed>0)
+                        client->setTankSpeed(speed-20);
+                    if (speed<0)
+                        client->setTankSpeed(speed+20);
+                    if (speed>-20 && speed<20)
+                        client->setTankSpeed(0);
+                }
             }
         }
     }
@@ -127,22 +140,25 @@ void EngineManager::checkColliders()
         {
             for (auto &client2: *clients)
             {
-                if (client1 != client2) {
-                    Collider *col1 = client1->getCollider();
-                    Collider *col2 = client2->getCollider();
-                    Vector2D col = Collider::areColliding(col1, col2);
+                double distance = sqrt((client1->getPosition().x-client2->getPosition().x)*(client1->getPosition().x-client2->getPosition().x)
+                                       + (client1->getPosition().y-client2->getPosition().y)*(client1->getPosition().y-client2->getPosition().y));
+                if (distance < FIELD_SIZE) {
+                    if (client1 != client2) {
+                        Collider *col1 = client1->getCollider();
+                        Collider *col2 = client2->getCollider();
+                        Vector2D col = Collider::areColliding(col1, col2);
 
-                    if (col.x != 0 || col.y != 0) {
-                        client1->setX(client1->getX() + col.x);
-                        client1->setY(client1->getY() + col.y);
-                        //client1->setTankSpeed(client1->getTankSpeed()-20);
+                        if (col.x != 0 || col.y != 0) {
+                            client1->setX(client1->getX() + col.x);
+                            client1->setY(client1->getY() + col.y);
+                            //client1->setTankSpeed(client1->getTankSpeed()-20);
 
-                        client2->setX(client2->getX() - col.x);
-                        client2->setY(client2->getY() - col.y);
-                        //client2->setTankSpeed(client2->getTankSpeed()-20);
+                            client2->setX(client2->getX() - col.x);
+                            client2->setY(client2->getY() - col.y);
+                            //client2->setTankSpeed(client2->getTankSpeed()-20);
+                        }
                     }
                 }
-
 
             }
         }
