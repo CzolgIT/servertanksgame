@@ -80,11 +80,19 @@ void EngineManager::checkColliders()
                 Collider *col1 = client->getCollider();
                 Collider *col2 = bullet->getCollider();
 
+                if (client->getId() == bullet->getClientId())
+                {
+                    bullet->todestroy = true;
+                    break;
+                }
+
                 Vector2D col = Collider::areColliding(col1, col2);
+
 
                 if (col.x != 0 || col.y != 0) {
                     for(auto &killer : *clients){
-                        if(killer->getId() == bullet->getClientId()){
+                        if(killer->getId() == bullet->getClientId())
+                        {
                             client->doDamage(static_cast<int>(10 * killer->getAttackRatio()));
                             if (client->getActHp() < 1 && client->isIsPlayerReady()) {
                                 client->setIsPlayerReady(false);
@@ -101,6 +109,7 @@ void EngineManager::checkColliders()
                                 TcpConnection::tcpSendAll(pdp, *clients);
                             }
                         }
+
                     }
 
                     bullet->todestroy = true;
