@@ -1,12 +1,13 @@
 #include "Main.h"
 
-EngineManager::EngineManager( std::vector<std::unique_ptr<Client>>* clients , std::vector<Bullet *>* bullets )
+EngineManager::EngineManager( std::vector<std::unique_ptr<Client>>* clients , std::vector<Bullet *>* bullets , std::vector<PowerUp*>* powerUps )
 {
-
-
     this->clients = clients;
     this->bullets = bullets;
+    this->powerUps = powerUps;
     this->bulletIdCounter = 1;
+    this->powerUpIdCounter = 1;
+    this->powerUpTimer = 0;
     this->walls = Map::getColliders();
 }
 
@@ -39,7 +40,27 @@ void EngineManager::move( double stepTime )
     for (auto& bullet: *bullets )
         bullet->move(stepTime);
 
+    powerUpTimer += stepTime;
 
+    if (powerUpTimer>5)
+    {
+        if (powerUps->size()<20)
+        {
+            auto* powerUp = new PowerUp( powerUpIdCounter++ , getSpawnPoint() , Uint8(random()%5) );
+            powerUps->push_back(powerUp);
+
+            //todo: DAWID BINKUS TU WYSYLAMY PAKIET
+
+            powerUpTimer=0;
+        }
+    }
+    else
+    {
+        powerUpTimer += stepTime;
+    }
+
+    if (bulletIdCounter>250) bulletIdCounter=0;
+    if (powerUpIdCounter>250) powerUpIdCounter=0;
 }
 
 
@@ -101,6 +122,29 @@ void EngineManager::checkColliders()
                 if (col.x != 0 || col.y != 0)
                 {
                     bullet->todestroy = true;
+                }
+            }
+        }
+    }
+
+    for (auto &client: *clients)
+    {
+        for (auto &powerUp: *powerUps)
+        {
+            double distance = sqrt((client->getPosition().x-powerUp->getPosition().x)*(client->getPosition().x-powerUp->getPosition().x)
+                                   + (client->getPosition().y-powerUp->getPosition().y)*(client->getPosition().y-powerUp->getPosition().y));
+            if (distance < FIELD_SIZE)
+            {
+                Collider *col1 = client->getCollider();
+                Collider *col2 = powerUp->getCollider();
+
+                Vector2D col = Collider::areColliding(col1, col2);
+
+                if (col.x != 0 || col.y != 0)
+                {
+                    // todo: DAWID BINKUS ZASTOSUJ TU POWERUPY
+
+                    powerUp->todestroy = true;
                 }
             }
         }
@@ -177,59 +221,61 @@ void EngineManager::checkColliders()
             bulletInfoPacket.setBulletId(static_cast<Uint8>((*bullet_iterator)->getId()));
             UdpConnection::udpSendAll(bulletInfoPacket, *clients );
 
-
             delete *bullet_iterator;
             bullet_iterator = bullets->erase(bullet_iterator);
         }
         else
             ++bullet_iterator;
     }
+
+    auto powerUp_iterator = powerUps->begin();
+    while(powerUp_iterator != powerUps->end())
+    {
+        if ((*powerUp_iterator)->todestroy)
+        {
+            // todo: DAWID BINKUS TU WYSYLAMY O ZNISZCZENIU POWERUPA
+            // (*powerUp_iterator)->getdata???
+
+            delete *powerUp_iterator;
+            powerUp_iterator = powerUps->erase(powerUp_iterator);
+        }
+        else
+            ++powerUp_iterator;
+    }
 }
 
+SDL_Point EngineManager::getSpawnPoint()
+{
+    float sum = 1;
+    while(sum != 0)
+    {
+        auto* spawn = Map::getSpawnPoints()[random()%int(Map::getSpawnPoints().size())];
+        sum=0;
+        for (auto &other: *clients)
+        {
+            Collider *col1 = other->getCollider();
+            Vector2D col = Collider::areColliding(col1, spawn);
 
+            if (col.x != 0 || col.y != 0)
+            {
+                sum+=abs(col.x);
+                sum+=abs(col.y);
+            }
+        }
+        for (auto &powerUp: *powerUps)
+        {
+            Collider *col1 = powerUp->getCollider();
+            Vector2D col = Collider::areColliding(col1, spawn);
 
-//    Collider * col1 = nullptr;
-//    Collider * col2 = nullptr;
-//
-//    for (int i = 0; i < gameObjects.size(); i++)
-//    {
-//        for (int j = i+1; j < gameObjects.size(); j++)
-//        {
-//            if (!(gameObjects[i]->getType()==STATIC && gameObjects[j]->getType()==STATIC))
-//            {
-//                double diagonal1 = sqrt( pow(gameObjects[i]->getW()/2,2) + pow(gameObjects[i]->getH()/2,2) );
-//                double diagonal2 = sqrt( pow(gameObjects[j]->getW()/2,2) + pow(gameObjects[j]->getH()/2,2) );
-//                double distance = sqrt( pow(gameObjects[j]->getX()-gameObjects[i]->getX(),2) + pow(gameObjects[j]->getY()-gameObjects[i]->getY(),2) );
-//
-//                if ( (distance < diagonal1 + diagonal2) )
-//                {
-//                    col1 = gameObjects[i]->getCollider();
-//                    col2 = gameObjects[j]->getCollider();
-//
-//                    Vector2D col = Collider::areColliding(col1, col2);
-//                    if (col.x != 0 || col.y != 0) {
-//
-//                        if (auto *p = dynamic_cast<Player *>(gameObjects[i])) {
-//                            if (auto *b = dynamic_cast<Bullet *>(gameObjects[j])) {
-//
-//                            } else{
-//                                p->PushOut(col * 2);
-//                            }
-//                        } else if (auto *p = dynamic_cast<Player *>(gameObjects[j])) {
-//                            if (auto *b = dynamic_cast<Bullet *>(gameObjects[i])) {
-//
-//                            } else{
-//                                p->PushOut(col * 2);
-//
-//                            }
-//                        } else if (auto *b = dynamic_cast<Bullet *>(gameObjects[i])) {
-//                            b->setToBeDestroyed();
-//                        } else if (auto *b = dynamic_cast<Bullet *>(gameObjects[j])) {
-//                            b->setToBeDestroyed();
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
+            if (col.x != 0 || col.y != 0)
+            {
+                sum+=abs(col.x);
+                sum+=abs(col.y);
+            }
+        }
+        if (sum == 0)
+        {
+            return { int(spawn->center->x) , int(spawn->center->y) };
+        }
+    }
+}

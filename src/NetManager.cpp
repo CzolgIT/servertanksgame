@@ -47,7 +47,7 @@ NetManager::NetManager()
 
     timer = new Timer();
 
-    engineManager = new EngineManager( &clients , &bullets );
+    engineManager = new EngineManager( &clients , &bullets , &powerUps );
 }
 
 
@@ -474,7 +474,6 @@ SDL_Point NetManager::getSpawnPoint()
     while(sum != 0)
     {
         auto* spawn = Map::getSpawnPoints()[random()%int(Map::getSpawnPoints().size())];
-
         sum=0;
         for (auto &other: clients)
         {
@@ -487,7 +486,17 @@ SDL_Point NetManager::getSpawnPoint()
                 sum+=abs(col.y);
             }
         }
+        for (auto &powerUp: powerUps)
+        {
+            Collider *col1 = powerUp->getCollider();
+            Vector2D col = Collider::areColliding(col1, spawn);
 
+            if (col.x != 0 || col.y != 0)
+            {
+                sum+=abs(col.x);
+                sum+=abs(col.y);
+            }
+        }
         if (sum == 0)
         {
             return { int(spawn->center->x) , int(spawn->center->y) };

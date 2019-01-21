@@ -1,8 +1,14 @@
-//
-// Created by inql on 21.01.19.
-//
-
 #include "Main.h"
+
+PowerUp::PowerUp( int id , SDL_Point position , Uint8 powerUpType)
+{
+    this->id = id;
+    this->position = position;
+    this->powerUpType = PowerUpType(powerUpType);
+    collider = new Collider(position.x,position.y,50,50,0);
+}
+
+PowerUp::~PowerUp() = default;
 
 int PowerUp::getId() const {
     return id;
@@ -40,8 +46,4 @@ Collider *PowerUp::getCollider() const {
     return collider;
 }
 
-PowerUp::PowerUp(const SDL_Point &position, int width, int height) : position(position), width(width), height(height) {
-    collider = new Collider(position.x,position.y,width,height,0);
-}
 
-PowerUp::~PowerUp() = default;

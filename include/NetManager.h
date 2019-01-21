@@ -37,7 +37,8 @@ private:
     EngineManager* engineManager;
 
     std::vector<std::unique_ptr<Client>> clients;
-    std::vector<Bullet *> bullets;
+    std::vector<Bullet*> bullets;
+    std::vector<PowerUp*> powerUps;
 
     std::vector<std::unique_ptr<Room>> rooms;
     IPaddress address;
