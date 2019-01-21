@@ -129,17 +129,6 @@ void NetManager::acceptClient()
                     currentPlayer.print();
                 }
             }
-
-            //send all powerups on the map
-            for (auto &powerup : powerUps){
-                PowerUpPacket powerUpPacket;
-                powerUpPacket.setFromPowerUp(powerup);
-                powerUpPacket.setToShow(true);
-                getClient(requesterId)->udpSend(powerUpPacket);
-            }
-
-
-
         }
         else
         {
@@ -271,26 +260,6 @@ void NetManager::processTcp() {
                                 (*client)->tcpSend(mapDataPacket);
                                 std::cout << "Map send " << std::endl;
                             }
-                            else if(infoRequestPacket->getRequested() == RT_PLAYER_LIST){
-                                //send player joined packets with players id
-//                                Uint8 requesterId = infoRequestPacket->getId();
-//                                for(size_t i = 0; i<clients.size(); i++){
-//                                    PlayerJoinedPacket currentPlayer;
-//                                    if(clients[i]->getId()!=requesterId){
-//                                        currentPlayer.setId(clients[i]->getId());
-//                                        getClient(requesterId)->tcpSend(currentPlayer);
-//                                        currentPlayer.print();
-//                                    }
-//                                }
-//                                LastPlayerSentPacket lastPlayerSentPacket;
-//                                getClient(requesterId)->tcpSend(lastPlayerSentPacket);
-                            }
-                            else if (infoRequestPacket->getRequested() == RT_SCORE)
-                            {
-
-
-                            }
-
                         }
                         else if(recvd->getType() == PT_PLAYER_READY){
                             auto * packet = (PlayerReadyPacket*)recvd.get();
@@ -303,6 +272,13 @@ void NetManager::processTcp() {
                             SDL_Point spawnPoint = getSpawnPoint();
                             client->setX(spawnPoint.x);
                             client->setY(spawnPoint.y);
+                            //send all powerups on the map
+                            for (auto &powerup : powerUps){
+                                PowerUpPacket powerUpPacket;
+                                powerUpPacket.setFromPowerUp(powerup);
+                                powerUpPacket.setToShow(true);
+                                client->udpSend(powerUpPacket);
+                            }
                             return;
 
                         }
