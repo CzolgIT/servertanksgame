@@ -291,7 +291,7 @@ void NetManager::processTcp() {
                             client->setIsPlayerReady(true);
                             client->setActHp(100);
                             //spawn a player
-                            SDL_Point spawnPoint = getSpawnPont();
+                            SDL_Point spawnPoint = getSpawnPoint();
                             client->setX(spawnPoint.x);
                             client->setY(spawnPoint.y);
                             return;
@@ -468,7 +468,7 @@ void NetManager::monitoring()
 
 }
 
-SDL_Point NetManager::getSpawnPont()
+SDL_Point NetManager::getSpawnPoint()
 {
     float sum = 1;
     while(sum != 0)

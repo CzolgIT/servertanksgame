@@ -30,7 +30,7 @@ public:
     Client* getClient(Uint8 id);
     bool disconnectClient(Uint8 id);
 
-    SDL_Point getSpawnPont();
+    SDL_Point getSpawnPoint();
 
 private:
 
