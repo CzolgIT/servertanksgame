@@ -130,6 +130,14 @@ void NetManager::acceptClient()
                 }
             }
 
+            //send all powerups on the map
+            for (auto &powerup : powerUps){
+                PowerUpPacket powerUpPacket;
+                powerUpPacket.setFromPowerUp(powerup);
+                powerUpPacket.setToShow(true);
+                getClient(requesterId)->udpSend(powerUpPacket);
+            }
+
 
 
         }
