@@ -441,7 +441,7 @@ Uint8 NetManager::getMapId() {
 void NetManager::monitoring()
 {
     std::cout << "\x1B[2J\x1B[H";
-    std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "\n";
+    std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "   powerups: " << powerUps.size() << "\n";
     std::cout << "-----------------------------------------------------------\n";
     for (auto &client : clients) client->print();
 
