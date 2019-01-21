@@ -280,6 +280,8 @@ void Client::doDamage(int damage)
 {
     if (this->actHp > 0)
         this->actHp -= (static_cast<int >(damage/defense));
+    if (this->actHp < 0)
+        this->actHp = 0;
 }
 
 Collider* Client::getCollider()
@@ -356,15 +358,19 @@ void Client::setAttackRatio(float attackRatio) {
 void Client::applyPowerUp(PowerUpType powerUpType) {
     switch (powerUpType){
         case PU_SPEED:
-            this->maxTankSpeed+=20;
+            if(maxTankSpeed<500)
+                this->maxTankSpeed+=20;
             break;
         case PU_RELOADING:
-            this->reloadTime+=0.2;
+            if(reloadTime>0.1)
+                this->reloadTime-=0.1;
             break;
         case PU_DEFENSE:
+            if(defense<3)
             this->defense+=0.2;
             break;
         case PU_ATTACK:
+            if(attackRatio<3)
             this->attackRatio+=0.2;
             break;
         case PU_REPAIR:
