@@ -38,8 +38,8 @@ std::unique_ptr<BasePacket> UniversalPacket::createFromContents()
             return constructPacket(new PlayerReadyPacket);
         case PT_PLAYER_DEAD:
             return constructPacket(new PlayerDeadPacket);
-        case PT_SCORE_INFO:
-            return constructPacket(new ScoreInfoPacket);
+        case PT_POWERUP:
+            return constructPacket(new PowerUpPacket);
         default:
             return nullptr;
     }

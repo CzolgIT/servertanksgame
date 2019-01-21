@@ -69,7 +69,26 @@ public:
 
     void print();
     void doDamage(int damage);
-    
+
+    int getMaxTankSpeed() const;
+
+    void setMaxTankSpeed(int maxTankSpeed);
+
+    float getReloadTime() const;
+
+    void setReloadTime(float reloadTime);
+
+    float getDefense() const;
+
+    void setDefense(float defense);
+
+    float getAttackRatio() const;
+
+    void setAttackRatio(float attackRatio);
+
+    void applyPowerUp(PowerUpType powerUpType);
+    void removePowerUps();
+
 private:
     TCPsocket tcpSocket;
     UDPsocket udpSocket;
@@ -98,6 +117,12 @@ private:
 
     bool readyToShoot=false;
     float shootLoading=0;
+
+    int maxTankSpeed = 300;
+    float reloadTime = 1.0;
+    float defense = 1.0;
+    float attackRatio = 1.0;
+
 
     std::vector<Bullet *> *bullets;
 

@@ -148,8 +148,8 @@ void Client::setTowerDirection(float towerDirection) {
 
 void Client::move( float timeStep )
 {
-        tankSpeed = accelerate(keys[0] , tankSpeed , 0 , TANKMAXSPEED , timeStep );
-        tankSpeed = accelerate(keys[1] , tankSpeed , 0 , -TANKMAXSPEED , timeStep );
+        tankSpeed = accelerate(keys[0] , tankSpeed , 0 , maxTankSpeed , timeStep );
+        tankSpeed = accelerate(keys[1] , tankSpeed , 0 , -maxTankSpeed , timeStep );
         rotationSpeed = accelerate(keys[3] , rotationSpeed , 0 , TANKMAXDIR , timeStep );
         rotationSpeed = accelerate(keys[2] , rotationSpeed , 0 , -TANKMAXDIR , timeStep );
         turretRotationSpeed = accelerate(keys[5] , turretRotationSpeed , 0 , TANKMAXDIR , timeStep );
@@ -188,7 +188,7 @@ void Client::move( float timeStep )
 
         if (!readyToShoot) {
             shootLoading += timeStep;
-            if (shootLoading >= 1) {
+            if (shootLoading >= reloadTime) {
                 readyToShoot = true;
                 shootLoading = 0;
             }
@@ -275,7 +275,7 @@ void Client::setActHp(Uint8 actHp)
 void Client::doDamage(int damage)
 {
     if (this->actHp > 0)
-        this->actHp -= damage;
+        this->actHp -= (static_cast<int >(damage/defense));
 }
 
 Collider* Client::getCollider()
@@ -315,4 +315,69 @@ int Client::getDeaths() const {
 
 void Client::setDeaths(int deaths) {
     Client::deaths = deaths;
+}
+
+int Client::getMaxTankSpeed() const {
+    return maxTankSpeed;
+}
+
+void Client::setMaxTankSpeed(int maxTankSpeed) {
+    Client::maxTankSpeed = maxTankSpeed;
+}
+
+float Client::getReloadTime() const {
+    return reloadTime;
+}
+
+void Client::setReloadTime(float reloadTime) {
+    Client::reloadTime = reloadTime;
+}
+
+float Client::getDefense() const {
+    return defense;
+}
+
+void Client::setDefense(float defense) {
+    Client::defense = defense;
+}
+
+float Client::getAttackRatio() const {
+    return attackRatio;
+}
+
+void Client::setAttackRatio(float attackRatio) {
+    Client::attackRatio = attackRatio;
+}
+
+void Client::applyPowerUp(PowerUpType powerUpType) {
+    switch (powerUpType){
+        case PU_SPEED:
+            this->maxTankSpeed+=20;
+            break;
+        case PU_RELOADING:
+            this->reloadTime+=0.2;
+            break;
+        case PU_DEFENSE:
+            this->defense+=0.2;
+            break;
+        case PU_ATTACK:
+            this->attackRatio+=0.2;
+            break;
+        case PU_REPAIR:
+            this->actHp+=50;
+            if(actHp>100)
+                actHp=100;
+            break;
+        default:
+            std::cout << "something went wrong" << std::endl;
+            break;
+    }
+
+}
+
+void Client::removePowerUps() {
+    this->maxTankSpeed = 300;
+    this->reloadTime = 1.0;
+    this->defense = 1.0;
+    this->attackRatio = 1.0;
 }

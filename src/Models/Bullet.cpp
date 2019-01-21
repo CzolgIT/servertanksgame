@@ -21,7 +21,7 @@ void Bullet::move( float timeStep )
     position.x = int(x);
     position.y = int(y);
 
-    if ( x< 0 || x > 32*64 || y<0 || y> 32*64 )
+    if ( x< 0 || x > 64*64 || y<0 || y> 64*64 )
         todestroy=true;
 
     collider->update( x , y , 36 , 12 , direction );
