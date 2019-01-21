@@ -59,17 +59,18 @@ void EngineManager::checkColliders()
                 Vector2D col = Collider::areColliding(col1, col2);
 
                 if (col.x != 0 || col.y != 0) {
-                    client->doDamage(10);
-                    if (client->getActHp() < 1 && client->isIsPlayerReady()) {
-                        client->setIsPlayerReady(false);
-                        client->setDeaths(client->getDeaths() + 1);
-                        //clear all input
-                        for (int i = 0; i < 7; i++) {
-                            client->setKeys(i, false);
-                        }
-                        // Wysylanie pakietu
-                        for (auto &killer : *clients) {
-                            if (killer->getId() == bullet->getClientId()) {
+                    for(auto &killer : *clients){
+                        if(killer->getId() == bullet->getClientId()){
+                            client->doDamage(static_cast<int>(10 * killer->getAttackRatio()));
+                            if (client->getActHp() < 1 && client->isIsPlayerReady()) {
+                                client->setIsPlayerReady(false);
+                                client->setDeaths(client->getDeaths() + 1);
+                                client->removePowerUps();
+                                //clear all input
+                                for (int i = 0; i < 7; i++) {
+                                    client->setKeys(i, false);
+                                }
+                                // Wysylanie pakietu
                                 killer->setScore(killer->getScore() + 1);
                                 PlayerDeadPacket pdp;
                                 pdp.setKillerId(killer->getId());
@@ -78,6 +79,7 @@ void EngineManager::checkColliders()
                             }
                         }
                     }
+
                     bullet->todestroy = true;
                 }
             }

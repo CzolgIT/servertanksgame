@@ -34,6 +34,7 @@
 #include "Packets/BulletInfoPacket.h"
 #include "Packets/LastPlayerSentPacket.h"
 #include "Packets/CurrentPositionPacket.h"
+#include "Packets/PowerUpPacket.h"
 #include "Packets/JoinRequestPacket.h"
 #include "Packets/JoinResponsePacket.h"
 #include "Packets/UniversalPacket.h"
