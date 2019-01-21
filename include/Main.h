@@ -26,6 +26,8 @@
     #include <SDL2/SDL_net.h>
 #endif
 
+#include "Models/PowerUpType.h"
+
 #include "Engine/Collisions/Vector2D.h"
 #include "Engine/Collisions/Projection.h"
 #include "Engine/Collisions/Collider.h"
@@ -55,6 +57,7 @@
 #include "Models/Bullet.h"
 #include "Models/Client.h"
 #include "Models/Wall.h"
+#include "Models/PowerUp.h"
 #include "Engine/Map.h"
 #include "Room.h"
 #include "Engine/EngineManager.h"

@@ -86,7 +86,7 @@ public:
 
     void setAttackRatio(float attackRatio);
 
-    void applyPowerUp(Uint8 powerUpType);
+    void applyPowerUp(PowerUpType powerUpType);
     void removePowerUps();
 
 private:

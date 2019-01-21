@@ -9,13 +9,7 @@
 
 #define POWERUP_PACKET_SIZE (1+1+1+1+2+2)
 
-enum PowerUpType : Uint8{
-    PU_SPEED = 0,
-    PU_RELOADING = 1,
-    PU_DEFENSE = 2,
-    PU_ATTACK = 3,
-    PU_REPAIR = 4
-};
+
 
 // data indexes explanation:
 // data[0] -> packet type
