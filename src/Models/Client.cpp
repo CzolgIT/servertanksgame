@@ -358,7 +358,7 @@ void Client::setAttackRatio(float attackRatio) {
 void Client::applyPowerUp(PowerUpType powerUpType) {
     switch (powerUpType){
         case PU_SPEED:
-            if(maxTankSpeed<40)
+            if(maxTankSpeed<400)
                 this->maxTankSpeed+=10;
             break;
         case PU_RELOADING:
