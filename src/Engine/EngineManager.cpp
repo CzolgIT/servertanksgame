@@ -74,18 +74,16 @@ void EngineManager::checkColliders()
     {
         for (auto &bullet: *bullets)
         {
+            if (client->getId() == bullet->getClientId())
+            {
+                break;
+            }
+
             double distance = sqrt((bullet->getPosition().x-client->getPosition().x)*(bullet->getPosition().x-client->getPosition().x)
                                    + (bullet->getPosition().y-client->getPosition().y)*(bullet->getPosition().y-client->getPosition().y));
             if (distance < FIELD_SIZE*2) {
                 Collider *col1 = client->getCollider();
                 Collider *col2 = bullet->getCollider();
-
-                if (client->getId() == bullet->getClientId())
-                {
-                    bullet->todestroy = true;
-                    break;
-                }
-
                 Vector2D col = Collider::areColliding(col1, col2);
 
 
