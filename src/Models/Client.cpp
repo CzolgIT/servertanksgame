@@ -101,6 +101,10 @@ void Client::print() {
               << "             nickname: " << nickname << "\n"
               << "            readyness: " << isPlayerReady << "\n"
               << "                  K/D: " << score << "/" << deaths << "\n"
+              << "          reload time: " << reloadTime << "\n"
+              << "            max speed: " << maxTankSpeed << "\n"
+              << "               damage: " << attackRatio << "\n"
+              << "              defense: " << defense << "\n"
               << "-----------------------------------------------------------\n";
 }
 
