@@ -76,7 +76,7 @@ void EngineManager::checkColliders()
         {
             double distance = sqrt((bullet->getPosition().x-client->getPosition().x)*(bullet->getPosition().x-client->getPosition().x)
                                    + (bullet->getPosition().y-client->getPosition().y)*(bullet->getPosition().y-client->getPosition().y));
-            if (distance < FIELD_SIZE) {
+            if (distance < FIELD_SIZE*2) {
                 Collider *col1 = client->getCollider();
                 Collider *col2 = bullet->getCollider();
 
@@ -115,7 +115,7 @@ void EngineManager::checkColliders()
         {
             double distance = sqrt((bullet->getPosition().x-wall->getPosition().x)*(bullet->getPosition().x-wall->getPosition().x)
                     + (bullet->getPosition().y-wall->getPosition().y)*(bullet->getPosition().y-wall->getPosition().y));
-            if (distance < FIELD_SIZE)
+            if (distance < FIELD_SIZE*2)
             {
                 Collider *col1 = bullet->getCollider();
                 Collider *col2 = wall->getCollider();
@@ -136,7 +136,7 @@ void EngineManager::checkColliders()
         {
             double distance = sqrt((client->getPosition().x-powerUp->getPosition().x)*(client->getPosition().x-powerUp->getPosition().x)
                                    + (client->getPosition().y-powerUp->getPosition().y)*(client->getPosition().y-powerUp->getPosition().y));
-            if (distance < FIELD_SIZE)
+            if (distance < FIELD_SIZE*2)
             {
                 Collider *col1 = client->getCollider();
                 Collider *col2 = powerUp->getCollider();
@@ -159,7 +159,7 @@ void EngineManager::checkColliders()
         {
             double distance = sqrt((client->getPosition().x-wall->getPosition().x)*(client->getPosition().x-wall->getPosition().x)
                                    + (client->getPosition().y-wall->getPosition().y)*(client->getPosition().y-wall->getPosition().y));
-            if (distance < FIELD_SIZE || wall->getHeight() > FIELD_SIZE || wall->getHeight() > FIELD_SIZE)
+            if (distance < FIELD_SIZE*2 || wall->getHeight() > FIELD_SIZE || wall->getWidth() > FIELD_SIZE)
             {
                 Collider *col1 = client->getCollider();
                 Collider *col2 = wall->getCollider();
@@ -190,7 +190,7 @@ void EngineManager::checkColliders()
             {
                 double distance = sqrt((client1->getPosition().x-client2->getPosition().x)*(client1->getPosition().x-client2->getPosition().x)
                                        + (client1->getPosition().y-client2->getPosition().y)*(client1->getPosition().y-client2->getPosition().y));
-                if (distance < FIELD_SIZE) {
+                if (distance < FIELD_SIZE*2) {
                     if (client1 != client2) {
                         Collider *col1 = client1->getCollider();
                         Collider *col2 = client2->getCollider();
