@@ -48,4 +48,11 @@ Uint16 PowerUpPacket::getY() {
     return SDLNet_Read16(&data[6]);
 }
 
+void PowerUpPacket::setFromPowerUp(PowerUp *powerUp) {
+    this->setPowerUpId(static_cast<Uint8>(powerUp->getId()));
+    this->setX(static_cast<Uint16>(powerUp->getPosition().x));
+    this->setY(static_cast<Uint16>(powerUp->getPosition().y));
+    this->setPowerUpType(powerUp->getPowerUpType());
+}
+
 

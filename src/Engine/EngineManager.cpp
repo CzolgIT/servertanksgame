@@ -50,6 +50,10 @@ void EngineManager::move( double stepTime )
             powerUps->push_back(powerUp);
 
             //todo: DAWID BINKUS TU WYSYLAMY PAKIET
+            PowerUpPacket powerUpPacket;
+            powerUpPacket.setFromPowerUp(powerUp);
+            powerUpPacket.setToShow(true);
+            UdpConnection::udpSendAll(powerUpPacket,*clients);
 
             powerUpTimer=0;
         }
@@ -85,7 +89,6 @@ void EngineManager::checkColliders()
                             if (client->getActHp() < 1 && client->isIsPlayerReady()) {
                                 client->setIsPlayerReady(false);
                                 client->setDeaths(client->getDeaths() + 1);
-                                client->removePowerUps();
                                 //clear all input
                                 for (int i = 0; i < 7; i++) {
                                     client->setKeys(i, false);
@@ -143,7 +146,7 @@ void EngineManager::checkColliders()
                 if (col.x != 0 || col.y != 0)
                 {
                     // todo: DAWID BINKUS ZASTOSUJ TU POWERUPY
-
+                    client->applyPowerUp(powerUp->getPowerUpType());
                     powerUp->todestroy = true;
                 }
             }
@@ -234,6 +237,10 @@ void EngineManager::checkColliders()
         if ((*powerUp_iterator)->todestroy)
         {
             // todo: DAWID BINKUS TU WYSYLAMY O ZNISZCZENIU POWERUPA
+            PowerUpPacket powerUpPacket;
+            powerUpPacket.setFromPowerUp((*powerUp_iterator));
+            powerUpPacket.setToShow(false);
+            UdpConnection::udpSendAll(powerUpPacket,*clients);
             // (*powerUp_iterator)->getdata???
 
             delete *powerUp_iterator;

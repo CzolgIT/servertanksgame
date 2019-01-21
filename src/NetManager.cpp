@@ -290,6 +290,7 @@ void NetManager::processTcp() {
                             Client * client = getClient(packet->getId());
                             client->setIsPlayerReady(true);
                             client->setActHp(100);
+                            client->removePowerUps();
                             //spawn a player
                             SDL_Point spawnPoint = getSpawnPoint();
                             client->setX(spawnPoint.x);
