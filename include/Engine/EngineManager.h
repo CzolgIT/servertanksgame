@@ -22,7 +22,6 @@ private:
     std::vector<Wall *> walls;
     int bulletIdCounter,powerUpIdCounter;
     double powerUpTimer;
-    std::map<int,int> scoreMap;
 
 };
 

@@ -49,7 +49,6 @@ void EngineManager::move( double stepTime )
             auto* powerUp = new PowerUp( powerUpIdCounter++ , getSpawnPoint() , Uint8(random()%5) );
             powerUps->push_back(powerUp);
 
-            //todo: DAWID BINKUS TU WYSYLAMY PAKIET
             PowerUpPacket powerUpPacket;
             powerUpPacket.setFromPowerUp(powerUp);
             powerUpPacket.setToShow(true);
@@ -152,7 +151,6 @@ void EngineManager::checkColliders()
 
                 if (col.x != 0 || col.y != 0)
                 {
-                    // todo: DAWID BINKUS ZASTOSUJ TU POWERUPY
                     client->applyPowerUp(powerUp->getPowerUpType());
                     powerUp->todestroy = true;
                 }
@@ -206,11 +204,9 @@ void EngineManager::checkColliders()
                         if (col.x != 0 || col.y != 0) {
                             client1->setX(client1->getX() + col.x);
                             client1->setY(client1->getY() + col.y);
-                            //client1->setTankSpeed(client1->getTankSpeed()-20);
 
                             client2->setX(client2->getX() - col.x);
                             client2->setY(client2->getY() - col.y);
-                            //client2->setTankSpeed(client2->getTankSpeed()-20);
                         }
                     }
                 }
@@ -243,12 +239,10 @@ void EngineManager::checkColliders()
     {
         if ((*powerUp_iterator)->todestroy)
         {
-            // todo: DAWID BINKUS TU WYSYLAMY O ZNISZCZENIU POWERUPA
             PowerUpPacket powerUpPacket;
             powerUpPacket.setFromPowerUp((*powerUp_iterator));
             powerUpPacket.setToShow(false);
             UdpConnection::udpSendAll(powerUpPacket,*clients);
-            // (*powerUp_iterator)->getdata???
 
             delete *powerUp_iterator;
             powerUp_iterator = powerUps->erase(powerUp_iterator);

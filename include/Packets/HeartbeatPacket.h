@@ -15,7 +15,6 @@ class HeartbeatPacket : public BasePacket
 {
 public:
     HeartbeatPacket();
-    HeartbeatPacket(Uint8 id);
     ~HeartbeatPacket();
 
     void setId(Uint8 id);

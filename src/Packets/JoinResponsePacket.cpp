@@ -17,14 +17,3 @@ void JoinResponsePacket::setId(Uint8 id) {
 Uint8 JoinResponsePacket::getId() const {
     return (Uint8)data[2];
 }
-
-void JoinResponsePacket::setIsHost(bool b) {
-    if(b)
-        data[3] = 1;
-    else
-        data[3] = 0;
-}
-
-bool JoinResponsePacket::isHost() {
-    return (Uint8)data[3] == 1;
-}

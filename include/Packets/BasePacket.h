@@ -5,7 +5,6 @@
 
 // First byte of a packed should always be the type
 enum PacketType : Uint8{
-    //todo: packettype list
     PT_BASE = 0,
     PT_JOIN_REQUEST = 1,
     PT_JOIN_RESPONSE = 2,

@@ -12,24 +12,15 @@
 class PlayerJoinedPacket : public BasePacket {
 public:
     PlayerJoinedPacket();
-    //PlayerJoinedPacket(Uint8 id);
     ~PlayerJoinedPacket();
 
     void setId(Uint8 id);
-    //todo: initial position
-
     Uint8 getId();
-    //todo: get initial position
 
     void setNickname(std::string nickname);
     std::string getNickname() const;
 
     void print()const override;
-
-private:
-
-    //Uint8 id;
-
 };
 
 

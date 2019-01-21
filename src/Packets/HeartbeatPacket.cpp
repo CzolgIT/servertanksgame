@@ -7,11 +7,6 @@
 HeartbeatPacket::HeartbeatPacket():BasePacket(PT_HEARTBEAT,HEARTBEAT_PACKET_SIZE) {
 
 }
-HeartbeatPacket::HeartbeatPacket(Uint8 id) : HeartbeatPacket() {
-
-    setId(id);
-
-}
 HeartbeatPacket::~HeartbeatPacket() {
 
 }

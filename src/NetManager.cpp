@@ -86,10 +86,6 @@ void NetManager::acceptClient()
             JoinResponsePacket joinResponsePacket;
             joinResponsePacket.setResponse(JR_OK);
             joinResponsePacket.setId(getAvailableId());
-            //if you are first player
-            if(clients.size()==1){
-                joinResponsePacket.setIsHost(true);
-            }
             if (SDLNet_TCP_Send(new_socket, joinResponsePacket.getData(), joinResponsePacket.getSize()) < (int) joinResponsePacket.getSize()){
 
                 std::cout << "error x2\n";
@@ -97,11 +93,11 @@ void NetManager::acceptClient()
 
             }
 
-            Client * klient = new Client(joinResponsePacket.getId(),new_socket,UDP_socket);
+            auto * acceptedClient = new Client(joinResponsePacket.getId(),new_socket,UDP_socket);
 
-            clients.push_back(std::unique_ptr<Client>(klient));
+            clients.push_back(std::unique_ptr<Client>(acceptedClient));
 
-            klient->setBulletsPointer( &bullets );
+            acceptedClient->setBulletsPointer( &bullets );
 
             SDLNet_TCP_AddSocket(TCP_SocketSet, clients.back()->getTcpSocket());
             SDLNet_CheckSockets(TCP_SocketSet,0);
@@ -158,7 +154,6 @@ void NetManager::update( int argc )
     while(!quit){
 
         // Check if any sockets are ready
-        //int numready =
         SDLNet_CheckSockets(TCP_SocketSet,0);
 
         acceptClient();
@@ -171,13 +166,11 @@ void NetManager::update( int argc )
         if (argc > 1)
             monitoring();
 
-        //SDL_Delay(10);
         timer->update();
     }
 }
 
 Uint8 NetManager::getAvailableId() {
-    //todo: randomize id bo andrzej tak chce xd
     Uint8 id = 1;
 
     while(getClient(id))
@@ -206,7 +199,6 @@ Client *NetManager::getClient(Uint8 id) {
 bool NetManager::disconnectClient(Uint8 id) {
 
     bool foundClient = false;
-    std::cout << "Before: " << clients.size() << std::endl;
     for(auto it = clients.begin(); it != clients.end(); it++){
         if((*it)->getId()==id){
             clients.erase(it);
@@ -218,11 +210,6 @@ bool NetManager::disconnectClient(Uint8 id) {
     if(foundClient){
         PlayerDisconnectedPacket playerDisconnectedPacket(id);
         TcpConnection::tcpSendAll(playerDisconnectedPacket, clients);
-        std::cout << "After: " << clients.size() << std::endl;
-        //if only one player stays in the room, give him the host role
-//        tutaj sprawdzic debilu
-//        czy vector nie jest pusty XDDD
-//        this->setHostId(clients.back()->getId());
     }
 
     return foundClient;
@@ -241,8 +228,6 @@ void NetManager::processTcp() {
 
                     if(recvd)
                     {
-//                        recvd->print();
-
                         if(recvd->getType() == PT_PLAYER_DISCONNECTED){
                             auto * packet = (PlayerDisconnectedPacket*)recvd.get();
                             disconnectClient(packet->getId());
@@ -255,37 +240,31 @@ void NetManager::processTcp() {
                                 MapDataPacket mapDataPacket;
                                 char * map = new char[64 * 64];
                                 Map::getMapFromFile(map);
-                                std::cout << map <<  std::endl;
                                 mapDataPacket.setMapData(map);
                                 (*client)->tcpSend(mapDataPacket);
-                                std::cout << "Map send " << std::endl;
                             }
                         }
                         else if(recvd->getType() == PT_PLAYER_READY){
                             auto * packet = (PlayerReadyPacket*)recvd.get();
-                            std::cout << "pakiet o gotowości od gracza: "<< (int)packet->getId() << std::endl;
-                            Client * client = getClient(packet->getId());
-                            client->setIsPlayerReady(true);
-                            client->setActHp(100);
-                            client->removePowerUps();
+                            Client * pClient = getClient(packet->getId());
+                            pClient->setIsPlayerReady(true);
+                            pClient->setActHp(100);
+                            pClient->removePowerUps();
                             //spawn a player
                             SDL_Point spawnPoint = getSpawnPoint();
-                            client->setX(spawnPoint.x);
-                            client->setY(spawnPoint.y);
+                            pClient->setX(spawnPoint.x);
+                            pClient->setY(spawnPoint.y);
                             //send all powerups on the map
                             for (auto &powerup : powerUps){
                                 PowerUpPacket powerUpPacket;
                                 powerUpPacket.setFromPowerUp(powerup);
                                 powerUpPacket.setToShow(true);
-                                client->udpSend(powerUpPacket);
+                                pClient->udpSend(powerUpPacket);
                             }
                             return;
-
                         }
-
                     }
                 }
-
             }
             else{
                 client++;
@@ -299,55 +278,6 @@ void NetManager::processTcp() {
     }
 
 }
-//temporary disabled - we will operate on one room only so who Room class is useless
-void NetManager::createRoom(Uint8 hostId, int maxClients) {
-    rooms.push_back(std::unique_ptr<Room>(new Room()));
-
-    rooms.back()->setRoomId(getAvailableRoomId());
-    rooms.back()->setMaxClients(maxClients);
-    rooms.back()->setHostId(hostId);
-}
-
-void NetManager::deleteRoom(Uint8 id) {
-    bool foundRoom = false;
-    std::cout << "Before: " << rooms.size() << std::endl;
-    for(auto it = rooms.begin(); it != rooms.end(); it++){
-        if((*it)->getRoomId()==id){
-            rooms.erase(it);
-            foundRoom = true;
-            break;
-        }
-    }
-
-    if(foundRoom){
-        //todo: send packet about destroying a room (optional!)
-        std::cout << "After: " << clients.size() << std::endl;
-    }
-}
-
-Room *NetManager::getRoom(Uint8 id) {
-    for(auto& room: rooms)
-    {
-        if(room->getRoomId()==id){
-            return room.get();
-        }
-    }
-    return nullptr;
-}
-
-Uint8 NetManager::getAvailableRoomId() {
-    Uint8 id = 1;
-
-    while(getRoom(id))
-    {
-        id++;
-        if(id == 0)
-            return id;
-    }
-    return id;
-}
-
-//---------------------------------------------
 
 void NetManager::processUdp()
 {
@@ -359,7 +289,6 @@ void NetManager::processUdp()
 
         if(recvd){
 
-            //recvd->print();
             //here will be all possibilities of received packets
 
             switch (recvd->getType()){
@@ -422,37 +351,6 @@ void NetManager::processUdp()
     }
 }
 
-Uint8 NetManager::getHostId() {
-    return this->hostId;
-}
-
-void NetManager::setHostId(Uint8 hostId) {
-    this->hostId = hostId;
-}
-
-void NetManager::setMapId(Uint8 mapId) {
-    this->mapId = mapId;
-}
-
-Uint8 NetManager::getMapId() {
-    return this->mapId;
-}
-
-void NetManager::monitoring()
-{
-    std::cout << "\x1B[2J\x1B[H";
-    std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "   powerups: " << powerUps.size() << "\n";
-    std::cout << "-----------------------------------------------------------\n";
-    for (auto &client : clients) client->print();
-
-    for(auto* bullet : bullets )
-    {
-        bullet->print();
-        std::cout << "-----------------------------------------------------------\n";
-    }
-
-}
-
 SDL_Point NetManager::getSpawnPoint()
 {
     float sum = 1;
@@ -487,4 +385,21 @@ SDL_Point NetManager::getSpawnPoint()
             return { int(spawn->center->x) , int(spawn->center->y) };
         }
     }
+    return {0,0};
+}
+
+
+void NetManager::monitoring()
+{
+    std::cout << "\x1B[2J\x1B[H";
+    std::cout << "Server            fps: " << timer->getFps() << "     IP: " << SERVERIP << " : " << SERVERPORT << "   powerups: " << powerUps.size() << "\n";
+    std::cout << "-----------------------------------------------------------\n";
+    for (auto &client : clients) client->print();
+
+    for(auto* bullet : bullets )
+    {
+        bullet->print();
+        std::cout << "-----------------------------------------------------------\n";
+    }
+
 }

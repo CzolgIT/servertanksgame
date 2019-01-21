@@ -23,11 +23,9 @@ public:
     
     void setResponse(JoinResponse joinResponse);
     void setId(Uint8 id);
-    void setIsHost(bool b);
 
     JoinResponse getResponse() const;
     Uint8 getId() const;
-    bool isHost();
 };
 
 #endif
