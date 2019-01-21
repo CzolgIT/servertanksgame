@@ -29,6 +29,9 @@ public:
     Uint8 getAvailableId();
     Client* getClient(Uint8 id);
     bool disconnectClient(Uint8 id);
+
+    SDL_Point getSpawnPont();
+
 private:
 
     EngineManager* engineManager;

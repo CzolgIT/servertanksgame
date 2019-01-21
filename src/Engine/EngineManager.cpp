@@ -34,13 +34,12 @@ void EngineManager::move( double stepTime )
                 bulletInfoPacket.setAngle(static_cast<Uint16>(bullet->getDirection()));
                 bulletInfoPacket.setBulletId(static_cast<Uint8>(bullet->getId()));
                 UdpConnection::udpSendAll(bulletInfoPacket, *clients );
-
-
         }
     }
-
     for (auto& bullet: *bullets )
         bullet->move(stepTime);
+
+
 }
 
 

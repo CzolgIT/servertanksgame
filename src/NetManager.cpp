@@ -296,28 +296,11 @@ void NetManager::processTcp() {
                             client->setIsPlayerReady(true);
                             client->setActHp(100);
                             //spawn a player
-                            for (auto &spawn: Map::getSpawnPoints())
-                            {
-                                float sum = 0;
-                                for (auto &other: clients)
-                                {
-                                    Collider *col1 = other->getCollider();
+                            SDL_Point spawnPoint = getSpawnPont();
+                            client->setX(spawnPoint.x);
+                            client->setY(spawnPoint.y);
+                            return;
 
-                                    Vector2D col = Collider::areColliding(col1, spawn);
-
-                                    if (col.x != 0 || col.y != 0)
-                                    {
-                                        sum+=abs(col.x);
-                                        sum+=abs(col.y);
-                                    }
-                                }
-                                if (sum == 0)
-                                {
-                                    client->setX(spawn->center->x);
-                                    client->setY(spawn->center->y);
-                                    return;
-                                }
-                            }
                         }
 
                     }
@@ -488,4 +471,31 @@ void NetManager::monitoring()
         std::cout << "-----------------------------------------------------------\n";
     }
 
+}
+
+SDL_Point NetManager::getSpawnPont()
+{
+    float sum = 1;
+    while(sum != 0)
+    {
+        auto* spawn = Map::getSpawnPoints()[random()%int(Map::getSpawnPoints().size())];
+
+        sum=0;
+        for (auto &other: clients)
+        {
+            Collider *col1 = other->getCollider();
+            Vector2D col = Collider::areColliding(col1, spawn);
+
+            if (col.x != 0 || col.y != 0)
+            {
+                sum+=abs(col.x);
+                sum+=abs(col.y);
+            }
+        }
+
+        if (sum == 0)
+        {
+            return { int(spawn->center->x) , int(spawn->center->y) };
+        }
+    }
 }
