@@ -10,27 +10,35 @@
 class PowerUp{
 public:
 
+    PowerUp(const SDL_Point &position, int width, int height);
+
+    virtual ~PowerUp();
+
     int getId() const;
 
     void setId(int id);
-
-    int getX() const;
-
-    void setX(int x);
-
-    int getY() const;
-
-    void setY(int y);
 
     PowerUpType getPowerUpType() const;
 
     void setPowerUpType(PowerUpType powerUpType);
 
+    const SDL_Point &getPosition() const;
+
+    void setPosition(const SDL_Point &position);
+
+    Collider *getCollider() const;
+
+    int getWidth() const;
+
+    int getHeight() const;
+
 private:
     int id;
-    int x;
-    int y;
+    SDL_Point position;
     PowerUpType powerUpType;
+    int width = 50;
+    int height = 50;
+    Collider *collider;
 };
 
 
