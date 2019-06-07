@@ -4,7 +4,6 @@ Map::Map() {}
 
 char * Map::getMapFromFile(char * pointer)
 {
-    //w, h - 64
     std::ifstream infile("assets/maps/map2.txt");
     char temp;
 
