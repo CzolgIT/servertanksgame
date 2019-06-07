@@ -106,7 +106,6 @@ Vector2D Collider::areColliding(Collider * col1, Collider * col2)
         smallest.y*=-1;
     }
     smallest = (smallest*overlap).Normalize();
-//    std::cout << overlap << std::endl;
     return smallest;
 }
 
@@ -117,11 +116,11 @@ Projection * Collider::project (Vector2D axis)
 
     for (int i = 1; i < points.size(); i++) {
       float p = axis.Dot(points[i]);
-      if (p < min) {
-        min = p;
-      } else if (p > max) {
+        if (p > max) {
         max = p;
-      }
+      } else if (p < min) {
+        min = p;
+      } 
     }
 
     auto * proj = new Projection(min, max);
@@ -136,10 +135,12 @@ Vector2D * Collider::getAxes(Collider * col){
     for (int i = 0; i < col->points.size(); i++)
     {
         Vector2D p1 = col->points[i];
-        Vector2D p2 = col->points[i + 1 == col->points.size() ? 0 : i + 1];
-        Vector2D edge = p1.Subtract(p2);
-        Vector2D normal = edge.Perp();
-        axes[i] = normal;
+        Vector2D p2;
+        if ((i+1) == col->points.size())
+                p2 = col->points[0];
+        else p2 = col->points[i+1];
+        Vector2D line = p1.Subtract(p2);
+        axes[i] = line.Perp();
     }
     return axes;
 }
