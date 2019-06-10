@@ -55,10 +55,11 @@ Default server port is 7777
 
 To change server ip or port, edit include/Main.h defines called:
 ```
-SERVER_IP
-SERVER_PORT
+SERVERIP
+SERVERiPORT
 ```
-
+And rebuild the server.
+## Miscellaneous
 Short review of ps command
 ```
 ps -aux | grep ./servertanksgame
