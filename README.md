@@ -56,7 +56,7 @@ Default server port is 7777
 To change server ip or port, edit include/Main.h defines called:
 ```
 SERVERIP
-SERVERiPORT
+SERVERPORT
 ```
 And rebuild the server.
 ## Miscellaneous
