@@ -9,11 +9,6 @@ Installed packages:
 libsdl2-dev
 libsdl2-net-dev
 ```
-### Windows
-mingw64 libraries installed in:
-```
-C:\tools\mingw64
-```
 ### Mac OS
 Installed frameworks:
 ```
@@ -28,52 +23,51 @@ Simply enter the project folder and type
 ```
 cmake .
 ```
-(temporary - have to set proper arguments to move cmake files)
 after that:
 ```$xslt
 make
 ```
-### Windows
-CLI
-```
-idk how lol
-```
 ## Running
 Run the server by typing
 ```
-./Server
+./servertanksgame
 ```
 or
 ```$xslt
-./Server &
+./servertanksgame &
 ```
 to run in the background
+or
+```
+./servertanksgame > logs.txt
+```
+to store data into logs.txt
+
+## Additional parameters
+Running server with parameter:
+```
+./servertanksgame debug
+```
+will enable debug mode and show current server status and all data in console.
 
 Default server ip is 127.0.0.1 (*localhost*).
-Default server port is 1177
+Default server port is 7777
 
-Just worth mentioning - to kill the server process you have to send SIGKILL. That means Ctrl+C doesnt work :poop:
+To change server ip or port, edit include/Main.h defines called:
+```
+SERVER_IP
+SERVER_PORT
+```
 
 Short review of ps command
 ```
-ps -aux | grep ./Server
+ps -aux | grep ./servertanksgame
 ```
 then find ./Server process and his PID number
 next step is:
 ```
 kill -9 PID
 ```
-
-## Current progress
-- [x] Make server operational
-- [x] Prepare some basic packets
-- [x] Enable TCP connection on the server
-- [ ] Enable UDP connection on the server
-- [ ] Implement main alorithm to send data between server and client
-- [ ] Add more packet types based on sent data
-- [ ] Synchronization stuff
-- [ ] Make server initialization possible from client side (not sure of it)
-- [ ] Fix some bugs...
 
 ## Useful links (just for my own use)
 http://beej.us/guide/bgnet/html/multi/index.html
