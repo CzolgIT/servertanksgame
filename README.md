@@ -68,7 +68,3 @@ next step is:
 ```
 kill -9 PID
 ```
-
-## Useful links (just for my own use)
-http://beej.us/guide/bgnet/html/multi/index.html
-https://www.libsdl.org/projects/SDL_net/docs/index.html
